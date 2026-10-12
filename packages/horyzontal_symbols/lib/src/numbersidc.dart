@@ -4,6 +4,7 @@
 import 'iconparts/air.dart';
 import 'iconparts/common_modifiers.dart';
 import 'iconparts/ground.dart';
+import 'iconparts/sea.dart';
 import 'iconparts/space.dart';
 import 'ms.dart';
 import 'numbersidc/sidc/activites.dart';
@@ -15,6 +16,7 @@ import 'numbersidc/sidc/landcivilian.dart';
 import 'numbersidc/sidc/landequipment.dart';
 import 'numbersidc/sidc/landinstallation.dart';
 import 'numbersidc/sidc/landunit.dart';
+import 'numbersidc/sidc/sea.dart';
 import 'numbersidc/sidc/space.dart';
 import 'numbersidc/sidc/spacemissile.dart';
 
@@ -111,6 +113,14 @@ const spacemissile = SymbolSetModule(
   icons: spacemissileIcons,
 );
 
+/// Symbol set 30, sea surface.
+const sea = SymbolSetModule(
+  name: 'sea',
+  symbolSets: ['30'],
+  iconParts: seaIconParts,
+  icons: seaIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
@@ -121,7 +131,7 @@ const List<SymbolSetModule> app6d = [
   landcivilian,
   landequipment,
   landinstallation,
-  // sea,
+  sea,
   // subsurface,
   // minewarfare,
   activites,
@@ -140,7 +150,7 @@ const List<SymbolSetModule> std2525d = [
   landcivilian,
   landequipment,
   landinstallation,
-  // sea,
+  sea,
   // subsurface,
   // minewarfare,
   activites,
@@ -160,7 +170,7 @@ const List<SymbolSetModule> std2525e = [
   landcivilian,
   landequipment,
   landinstallation,
-  // sea,
+  sea,
   // subsurface,
   // minewarfare,
   activites,

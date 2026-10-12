@@ -41,6 +41,7 @@ const PORTED = [
   "airmissile",
   "space",
   "spacemissile",
+  "sea",
 ];
 const ported = PORTED.map((n) => {
   if (!N[n]) throw new Error("unknown module " + n);
@@ -122,7 +123,7 @@ const FAMILIES = [
   { name: "airmissile", sets: ["02"] },
   { name: "space", sets: ["05"] },
   { name: "spacemissile", sets: ["06"] },
-  // { name: "sea", sets: ["30"] },
+  { name: "sea", sets: ["30"] },
   // { name: "subsurface", sets: ["35"] },
   // { name: "minewarfare", sets: ["36"] },
   // { name: "signalsintelligence", sets: ["50", "51", "52", "53", "54"] },
@@ -132,6 +133,16 @@ const FAMILIES = [
 // Entity used for the modifier fixtures of a set; default: first entity
 // code that draws something.
 const REPRESENTATIVE = { 10: "121100", 11: "110100", 15: "110100", 20: "110000", 27: "110100", 40: "110100" };
+// Style variants rotated over the entities of a family.
+const STYLES = [
+  { monoColor: "black" },
+  { fill: false },
+  { frame: false },
+  { frame: false, standard: "APP6" },
+  { colorMode: "Dark", alternateMedal: true },
+  { monoColor: "rgb(0,0,255)", standard: "APP6", outlineWidth: 2 },
+  { fill: false, frame: false, alternateMedal: true },
+];
 // Sets whose icon milsymbol shrinks when sector modifiers are present (icon.js).
 const SCALED_SETS = ["15", "27"];
 
@@ -193,6 +204,8 @@ function tableKeys(set) {
       for (const ent of t.icons) {
         for (const si of AFF) add(g, [set], sidc20({ si, set, ent }));
         add(g, [set], sidc20({ si: AFF[k++ % 4], set, ent }), { standard: "APP6" });
+        // Styles the icon parts branch on (frame, fill, monoColor, medal).
+        add(`${g}-styles`, [set], sidc20({ si: AFF[k % 4], set, ent }), STYLES[k++ % STYLES.length]);
       }
       // Sector modifiers: every 2 digit code with a representative entity,
       // every 3 digit (2525E common) code via 30 digit SIDCs.

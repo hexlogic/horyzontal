@@ -12,7 +12,8 @@
     "air",
     "airmissile",
     "space",
-    "spacemissile"
+    "spacemissile",
+    "sea"
   ],
   "files": [
     {
@@ -26,6 +27,19 @@
         "40"
       ],
       "count": 3975,
+      "errors": 0
+    },
+    {
+      "name": "land-styles.jsonl.gz",
+      "sets": [
+        "10",
+        "11",
+        "15",
+        "20",
+        "27",
+        "40"
+      ],
+      "count": 795,
       "errors": 0
     },
     {
@@ -59,6 +73,14 @@
       "errors": 0
     },
     {
+      "name": "air-styles.jsonl.gz",
+      "sets": [
+        "01"
+      ],
+      "count": 53,
+      "errors": 0
+    },
+    {
       "name": "air-modifiers.jsonl.gz",
       "sets": [
         "01"
@@ -72,6 +94,14 @@
         "02"
       ],
       "count": 5,
+      "errors": 0
+    },
+    {
+      "name": "airmissile-styles.jsonl.gz",
+      "sets": [
+        "02"
+      ],
+      "count": 1,
       "errors": 0
     },
     {
@@ -91,6 +121,14 @@
       "errors": 0
     },
     {
+      "name": "space-styles.jsonl.gz",
+      "sets": [
+        "05"
+      ],
+      "count": 36,
+      "errors": 0
+    },
+    {
       "name": "space-modifiers.jsonl.gz",
       "sets": [
         "05"
@@ -107,11 +145,43 @@
       "errors": 0
     },
     {
+      "name": "spacemissile-styles.jsonl.gz",
+      "sets": [
+        "06"
+      ],
+      "count": 1,
+      "errors": 0
+    },
+    {
       "name": "spacemissile-modifiers.jsonl.gz",
       "sets": [
         "06"
       ],
       "count": 125,
+      "errors": 0
+    },
+    {
+      "name": "sea.jsonl.gz",
+      "sets": [
+        "30"
+      ],
+      "count": 465,
+      "errors": 0
+    },
+    {
+      "name": "sea-styles.jsonl.gz",
+      "sets": [
+        "30"
+      ],
+      "count": 93,
+      "errors": 0
+    },
+    {
+      "name": "sea-modifiers.jsonl.gz",
+      "sets": [
+        "30"
+      ],
+      "count": 157,
       "errors": 0
     },
     {
