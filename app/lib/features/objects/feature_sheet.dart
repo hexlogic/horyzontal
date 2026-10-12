@@ -38,6 +38,34 @@ Future<void> showFeatureSheet(BuildContext context, String id) => showModalBotto
       ),
     );
 
+/// Object card beside the map on a wide window.
+class FeaturePanel extends StatelessWidget {
+  const FeaturePanel({super.key, required this.id, required this.onClose});
+  final String id;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) => Material(
+        elevation: 3,
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                onPressed: onClose,
+              ),
+            ),
+            Expanded(child: FeatureDetails(key: ValueKey(id), id: id, inSheet: true, onClose: onClose)),
+          ],
+        ),
+      );
+}
+
 /// Object card as a page (from the journal).
 class FeaturePage extends StatelessWidget {
   const FeaturePage({super.key, required this.id});
@@ -51,11 +79,18 @@ class FeaturePage extends StatelessWidget {
 }
 
 class FeatureDetails extends ConsumerWidget {
-  const FeatureDetails({super.key, required this.id, this.scroll, this.inSheet = false});
+  const FeatureDetails({super.key, required this.id, this.scroll, this.inSheet = false, this.onClose});
 
   final String id;
   final ScrollController? scroll;
+
+  /// Over the map (a sheet or a side panel) rather than a page of its own.
   final bool inSheet;
+
+  /// Closes the card; pops the sheet or page when not given.
+  final VoidCallback? onClose;
+
+  void _close(BuildContext context) => (onClose ?? context.pop)();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -93,7 +128,7 @@ class FeatureDetails extends ConsumerWidget {
               avatar: const Icon(Icons.edit_outlined, size: 18),
               label: Text(l.edit),
               onPressed: () {
-                if (inSheet) context.pop();
+                if (inSheet) _close(context);
                 context.go('/journal/object/$id/edit');
               },
             ),
@@ -171,7 +206,7 @@ class FeatureDetails extends ConsumerWidget {
     );
     if (ok != true) return;
     await ref.read(repositoryProvider).deleteFeature(f.id);
-    if (context.mounted) context.pop();
+    if (context.mounted) _close(context);
   }
 
   /// Hands the destination to a maps app; the app itself makes no request.

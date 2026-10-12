@@ -30,12 +30,13 @@ import '../features/tasks/sky_page.dart';
 import '../features/tasks/tasks_page.dart';
 import 'data/model.dart';
 import 'labels.dart';
+import 'layout.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-GoRouter buildRouter() => GoRouter(
+GoRouter buildRouter({String initialLocation = '/map'}) => GoRouter(
       navigatorKey: rootNavigatorKey,
-      initialLocation: '/map',
+      initialLocation: initialLocation,
       // Anything unknown (an odd link handed over by the OS) lands on the map.
       redirect: (_, state) => state.uri.scheme == 'file' ? '/map' : null,
       errorBuilder: (_, _) => const MapPage(),
@@ -44,10 +45,10 @@ GoRouter buildRouter() => GoRouter(
         GoRoute(
           path: '/symbol',
           parentNavigatorKey: rootNavigatorKey,
-          builder: (_, s) => SymbolPickerPage(initial: s.uri.queryParameters['sidc']),
+          builder: (_, s) => FullScreenForm(child: SymbolPickerPage(initial: s.uri.queryParameters['sidc'])),
         ),
         StatefulShellRoute.indexedStack(
-          builder: (context, state, shell) => _Shell(shell: shell),
+          builder: (context, state, shell) => _Shell(shell: shell, onMap: state.uri.path == '/map'),
           branches: [
             StatefulShellBranch(routes: [
               GoRoute(
@@ -57,10 +58,12 @@ GoRouter buildRouter() => GoRouter(
                   GoRoute(
                     path: 'new',
                     parentNavigatorKey: rootNavigatorKey,
-                    builder: (_, s) => FeatureEditorPage(
-                      initial: Geodetic(
-                        double.parse(s.uri.queryParameters['lat']!),
-                        double.parse(s.uri.queryParameters['lon']!),
+                    builder: (_, s) => FullScreenForm(
+                      child: FeatureEditorPage(
+                        initial: Geodetic(
+                          double.parse(s.uri.queryParameters['lat']!),
+                          double.parse(s.uri.queryParameters['lon']!),
+                        ),
                       ),
                     ),
                   ),
@@ -68,9 +71,11 @@ GoRouter buildRouter() => GoRouter(
                   GoRoute(
                     path: 'shape',
                     parentNavigatorKey: rootNavigatorKey,
-                    builder: (_, s) => FeatureEditorPage(
-                      kind: FeatureKind.values.byName(s.uri.queryParameters['kind']!),
-                      vertices: s.extra! as List<Geodetic>,
+                    builder: (_, s) => FullScreenForm(
+                      child: FeatureEditorPage(
+                        kind: FeatureKind.values.byName(s.uri.queryParameters['kind']!),
+                        vertices: s.extra! as List<Geodetic>,
+                      ),
                     ),
                   ),
                   GoRoute(
@@ -109,7 +114,7 @@ GoRouter buildRouter() => GoRouter(
                       GoRoute(
                         path: 'edit',
                         parentNavigatorKey: rootNavigatorKey,
-                        builder: (_, s) => FeatureEditorPage(id: s.pathParameters['id']),
+                        builder: (_, s) => FullScreenForm(child: FeatureEditorPage(id: s.pathParameters['id'])),
                       ),
                     ],
                   ),
@@ -177,26 +182,67 @@ GoRouter buildRouter() => GoRouter(
     );
 
 class _Shell extends StatelessWidget {
-  const _Shell({required this.shell});
+  const _Shell({required this.shell, required this.onMap});
   final StatefulNavigationShell shell;
+
+  /// The map itself, which takes the whole window.
+  final bool onMap;
+
+  void _go(int i) => shell.goBranch(i, initialLocation: i == shell.currentIndex);
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final tabs = [
+      (const Icon(Icons.map_outlined), l.tabMap),
+      (const Icon(Icons.list_alt), l.tabJournal),
+      (const Icon(Icons.calculate_outlined), l.tabTasks),
+      (const Icon(Icons.explore_outlined), l.tabCompass),
+      (const Icon(Icons.settings_outlined), l.tabSettings),
+    ];
+    if (useRail(context)) {
+      return Scaffold(
+        body: Row(
+          children: [
+            SafeArea(
+              right: false,
+              child: NavigationRail(
+                selectedIndex: shell.currentIndex,
+                labelType: NavigationRailLabelType.all,
+                groupAlignment: 0,
+                onDestinationSelected: _go,
+                destinations: [
+                  for (final (icon, label) in tabs) NavigationRailDestination(icon: icon, label: Text(label)),
+                ],
+              ),
+            ),
+            const VerticalDivider(width: 1),
+            // The map takes the whole window; lists and forms stay readable.
+            Expanded(child: onMap || !isWide(context) ? shell : ContentWidth(child: shell)),
+          ],
+        ),
+      );
+    }
     return Scaffold(
       body: shell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: shell.currentIndex,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        onDestinationSelected: (i) => shell.goBranch(i, initialLocation: i == shell.currentIndex),
-        destinations: [
-          NavigationDestination(icon: const Icon(Icons.map_outlined), label: l.tabMap),
-          NavigationDestination(icon: const Icon(Icons.list_alt), label: l.tabJournal),
-          NavigationDestination(icon: const Icon(Icons.calculate_outlined), label: l.tabTasks),
-          NavigationDestination(icon: const Icon(Icons.explore_outlined), label: l.tabCompass),
-          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l.tabSettings),
-        ],
+        onDestinationSelected: _go,
+        destinations: [for (final (icon, label) in tabs) NavigationDestination(icon: icon, label: label)],
       ),
     );
   }
+}
+
+/// A full-screen form over the tabs: on a wide window it keeps a readable
+/// width in the middle.
+class FullScreenForm extends StatelessWidget {
+  const FullScreenForm({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => isWide(context)
+      ? ColoredBox(color: Theme.of(context).colorScheme.surface, child: ContentWidth(child: child))
+      : child;
 }

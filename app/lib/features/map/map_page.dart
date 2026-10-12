@@ -11,6 +11,7 @@ import 'package:maplibre_gl/maplibre_gl.dart';
 import '../../core/data/model.dart';
 import '../../core/data/repository.dart';
 import '../../core/labels.dart';
+import '../../core/layout.dart';
 import '../../core/sensors.dart';
 import '../../core/settings.dart';
 import '../../core/widgets/copy_tile.dart';
@@ -65,6 +66,9 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   /// Whether the current style's point source clusters.
   bool _clustered = false;
+
+  /// Object shown in the side panel on a wide window.
+  String? _panelId;
 
   /// Opacity of each user source layer in the current style, by layer id.
   final _sourceOpacity = <String, double>{};
@@ -520,7 +524,11 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   void _onFeatureTap(String id) {
     if (ref.read(mapToolProvider).active) return; // the map click adds a vertex
-    showFeatureSheet(context, id);
+    if (isWide(context)) {
+      setState(() => _panelId = id);
+    } else {
+      showFeatureSheet(context, id);
+    }
   }
 
   Future<void> _onLongPress(LatLng p) async {
@@ -555,6 +563,10 @@ class _MapPageState extends ConsumerState<MapPage> {
     final cam = _camera;
     final center = cam == null ? null : Geodetic(cam.target.latitude, cam.target.longitude);
     final style = _style;
+    final wide = isWide(context);
+    final panelId = wide ? _panelId : null;
+    // Map controls stay clear of the side panel.
+    final panelInset = panelId == null ? 0.0 : sidePanelWidth + 12;
 
     final page = Scaffold(
       body: Stack(
@@ -577,7 +589,7 @@ class _MapPageState extends ConsumerState<MapPage> {
               // never covers it: OSM (ODbL), OpenFreeMap, Protomaps and Copernicus
               // credits come from the style's sources.
               attributionButtonPosition: AttributionButtonPosition.topRight,
-              attributionButtonMargins: const math.Point(16, 110),
+              attributionButtonMargins: math.Point(16 + panelInset, 110),
               myLocationEnabled: _locationAllowed,
               myLocationTrackingMode: _tracking,
               myLocationRenderMode:
@@ -609,7 +621,7 @@ class _MapPageState extends ConsumerState<MapPage> {
           const IgnorePointer(child: Center(child: Icon(Icons.add, size: 28, color: Colors.black54))),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12).copyWith(right: 12 + panelInset),
               child: Column(
                 children: [
                   _TopBar(onSearch: () => showSearchSheet(context)),
@@ -668,14 +680,35 @@ class _MapPageState extends ConsumerState<MapPage> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  if (tool.active)
-                    _toolPanel(tool)
-                  else if (center != null)
-                    _CenterReadout(center: center),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: wide ? 560 : double.infinity),
+                      child: tool.active
+                          ? _toolPanel(tool)
+                          : center != null
+                          ? _CenterReadout(center: center)
+                          : const SizedBox.shrink(),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
+          if (panelId != null)
+            Positioned(
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: sidePanelWidth + 24,
+              child: SafeArea(
+                left: false,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: FeaturePanel(id: panelId, onClose: () => setState(() => _panelId = null)),
+                ),
+              ),
+            ),
         ],
       ),
     );

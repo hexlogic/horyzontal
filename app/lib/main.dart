@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'app.dart';
 import 'core/db/database.dart';
+import 'core/layout.dart';
 import 'core/secure_store.dart';
 import 'core/settings.dart';
 import 'features/security/lock.dart';
@@ -14,6 +15,7 @@ import 'features/security/pin_store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await lockPhoneOrientation();
   const store = PlatformSecureStore();
   final db = await openAppDatabase(store);
   final settings = AppSettings.fromMap(await db.readSettings());
