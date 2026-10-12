@@ -8,20 +8,22 @@ void main() {
 
   test('plane frame: typed grid wins, else default grid, else СК-42', () {
     final typed = PointValue(kyiv, CoordinateSystem.usk2000Gk, zone: 5);
-    expect(PlaneFrame.forPoint(typed, CoordinateSystem.wgs84).system, CoordinateSystem.usk2000Gk);
-    expect(PlaneFrame.forPoint(typed, CoordinateSystem.wgs84).zone, 5);
+    expect(planeFrameFor(typed, CoordinateSystem.wgs84).system, CoordinateSystem.usk2000Gk);
+    expect(planeFrameFor(typed, CoordinateSystem.wgs84).zone, 5);
     const wgs = PointValue(kyiv, CoordinateSystem.wgs84);
     expect(
-      PlaneFrame.forPoint(wgs, CoordinateSystem.usk2000Tm3).system,
+      planeFrameFor(wgs, CoordinateSystem.usk2000Tm3).system,
       CoordinateSystem.usk2000Tm3,
     );
-    final f = PlaneFrame.forPoint(wgs, CoordinateSystem.mgrs);
-    expect((f.system, f.zone), (CoordinateSystem.sk42Gk, 6));
+    final f = planeFrameFor(wgs, CoordinateSystem.mgrs);
+    expect((f.system, f.zone), (CoordinateSystem.utm, 36));
+    final g = planeFrameFor(wgs, CoordinateSystem.sk42);
+    expect((g.system, g.zone), (CoordinateSystem.sk42Gk, 6));
   });
 
   for (final method in ProblemMethod.values) {
     test('$method: direct then inverse gives the input back', () {
-      final frame = PlaneFrame.forPoint(
+      final frame = planeFrameFor(
         const PointValue(kyiv, CoordinateSystem.wgs84),
         CoordinateSystem.sk42Gk,
       );
@@ -34,7 +36,7 @@ void main() {
   }
 
   test('plane and ellipsoid agree up to convergence and scale', () {
-    final frame = PlaneFrame.forPoint(
+    final frame = planeFrameFor(
       const PointValue(kyiv, CoordinateSystem.wgs84),
       CoordinateSystem.sk42Gk,
     );

@@ -9,7 +9,10 @@
 
 import 'dart:math' as math;
 
+import 'datum.dart';
 import 'ellipsoid.dart';
+
+part 'polygon_area.dart';
 
 /// Solution of the direct or inverse geodesic problem. Angles in degrees,
 /// lengths in metres.

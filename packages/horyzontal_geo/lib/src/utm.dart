@@ -59,6 +59,9 @@ UtmPoint utmFromWgs84(Geodetic g, {int? zone}) {
   return UtmPoint(z, utmBand(g.lat), p.x + 500000, g.lat < 0 ? p.y + 10000000 : p.y);
 }
 
+/// Raw projection in [zone] with convergence and point scale.
+TmPoint utmFactors(Geodetic g, int zone) => _tm.forward(g.lat, g.lon, utmCentralMeridian(zone));
+
 /// Hemisphere comes from [UtmPoint.north].
 Geodetic utmToWgs84(UtmPoint p) {
   final (lat, lon) = _tm.inverse(

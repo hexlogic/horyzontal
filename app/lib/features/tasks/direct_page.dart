@@ -33,7 +33,7 @@ class _DirectPageState extends ConsumerState<DirectPage> {
     final l = context.l10n;
     final settings = ref.watch(settingsProvider);
     final start = _start;
-    final frame = start == null ? null : PlaneFrame.forPoint(start, settings.system);
+    final frame = start == null ? null : planeFrameFor(start, settings.system);
     DirectSolution? result;
     if (start != null && frame != null && _distance != null && _angle != null) {
       result = solveDirect(start.wgs, _distance!, _angle!, _method, frame);

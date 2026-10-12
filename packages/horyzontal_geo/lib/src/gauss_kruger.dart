@@ -60,6 +60,9 @@ class GaussKruger {
   /// Meridian convergence (degrees) at [g] in its zone or a forced [zone].
   double convergence(Geodetic g, {int? zone}) => _project(g, zone ?? zoneFor(g.lon)).$2.convergence;
 
+  /// Convergence and point scale at datum geodetic [g].
+  TmPoint factors(Geodetic g, {int? zone}) => _project(g, zone ?? zoneFor(g.lon)).$2;
+
   (GkPoint, TmPoint) _project(Geodetic g, int zone) {
     final p = _proj.forward(g.lat, g.lon, centralMeridian(zone));
     return (GkPoint(zone, p.y, p.x + falseEasting(zone)), p);

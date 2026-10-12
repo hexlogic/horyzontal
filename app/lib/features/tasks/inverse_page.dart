@@ -27,7 +27,7 @@ class _InversePageState extends ConsumerState<InversePage> {
     final l = context.l10n;
     final settings = ref.watch(settingsProvider);
     final a = _a, b = _b;
-    final frame = a == null ? null : PlaneFrame.forPoint(a, settings.system);
+    final frame = a == null ? null : planeFrameFor(a, settings.system);
     final result = a != null && b != null && frame != null
         ? solveInverse(a.wgs, b.wgs, _method, frame)
         : null;

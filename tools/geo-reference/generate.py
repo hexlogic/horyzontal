@@ -7,6 +7,7 @@ GeodTest set. See README.md for versions and how to run.
 """
 import csv
 import gzip
+import math
 import random
 import subprocess
 import sys
@@ -147,6 +148,35 @@ def convergence(rnd):
     write('tm_factors.csv', ['lat', 'lon', 'lon0', 'convergence', 'scale'], rows)
 
 
+def polygons():
+    """Polygon perimeter and area and open path length from geographiclib."""
+    from geographiclib.geodesic import Geodesic
+    g = Geodesic.WGS84
+    rnd = random.Random(20261013)  # own seed: the other fixtures stay as they are
+    rows = []
+    for i in range(40):
+        lat0, lon0 = rnd.uniform(44.5, 52.2), rnd.uniform(22.3, 40.0)
+        radius = 10 ** rnd.uniform(math.log10(50), math.log10(300_000))
+        n = rnd.randint(3, 12)
+        angles = sorted(rnd.uniform(0, 360) for _ in range(n))
+        pts = []
+        for a in angles:
+            d = g.Direct(lat0, lon0, a, radius * rnd.uniform(0.4, 1.0))
+            # Rounded as written, so the reference matches the CSV exactly.
+            pts.append((float(f"{d['lat2']:.10f}"), float(f"{d['lon2']:.10f}")))
+        if i % 2:
+            pts.reverse()
+        poly, line = g.Polygon(False), g.Polygon(True)
+        for lat, lon in pts:
+            poly.AddPoint(lat, lon)
+            line.AddPoint(lat, lon)
+        _, perimeter, area = poly.Compute(False, True)
+        _, length, _ = line.Compute(False, True)
+        rows.append(['|'.join(f'{lat:.10f}:{lon:.10f}' for lat, lon in pts),
+                     f'{perimeter:.6f}', f'{area:.4f}', f'{length:.6f}'])
+    write('polygons.csv', ['vertices', 'perimeter', 'area', 'line_length'], rows)
+
+
 def geodtest():
     with gzip.open(GEODTEST, 'rt') as f:
         lines = f.readlines()
@@ -165,6 +195,7 @@ def main():
     utm_mgrs(rnd)
     convergence(rnd)
     geodtest()
+    polygons()
 
 
 if __name__ == '__main__':

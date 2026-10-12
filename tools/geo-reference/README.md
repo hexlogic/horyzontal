@@ -14,13 +14,14 @@
 | `geodtest_subset.dat` | каждая 20-я строка GeodTest-short C. F. F. Karney ([doi:10.5281/zenodo.32156](https://doi.org/10.5281/zenodo.32156)) |
 | `WMM2025_TEST_VALUES.txt` | официальные тестовые значения NOAA NCEI |
 | `geoid.csv` | PROJ `vgridshift` по `us_nga_egm08_25.tif` |
+| `polygons.csv` | `geographiclib` (`Geodesic.Polygon`): периметр, площадь, длина ломаной для 40 полигонов по Украине |
 
 Использовались PROJ 9.9.0, `geographiclib` 2.1, `mgrs` 1.5.4.
 
 ## Запуск
 
 ```bash
-python3 -m venv /tmp/georef && /tmp/georef/bin/pip install mgrs packaging
+python3 -m venv /tmp/georef && /tmp/georef/bin/pip install mgrs packaging geographiclib==2.1
 ```
 
 ```bash

@@ -5,26 +5,10 @@ import '../../core/widgets/point_input.dart';
 enum ProblemMethod { plane, ellipsoid }
 
 /// Grid and zone a plane problem is solved in: the grid the first point was
-/// typed in, else the default system's grid, else СК-42.
-class PlaneFrame {
-  const PlaneFrame(this.system, this.zone);
-  final CoordinateSystem system;
-  final int zone;
-
-  GaussKruger get grid => system.grid!;
-
-  factory PlaneFrame.forPoint(PointValue p, CoordinateSystem defaultSystem) {
-    if (p.system.isGrid && p.zone != null) return PlaneFrame(p.system, p.zone!);
-    final s = defaultSystem.isGrid ? defaultSystem : CoordinateSystem.sk42Gk;
-    return PlaneFrame(s, s.grid!.zoneFor(s.datum.fromWgs84Geodetic(p.wgs).lon));
-  }
-
-  PlanePoint project(Geodetic wgs) {
-    final p = grid.fromWgs84(wgs, zone: zone);
-    return PlanePoint(p.x, p.y);
-  }
-
-  Geodetic unproject(PlanePoint p) => grid.toWgs84(GkPoint(zone, p.x, p.y));
+/// typed in (MGRS counts as UTM), else the default system's grid, else СК-42.
+PlaneFrame planeFrameFor(PointValue p, CoordinateSystem defaultSystem) {
+  final typed = p.system.canBePlane || p.system == CoordinateSystem.mgrs;
+  return PlaneFrame.auto(p.wgs, typed ? p.system : defaultSystem, zone: typed ? p.zone : null);
 }
 
 class DirectSolution {
