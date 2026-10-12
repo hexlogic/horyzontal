@@ -1,0 +1,82 @@
+{
+  "milsymbol": "3.0.4",
+  "milsymbolSrcSha256": "12ec472f630b8f655826b38ce00f1190b477bf86573b12f3b8bdc7522b7f2020",
+  "modules": [
+    "common",
+    "landunit",
+    "landcivilian",
+    "landequipment",
+    "landinstallation",
+    "activites",
+    "dismountedindividual"
+  ],
+  "files": [
+    {
+      "name": "land.jsonl.gz",
+      "sets": [
+        "10",
+        "11",
+        "15",
+        "20",
+        "27",
+        "40"
+      ],
+      "count": 3975,
+      "errors": 0
+    },
+    {
+      "name": "land-modifiers.jsonl.gz",
+      "sets": [
+        "10",
+        "11",
+        "15",
+        "20",
+        "27",
+        "40"
+      ],
+      "count": 1085,
+      "errors": 0
+    },
+    {
+      "name": "land-scaled.jsonl.gz",
+      "sets": [
+        "15",
+        "27"
+      ],
+      "count": 843,
+      "errors": 0
+    },
+    {
+      "name": "core-frames.jsonl.gz",
+      "sets": [
+        "core"
+      ],
+      "count": 651,
+      "errors": 0
+    },
+    {
+      "name": "core-amplifiers.jsonl.gz",
+      "sets": [
+        "core"
+      ],
+      "count": 564,
+      "errors": 0
+    },
+    {
+      "name": "core-options.jsonl.gz",
+      "sets": [
+        "core"
+      ],
+      "count": 1008,
+      "errors": 0
+    },
+    {
+      "name": "core-invalid.jsonl.gz",
+      "sets": [
+        "core"
+      ],
+      "count": 52,
+      "errors": 0
+    }
+  ]
+}
