@@ -14,7 +14,8 @@
     "space",
     "spacemissile",
     "sea",
-    "subsurface"
+    "subsurface",
+    "minewarfare"
   ],
   "files": [
     {
@@ -207,6 +208,30 @@
         "35"
       ],
       "count": 155,
+      "errors": 0
+    },
+    {
+      "name": "minewarfare.jsonl.gz",
+      "sets": [
+        "36"
+      ],
+      "count": 325,
+      "errors": 0
+    },
+    {
+      "name": "minewarfare-styles.jsonl.gz",
+      "sets": [
+        "36"
+      ],
+      "count": 65,
+      "errors": 0
+    },
+    {
+      "name": "minewarfare-modifiers.jsonl.gz",
+      "sets": [
+        "36"
+      ],
+      "count": 116,
       "errors": 0
     },
     {

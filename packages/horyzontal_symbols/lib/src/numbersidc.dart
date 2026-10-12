@@ -17,6 +17,7 @@ import 'numbersidc/sidc/landcivilian.dart';
 import 'numbersidc/sidc/landequipment.dart';
 import 'numbersidc/sidc/landinstallation.dart';
 import 'numbersidc/sidc/landunit.dart';
+import 'numbersidc/sidc/minewarfare.dart';
 import 'numbersidc/sidc/sea.dart';
 import 'numbersidc/sidc/space.dart';
 import 'numbersidc/sidc/spacemissile.dart';
@@ -131,6 +132,14 @@ const subsurface = SymbolSetModule(
   icons: subsurfaceIcons,
 );
 
+/// Symbol set 36, mine warfare (MEDAL or alternate MEDAL icons).
+const minewarfare = SymbolSetModule(
+  name: 'minewarfare',
+  symbolSets: ['36'],
+  iconParts: subsurfaceIconParts,
+  icons: minewarfareIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
@@ -143,7 +152,7 @@ const List<SymbolSetModule> app6d = [
   landinstallation,
   sea,
   subsurface,
-  // minewarfare,
+  minewarfare,
   activites,
   // signalsintelligence,
   dismountedindividual,
@@ -162,7 +171,7 @@ const List<SymbolSetModule> std2525d = [
   landinstallation,
   sea,
   subsurface,
-  // minewarfare,
+  minewarfare,
   activites,
   // signalsintelligence,
   // cyberspace,
@@ -182,7 +191,7 @@ const List<SymbolSetModule> std2525e = [
   landinstallation,
   sea,
   subsurface,
-  // minewarfare,
+  minewarfare,
   activites,
   // signalsintelligence,
   dismountedindividual,
