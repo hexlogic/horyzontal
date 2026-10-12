@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Map pipeline outputs and caches (packs go to GitHub Releases, not git)
+tools/map-pipeline/out/
+tools/map-pipeline/style/node_modules/

@@ -1,0 +1,8 @@
+{
+  "name": "horyzontal-map-style",
+  "private": true,
+  "type": "module",
+  "description": "Generates the offline MapLibre style for Protomaps basemap packs",
+  "scripts": { "generate": "node generate.mjs" },
+  "dependencies": { "@protomaps/basemaps": "5.7.2" }
+}
