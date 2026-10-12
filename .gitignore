@@ -3,6 +3,11 @@
 .vscode/
 *.iml
 
+# Dart / Flutter
+.dart_tool/
+build/
+pubspec_overrides.yaml
+
 # Map pipeline outputs and caches (packs go to GitHub Releases, not git)
 tools/map-pipeline/out/
 tools/map-pipeline/style/node_modules/

@@ -1,0 +1,16 @@
+name: horyzontal_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+workspace:
+  - app
+  - packages/horyzontal_geo
+
+# The app database is encrypted: package:sqlite3 bundles SQLCipher instead of
+# plain SQLite (https://github.com/simolus3/sqlite3.dart/blob/main/sqlite3/doc/hook.md).
+hooks:
+  user_defines:
+    sqlite3:
+      source: sqlcipher
