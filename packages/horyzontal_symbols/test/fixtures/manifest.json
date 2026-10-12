@@ -10,7 +10,8 @@
     "activites",
     "dismountedindividual",
     "air",
-    "airmissile"
+    "airmissile",
+    "space"
   ],
   "files": [
     {
@@ -78,6 +79,22 @@
         "02"
       ],
       "count": 131,
+      "errors": 0
+    },
+    {
+      "name": "space.jsonl.gz",
+      "sets": [
+        "05"
+      ],
+      "count": 180,
+      "errors": 0
+    },
+    {
+      "name": "space-modifiers.jsonl.gz",
+      "sets": [
+        "05"
+      ],
+      "count": 135,
       "errors": 0
     },
     {
