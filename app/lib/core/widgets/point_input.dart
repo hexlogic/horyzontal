@@ -55,6 +55,7 @@ class _PointInputState extends ConsumerState<PointInput> {
       final wgs = parseCoordinates(text, _system, zone: zone);
       int? gridZone;
       if (_system.isGrid) gridZone = parseGrid(text, _system, zone: zone).zone;
+      if (_system == CoordinateSystem.utm) gridZone = parseUtm(text).zone;
       setState(() => _error = null);
       widget.onChanged(PointValue(wgs, _system, zone: gridZone));
     } on CoordinateParseException catch (e) {

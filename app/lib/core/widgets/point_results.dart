@@ -24,14 +24,17 @@ String? _safeFormat(Geodetic wgs, CoordinateSystem s, GeoFormat f, {int? zone}) 
 /// [wgs] in every coordinate system, with the neighbouring 6° zone when the
 /// point is within a degree of a zone edge (adjacent map sheets).
 class PointResults extends ConsumerWidget {
-  const PointResults({super.key, required this.wgs});
+  const PointResults({super.key, required this.wgs, this.geoFormat});
 
   final Geodetic wgs;
+
+  /// Overrides the geographic format from the settings.
+  final GeoFormat? geoFormat;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    final geoFormat = ref.watch(settingsProvider).geoFormat;
+    final geoFormat = this.geoFormat ?? ref.watch(settingsProvider).geoFormat;
     final tiles = <Widget>[];
     for (final s in CoordinateSystem.values) {
       final v = _safeFormat(wgs, s, geoFormat);

@@ -20,6 +20,7 @@ class InversePage extends ConsumerStatefulWidget {
 class _InversePageState extends ConsumerState<InversePage> {
   ProblemMethod _method = ProblemMethod.plane;
   PointValue? _a, _b;
+  PlaneFrame? _frame;
   late AngleFormat _outFormat = ref.read(settingsProvider).angleOutput;
 
   @override
@@ -27,12 +28,11 @@ class _InversePageState extends ConsumerState<InversePage> {
     final l = context.l10n;
     final settings = ref.watch(settingsProvider);
     final a = _a, b = _b;
-    final frame = a == null ? null : planeFrameFor(a, settings.system);
+    final frame = _frame ?? (a == null ? null : planeFrameFor(a, settings.system));
     final result = a != null && b != null && frame != null
         ? solveInverse(a.wgs, b.wgs, _method, frame)
         : null;
     final plane = _method == ProblemMethod.plane;
-    String angle(double d) => formatAngle(d, _outFormat);
 
     return Scaffold(
       appBar: AppBar(title: Text(l.taskInverse)),
@@ -40,7 +40,12 @@ class _InversePageState extends ConsumerState<InversePage> {
         padding: const EdgeInsets.all(16),
         children: [
           MethodSelector(value: _method, onChanged: (m) => setState(() => _method = m)),
-          FrameNote(method: _method, frame: frame),
+          FrameSelector(
+            method: _method,
+            frame: frame,
+            auto: _frame == null,
+            onChanged: (f) => setState(() => _frame = f),
+          ),
           PointInput(label: l.point1, onChanged: (v) => setState(() => _a = v)),
           const SizedBox(height: 16),
           PointInput(label: l.point2, onChanged: (v) => setState(() => _b = v)),
@@ -50,17 +55,21 @@ class _InversePageState extends ConsumerState<InversePage> {
               value: _outFormat,
               onChanged: (f) => setState(() => _outFormat = f),
             ),
-            CopyTile(label: l.distance, value: formatDistance(l, result.distance)),
-            CopyTile(label: plane ? l.gridBearing : l.azimuth, value: angle(result.angle)),
             CopyTile(
-              label: plane ? l.backGridBearing : l.backAzimuth,
-              value: angle(result.backAngle),
+              label: l.distance,
+              value: formatDistance(l, plane ? result.gridDistance : result.ellipsoidDistance),
             ),
-            if (!plane)
-              CopyTile(
-                label: l.magneticAzimuth,
-                value: angle(result.angle - declinationAt(a!.wgs)),
-              ),
+            AngleSetTiles(set: result.forward, format: _outFormat),
+            AngleSetTiles(set: result.back, format: _outFormat, back: true),
+            AngleContextTiles(at: result.atA, format: _outFormat),
+            CopyTile(label: l.gridDistance, value: formatDistance(l, result.gridDistance), dense: true),
+            CopyTile(
+              label: l.ellipsoidDistance,
+              value: formatDistance(l, result.ellipsoidDistance),
+              dense: true,
+            ),
+            if (result.ellipsoidDistance > 0)
+              CopyTile(label: l.scaleFactor, value: result.scale.toStringAsFixed(6), dense: true),
           ],
         ],
       ),

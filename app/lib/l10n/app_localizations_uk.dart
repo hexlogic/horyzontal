@@ -118,7 +118,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get errAngle => 'Не вдалося розпізнати кут';
 
   @override
-  String get errDistance => 'Вкажіть відстань у метрах';
+  String get errDistance => 'Вкажіть відстань';
 
   @override
   String get errLocation => 'Немає доступу до геолокації';
@@ -210,6 +210,52 @@ class AppLocalizationsUk extends AppLocalizations {
   String get magneticAzimuth => 'Магнітний азимут';
 
   @override
+  String get trueAzimuth => 'Істинний азимут';
+
+  @override
+  String get backTrueAzimuth => 'Зворотний істинний азимут';
+
+  @override
+  String get backMagneticAzimuth => 'Зворотний магнітний азимут';
+
+  @override
+  String get angleKind => 'Вид кута';
+
+  @override
+  String get directionCorrection => 'Поправка напрямку';
+
+  @override
+  String get planeFrame => 'Прямокутна сітка';
+
+  @override
+  String get frameAuto => 'Автоматично';
+
+  @override
+  String get frameAutoNote => 'авто';
+
+  @override
+  String get gridDistance => 'Відстань на площині';
+
+  @override
+  String get ellipsoidDistance => 'Відстань на еліпсоїді';
+
+  @override
+  String get scaleFactor => 'Масштаб сітки';
+
+  @override
+  String get groundDistance => 'Відстань на місцевості';
+
+  @override
+  String get groundDistanceHint =>
+      'Переводиться на площину з урахуванням масштабу сітки';
+
+  @override
+  String get unitM => 'м';
+
+  @override
+  String get unitKm => 'км';
+
+  @override
   String get method => 'Метод';
 
   @override
@@ -224,8 +270,7 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
-  String get ellipsoidNote =>
-      'Геодезична лінія на еліпсоїді WGS 84, азимути від істинної півночі';
+  String get ellipsoidNote => 'Геодезична лінія на еліпсоїді WGS 84';
 
   @override
   String metres(String value) {

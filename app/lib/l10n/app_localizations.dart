@@ -313,7 +313,7 @@ abstract class AppLocalizations {
   /// No description provided for @errDistance.
   ///
   /// In uk, this message translates to:
-  /// **'Вкажіть відстань у метрах'**
+  /// **'Вкажіть відстань'**
   String get errDistance;
 
   /// No description provided for @errLocation.
@@ -490,6 +490,96 @@ abstract class AppLocalizations {
   /// **'Магнітний азимут'**
   String get magneticAzimuth;
 
+  /// No description provided for @trueAzimuth.
+  ///
+  /// In uk, this message translates to:
+  /// **'Істинний азимут'**
+  String get trueAzimuth;
+
+  /// No description provided for @backTrueAzimuth.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зворотний істинний азимут'**
+  String get backTrueAzimuth;
+
+  /// No description provided for @backMagneticAzimuth.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зворотний магнітний азимут'**
+  String get backMagneticAzimuth;
+
+  /// No description provided for @angleKind.
+  ///
+  /// In uk, this message translates to:
+  /// **'Вид кута'**
+  String get angleKind;
+
+  /// No description provided for @directionCorrection.
+  ///
+  /// In uk, this message translates to:
+  /// **'Поправка напрямку'**
+  String get directionCorrection;
+
+  /// No description provided for @planeFrame.
+  ///
+  /// In uk, this message translates to:
+  /// **'Прямокутна сітка'**
+  String get planeFrame;
+
+  /// No description provided for @frameAuto.
+  ///
+  /// In uk, this message translates to:
+  /// **'Автоматично'**
+  String get frameAuto;
+
+  /// No description provided for @frameAutoNote.
+  ///
+  /// In uk, this message translates to:
+  /// **'авто'**
+  String get frameAutoNote;
+
+  /// No description provided for @gridDistance.
+  ///
+  /// In uk, this message translates to:
+  /// **'Відстань на площині'**
+  String get gridDistance;
+
+  /// No description provided for @ellipsoidDistance.
+  ///
+  /// In uk, this message translates to:
+  /// **'Відстань на еліпсоїді'**
+  String get ellipsoidDistance;
+
+  /// No description provided for @scaleFactor.
+  ///
+  /// In uk, this message translates to:
+  /// **'Масштаб сітки'**
+  String get scaleFactor;
+
+  /// No description provided for @groundDistance.
+  ///
+  /// In uk, this message translates to:
+  /// **'Відстань на місцевості'**
+  String get groundDistance;
+
+  /// No description provided for @groundDistanceHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Переводиться на площину з урахуванням масштабу сітки'**
+  String get groundDistanceHint;
+
+  /// No description provided for @unitM.
+  ///
+  /// In uk, this message translates to:
+  /// **'м'**
+  String get unitM;
+
+  /// No description provided for @unitKm.
+  ///
+  /// In uk, this message translates to:
+  /// **'км'**
+  String get unitKm;
+
   /// No description provided for @method.
   ///
   /// In uk, this message translates to:
@@ -517,7 +607,7 @@ abstract class AppLocalizations {
   /// No description provided for @ellipsoidNote.
   ///
   /// In uk, this message translates to:
-  /// **'Геодезична лінія на еліпсоїді WGS 84, азимути від істинної півночі'**
+  /// **'Геодезична лінія на еліпсоїді WGS 84'**
   String get ellipsoidNote;
 
   /// No description provided for @metres.
