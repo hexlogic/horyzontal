@@ -136,7 +136,7 @@ class FeatureDetails extends ConsumerWidget {
           if (f.radius != null) CopyTile(label: l.radius, value: l.metres(f.radius!.toStringAsFixed(0))),
           PointResults(wgs: f.position),
         ] else
-          ListTile(title: Text(l.vertices(f.vertices.length))),
+          _ShapeMetrics(f),
         if (f.description.isNotEmpty)
           ListTile(title: Text(l.description, style: theme.textTheme.labelMedium), subtitle: Text(f.description)),
         ListTile(
@@ -205,6 +205,56 @@ class FeatureDetails extends ConsumerWidget {
       ),
     );
     if (pick != null) await launchUrl(pick);
+  }
+}
+
+/// Length or perimeter and area of a polyline or polygon, and each vertex
+/// with the edge leaving it and the angle there.
+class _ShapeMetrics extends ConsumerWidget {
+  const _ShapeMetrics(this.f);
+  final MapFeature f;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final s = ref.watch(settingsProvider);
+    final closed = f.kind == FeatureKind.polygon;
+    final m = pathMetrics(f.vertices, closed: closed);
+    final area = closed && f.vertices.length >= 3 ? Geodesic.wgs84.polygon(f.vertices).area : null;
+    final angles = closed ? m.interiorAngles : m.vertexAngles;
+    String angle(double d) => formatAngle(d, s.angleOutput);
+    String point(Geodetic g) {
+      try {
+        return formatPoint(g, s.system, s.geoFormat);
+      } on RangeError {
+        return formatPoint(g, CoordinateSystem.wgs84, s.geoFormat);
+      }
+    }
+
+    return Column(
+      children: [
+        CopyTile(label: closed ? l.perimeter : l.length, value: formatDistance(l, m.length)),
+        if (area != null) CopyTile(label: l.area, value: formatArea(l, area)),
+        ExpansionTile(
+          title: Text(l.vertices(f.vertices.length)),
+          children: [
+            for (final (i, v) in f.vertices.indexed)
+              ListTile(
+                dense: true,
+                leading: CircleAvatar(radius: 14, child: Text('${i + 1}')),
+                title: SelectableText(point(v)),
+                subtitle: Text([
+                  if (i < m.segments.length)
+                    '→ ${(i + 1) % f.vertices.length + 1}: ${formatDistance(l, m.segments[i].length)} · '
+                        '${l.azimuth.toLowerCase()} ${angle(m.segments[i].azimuth1)}',
+                  if (angles != null && angles[i] != null)
+                    '${closed ? l.interiorAngle : l.vertexAngle}: ${angle(angles[i]!)}',
+                ].join('\n')),
+              ),
+          ],
+        ),
+      ],
+    );
   }
 }
 

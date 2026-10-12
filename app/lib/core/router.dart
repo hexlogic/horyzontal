@@ -23,6 +23,7 @@ import '../features/tasks/converter_page.dart';
 import '../features/tasks/direct_page.dart';
 import '../features/tasks/inverse_page.dart';
 import '../features/tasks/tasks_page.dart';
+import 'data/model.dart';
 import 'labels.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -56,6 +57,15 @@ GoRouter buildRouter() => GoRouter(
                         double.parse(s.uri.queryParameters['lat']!),
                         double.parse(s.uri.queryParameters['lon']!),
                       ),
+                    ),
+                  ),
+                  // A polyline or polygon drawn with a map tool: vertices in extra.
+                  GoRoute(
+                    path: 'shape',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (_, s) => FeatureEditorPage(
+                      kind: FeatureKind.values.byName(s.uri.queryParameters['kind']!),
+                      vertices: s.extra! as List<Geodetic>,
                     ),
                   ),
                   GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),

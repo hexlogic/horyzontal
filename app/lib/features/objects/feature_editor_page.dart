@@ -13,12 +13,21 @@ import '../../core/widgets/point_input.dart';
 import '../layers/layer_picker.dart';
 import 'symbol_icons.dart';
 
-/// Creates a point at [initial] or edits the object [id].
+/// Creates a point at [initial], a polyline or polygon through [vertices],
+/// or edits the object [id]. Pops true once saved.
 class FeatureEditorPage extends ConsumerStatefulWidget {
-  const FeatureEditorPage({super.key, this.id, this.initial});
+  const FeatureEditorPage({
+    super.key,
+    this.id,
+    this.initial,
+    this.kind = FeatureKind.point,
+    this.vertices = const [],
+  });
 
   final String? id;
   final Geodetic? initial;
+  final FeatureKind kind;
+  final List<Geodetic> vertices;
 
   @override
   ConsumerState<FeatureEditorPage> createState() => _FeatureEditorPageState();
@@ -36,7 +45,8 @@ class _FeatureEditorPageState extends ConsumerState<FeatureEditorPage> {
   String? _sidc;
   bool _loading = true;
 
-  bool get _isPoint => _original == null || _original!.kind == FeatureKind.point;
+  FeatureKind get _kind => _original?.kind ?? widget.kind;
+  bool get _isPoint => _kind == FeatureKind.point;
 
   @override
   void initState() {
@@ -108,12 +118,12 @@ class _FeatureEditorPageState extends ConsumerState<FeatureEditorPage> {
     final radius = double.tryParse(_radius.text.replaceAll(',', '.'));
     final now = repo.now();
     final o = _original;
-    final vertices = _isPoint ? [Geodetic(pos!.lat, pos.lon, alt)] : o!.vertices;
+    final vertices = _isPoint ? [Geodetic(pos!.lat, pos.lon, alt)] : o?.vertices ?? widget.vertices;
     final f = o == null
         ? MapFeature(
             id: newId(),
             layerId: layer.id,
-            kind: FeatureKind.point,
+            kind: _kind,
             vertices: vertices,
             name: _name.text.trim(),
             description: _description.text.trim(),
@@ -133,7 +143,7 @@ class _FeatureEditorPageState extends ConsumerState<FeatureEditorPage> {
             radius: () => radius != null && radius > 0 ? radius : null,
           );
     await repo.saveFeature(f);
-    if (mounted) context.pop();
+    if (mounted) context.pop(true);
   }
 
   @override
@@ -144,7 +154,12 @@ class _FeatureEditorPageState extends ConsumerState<FeatureEditorPage> {
     final numbers = [FilteringTextInputFormatter.allow(RegExp(r'[\d.,-]'))];
     return Scaffold(
       appBar: AppBar(
-        title: Text(_original == null ? l.newPoint : l.edit),
+        title: Text(switch ((_original, _kind)) {
+          (null, FeatureKind.point) => l.newPoint,
+          (null, FeatureKind.polyline) => l.newPolyline,
+          (null, FeatureKind.polygon) => l.newPolygon,
+          _ => l.edit,
+        }),
         actions: [TextButton(onPressed: _save, child: Text(l.save))],
       ),
       body: ListView(

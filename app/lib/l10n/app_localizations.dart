@@ -1360,6 +1360,24 @@ abstract class AppLocalizations {
   /// **'Нова точка'**
   String get newPoint;
 
+  /// No description provided for @newPolyline.
+  ///
+  /// In uk, this message translates to:
+  /// **'Нова полілінія'**
+  String get newPolyline;
+
+  /// No description provided for @newPolygon.
+  ///
+  /// In uk, this message translates to:
+  /// **'Новий полігон'**
+  String get newPolygon;
+
+  /// No description provided for @interiorAngle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Внутрішній кут'**
+  String get interiorAngle;
+
   /// No description provided for @noLayers.
   ///
   /// In uk, this message translates to:

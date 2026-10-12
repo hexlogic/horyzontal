@@ -680,6 +680,15 @@ class AppLocalizationsUk extends AppLocalizations {
   String get newPoint => 'Нова точка';
 
   @override
+  String get newPolyline => 'Нова полілінія';
+
+  @override
+  String get newPolygon => 'Новий полігон';
+
+  @override
+  String get interiorAngle => 'Внутрішній кут';
+
+  @override
   String get noLayers => 'Шарів ще немає';
 
   @override
