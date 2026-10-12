@@ -157,7 +157,7 @@ Flutter-приложение с ядром геодезии в отдельно�
 - **Wi-Fi обмен:** на Android 13+ нужно разрешение NEARBY_WIFI_DEVICES, на старых версиях включенная геолокация; на iOS capability Hotspot Configuration. Поведение разных прошивок Android проверяем на 3-4 реальных устройствах.
 - **GitHub Releases:** лимит 2 ГБ на файл, большие области делим на части.
 - **Сканер QR:** закрыто на этапе 3. mobile_scanner на Android тянул Google ML Kit, а тот отправляет в Google метрики использования ([раскрытие данных ML Kit](https://developers.google.com/ml-kit/android-data-disclosure)); сканер заменен на ZXing (flutter_zxing), CI не дает ML Kit вернуться.
-- **F-Droid и Google Play Services:** geolocator на Android тянет play-services-location. Телеметрии в нем нет, но для F-Droid нужен вариант без Play Services.
+- **F-Droid и Google Play Services:** geolocator на Android тянет play-services-location, несвободный компонент Google Play Services; что он отправляет, не проверялось. Для F-Droid нужен вариант без Play Services.
 - **Магнитный компас** на телефонах дает ошибку в несколько градусов; в интерфейсе показываем точность датчика и предупреждаем о калибровке.
 
 ## Источники

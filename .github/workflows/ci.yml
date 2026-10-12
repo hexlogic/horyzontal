@@ -70,3 +70,9 @@ jobs:
             echo "ML Kit native code or models in the APK"
             exit 1
           fi
+      - name: No microphone or storage permissions
+        run: |
+          if grep -E 'RECORD_AUDIO|_EXTERNAL_STORAGE' app/build/app/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml; then
+            echo "A plugin brought in a permission the app does not need"
+            exit 1
+          fi
