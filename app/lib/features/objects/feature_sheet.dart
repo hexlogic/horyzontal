@@ -133,7 +133,7 @@ class FeatureDetails extends ConsumerWidget {
         if (distance != null) CopyTile(label: l.distanceAzimuthFromMe, value: distance),
         if (f.kind == FeatureKind.point) ...[
           if (f.position.h != 0) CopyTile(label: l.altitude, value: l.metres(f.position.h.toStringAsFixed(0))),
-          if (f.radius != null) CopyTile(label: l.radius, value: formatDistance(l, f.radius!)),
+          if (f.radius != null) CopyTile(label: l.radius, value: l.metres(f.radius!.toStringAsFixed(0))),
           PointResults(wgs: f.position),
         ] else
           ListTile(title: Text(l.vertices(f.vertices.length))),
