@@ -15,7 +15,7 @@ import 'common.dart';
 // every element names its layer, so the app splits them again while other
 // apps see one file.
 
-const hrzGpxNs = 'https://horyzontal.app/xmlns/gpx/1';
+const hrzGpxNs = 'https://github.com/hexlogic/horyzontal/xmlns/gpx/1';
 const osmandNs = 'https://osmand.net';
 const _gpxNs = 'http://www.topografix.com/GPX/1/1';
 

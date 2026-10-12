@@ -18,6 +18,7 @@ allowed=(
   www.opengis.net
   www.topografix.com
   www.google.com
+  osmand.net
 )
 
 found=$(grep -rhoE 'https?://[A-Za-z0-9.-]+' app/lib packages/*/lib \
