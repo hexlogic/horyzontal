@@ -15,8 +15,9 @@
 | `WMM2025_TEST_VALUES.txt` | официальные тестовые значения NOAA NCEI |
 | `geoid.csv` | PROJ `vgridshift` по `us_nga_egm08_25.tif` |
 | `polygons.csv` | `geographiclib` (`Geodesic.Polygon`): периметр, площадь, длина ломаной для 40 полигонов по Украине |
+| `astro_positions.csv`, `astro_events.csv` | `skyfield` с эфемеридами JPL DE440: топоцентрические азимут и высота Солнца и Луны (без рефракции), освещенность Луны; восходы, заходы, кульминации и сумерки (`almanac.find_risings`, `find_settings`, `find_transits`). Время — UT1 |
 
-Использовались PROJ 9.9.0, `geographiclib` 2.1, `mgrs` 1.5.4.
+Использовались PROJ 9.9.0, `geographiclib` 2.1, `mgrs` 1.5.4, `skyfield` 1.55, DE440.
 
 ## Запуск
 
@@ -31,6 +32,24 @@ curl -L -o /tmp/GeodTest-short.dat.gz https://sourceforge.net/projects/geographi
 ```bash
 /tmp/georef/bin/python -I tools/geo-reference/generate.py packages/horyzontal_geo/test/fixtures /tmp/GeodTest-short.dat.gz
 ```
+
+Солнце и Луна (отдельный скрипт, эфемериды DE440 — 115 МБ, 1550–2650 годы):
+
+```bash
+/tmp/georef/bin/pip install skyfield==1.55
+```
+
+```bash
+curl -L -o /tmp/de440.bsp https://ssd.jpl.nasa.gov/ftp/eph/planets/bsp/de440.bsp
+```
+
+```bash
+/tmp/georef/bin/python -I tools/geo-reference/astro.py packages/horyzontal_geo/test/fixtures /tmp/de440.bsp
+```
+
+Время берется в UT1, а не в UTC skyfield: у skyfield нет високосных секунд до 1972 года и после
+последней объявленной, поэтому его UTC за века уходит от вращения Земли на минуты. Гражданское
+время держится в пределах секунды от UT1.
 
 Сетка геоида для приложения и ее проверочные точки:
 

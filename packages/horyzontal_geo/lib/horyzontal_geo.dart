@@ -1,8 +1,11 @@
-/// Coordinate systems, geodesy, angles and the magnetic model for Horyzontal.
+/// Coordinate systems, geodesy, angles, the magnetic model and the Sun and
+/// the Moon for Horyzontal.
 /// Pure Dart, no Flutter.
 library;
 
 export 'src/angle.dart';
+export 'src/astro/sky.dart';
+export 'src/astro/time.dart' show deltaT, fromJulianDay, julianDay;
 export 'src/coordinates.dart';
 export 'src/datum.dart';
 export 'src/deviation.dart';
