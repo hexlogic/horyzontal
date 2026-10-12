@@ -712,11 +712,16 @@ class _MapPageState extends ConsumerState<MapPage> {
         ],
       ),
     );
-    // Back closes the tool instead of leaving the map.
+    // Back closes the side panel or the tool instead of leaving the map.
     return PopScope(
-      canPop: !tool.active,
+      canPop: !tool.active && panelId == null,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) ref.read(mapToolProvider.notifier).close();
+        if (didPop) return;
+        if (panelId != null) {
+          setState(() => _panelId = null);
+        } else {
+          ref.read(mapToolProvider.notifier).close();
+        }
       },
       child: page,
     );

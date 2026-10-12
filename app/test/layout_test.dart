@@ -29,5 +29,8 @@ void main() {
     await tester.tap(find.text('Налаштування'));
     await tester.pumpAndSettle();
     expect(find.text('Джерела мапи'), findsOneWidget);
+    // The shell itself is not narrowed, so the map branch keeps the window.
+    final shellBody = find.byWidgetPredicate((w) => w.runtimeType.toString() == 'StatefulNavigationShell');
+    expect(tester.getSize(shellBody).width, greaterThan(1000));
   });
 }

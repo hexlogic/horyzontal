@@ -48,7 +48,7 @@ GoRouter buildRouter({String initialLocation = '/map'}) => GoRouter(
           builder: (_, s) => FullScreenForm(child: SymbolPickerPage(initial: s.uri.queryParameters['sidc'])),
         ),
         StatefulShellRoute.indexedStack(
-          builder: (context, state, shell) => _Shell(shell: shell, onMap: state.uri.path == '/map'),
+          builder: (context, state, shell) => _Shell(shell: shell),
           branches: [
             StatefulShellBranch(routes: [
               GoRoute(
@@ -91,12 +91,12 @@ GoRouter buildRouter({String initialLocation = '/map'}) => GoRouter(
                       return LosPage(a: ab[0], b: ab[1]);
                     },
                   ),
-                  GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
+                  GoRoute(path: 'packs', builder: (_, _) => const FullScreenForm(child: PacksPage())),
                   GoRoute(
                     path: 'sources',
-                    builder: (_, _) => const SourcesPage(base: '/map/sources'),
+                    builder: (_, _) => const FullScreenForm(child: SourcesPage(base: '/map/sources')),
                     routes: [
-                      GoRoute(path: 'edit', builder: (_, s) => SourceEditPage(id: s.uri.queryParameters['id'])),
+                      GoRoute(path: 'edit', builder: (_, s) => FullScreenForm(child: SourceEditPage(id: s.uri.queryParameters['id']))),
                     ],
                   ),
                 ],
@@ -105,11 +105,11 @@ GoRouter buildRouter({String initialLocation = '/map'}) => GoRouter(
             StatefulShellBranch(routes: [
               GoRoute(
                 path: '/journal',
-                builder: (_, _) => const JournalPage(),
+                builder: (_, _) => const FullScreenForm(child: JournalPage()),
                 routes: [
                   GoRoute(
                     path: 'object/:id',
-                    builder: (_, s) => FeaturePage(id: s.pathParameters['id']!),
+                    builder: (_, s) => FullScreenForm(child: FeaturePage(id: s.pathParameters['id']!)),
                     routes: [
                       GoRoute(
                         path: 'edit',
@@ -120,16 +120,16 @@ GoRouter buildRouter({String initialLocation = '/map'}) => GoRouter(
                   ),
                   GoRoute(
                     path: 'layers',
-                    builder: (_, _) => const LayersPage(),
+                    builder: (_, _) => const FullScreenForm(child: LayersPage()),
                     routes: [
-                      GoRoute(path: ':id', builder: (_, s) => LayerPage(id: s.pathParameters['id']!)),
+                      GoRoute(path: ':id', builder: (_, s) => FullScreenForm(child: LayerPage(id: s.pathParameters['id']!))),
                     ],
                   ),
-                  GoRoute(path: 'scan', builder: (_, _) => const ScanPage()),
+                  GoRoute(path: 'scan', builder: (_, _) => const FullScreenForm(child: ScanPage())),
                   GoRoute(
                     path: 'transfer',
-                    builder: (_, s) => TransferPage(
-                      layerIds: s.uri.queryParameters['layers']?.split(',') ?? const [],
+                    builder: (_, s) => FullScreenForm(
+                      child: TransferPage(layerIds: s.uri.queryParameters['layers']?.split(',') ?? const []),
                     ),
                   ),
                 ],
@@ -138,39 +138,39 @@ GoRouter buildRouter({String initialLocation = '/map'}) => GoRouter(
             StatefulShellBranch(routes: [
               GoRoute(
                 path: '/tasks',
-                builder: (_, _) => const TasksPage(),
+                builder: (_, _) => const FullScreenForm(child: TasksPage()),
                 routes: [
-                  GoRoute(path: 'converter', builder: (_, _) => const ConverterPage()),
-                  GoRoute(path: 'angles', builder: (_, _) => const AnglesPage()),
-                  GoRoute(path: 'direct', builder: (_, _) => const DirectPage()),
-                  GoRoute(path: 'inverse', builder: (_, _) => const InversePage()),
-                  GoRoute(path: 'sky', builder: (_, _) => const SkyPage()),
+                  GoRoute(path: 'converter', builder: (_, _) => const FullScreenForm(child: ConverterPage())),
+                  GoRoute(path: 'angles', builder: (_, _) => const FullScreenForm(child: AnglesPage())),
+                  GoRoute(path: 'direct', builder: (_, _) => const FullScreenForm(child: DirectPage())),
+                  GoRoute(path: 'inverse', builder: (_, _) => const FullScreenForm(child: InversePage())),
+                  GoRoute(path: 'sky', builder: (_, _) => const FullScreenForm(child: SkyPage())),
                 ],
               ),
             ]),
             StatefulShellBranch(routes: [
-              GoRoute(path: '/compass', builder: (_, _) => const CompassPage()),
+              GoRoute(path: '/compass', builder: (_, _) => const FullScreenForm(child: CompassPage())),
             ]),
             StatefulShellBranch(routes: [
               GoRoute(
                 path: '/settings',
-                builder: (_, _) => const SettingsPage(),
+                builder: (_, _) => const FullScreenForm(child: SettingsPage()),
                 routes: [
-                  GoRoute(path: 'about', builder: (_, _) => const AboutPage()),
-                  GoRoute(path: 'whats-new', builder: (_, _) => const WhatsNewPage()),
-                  GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
+                  GoRoute(path: 'about', builder: (_, _) => const FullScreenForm(child: AboutPage())),
+                  GoRoute(path: 'whats-new', builder: (_, _) => const FullScreenForm(child: WhatsNewPage())),
+                  GoRoute(path: 'packs', builder: (_, _) => const FullScreenForm(child: PacksPage())),
                   GoRoute(
                     path: 'sources',
-                    builder: (_, _) => const SourcesPage(base: '/settings/sources'),
+                    builder: (_, _) => const FullScreenForm(child: SourcesPage(base: '/settings/sources')),
                     routes: [
-                      GoRoute(path: 'edit', builder: (_, s) => SourceEditPage(id: s.uri.queryParameters['id'])),
+                      GoRoute(path: 'edit', builder: (_, s) => FullScreenForm(child: SourceEditPage(id: s.uri.queryParameters['id']))),
                     ],
                   ),
-                  GoRoute(path: 'wipe', builder: (_, _) => const WipePage()),
+                  GoRoute(path: 'wipe', builder: (_, _) => const FullScreenForm(child: WipePage())),
                   GoRoute(
                     path: 'pin/:mode',
-                    builder: (_, state) => PinSetupPage(
-                      mode: PinSetupMode.values.byName(state.pathParameters['mode']!),
+                    builder: (_, state) => FullScreenForm(
+                      child: PinSetupPage(mode: PinSetupMode.values.byName(state.pathParameters['mode']!)),
                     ),
                   ),
                 ],
@@ -182,11 +182,8 @@ GoRouter buildRouter({String initialLocation = '/map'}) => GoRouter(
     );
 
 class _Shell extends StatelessWidget {
-  const _Shell({required this.shell, required this.onMap});
+  const _Shell({required this.shell});
   final StatefulNavigationShell shell;
-
-  /// The map itself, which takes the whole window.
-  final bool onMap;
 
   void _go(int i) => shell.goBranch(i, initialLocation: i == shell.currentIndex);
 
@@ -217,8 +214,9 @@ class _Shell extends StatelessWidget {
               ),
             ),
             const VerticalDivider(width: 1),
-            // The map takes the whole window; lists and forms stay readable.
-            Expanded(child: onMap || !isWide(context) ? shell : ContentWidth(child: shell)),
+            // Pages limit their own width (FullScreenForm): the map branch
+            // keeps the whole window even while another tab is shown.
+            Expanded(child: shell),
           ],
         ),
       );
