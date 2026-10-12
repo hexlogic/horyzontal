@@ -47,6 +47,7 @@ class _SymbolPickerPageState extends ConsumerState<SymbolPickerPage> {
   Future<T?> _choose<T>(String title, List<T> values, String Function(T) label, {String Function(T)? subtitle}) =>
       showModalBottomSheet<T>(
         context: context,
+        useRootNavigator: true,
         isScrollControlled: true,
         useSafeArea: true,
         builder: (context) => DraggableScrollableSheet(

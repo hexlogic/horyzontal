@@ -11,6 +11,16 @@ import 'l10n/app_localizations.dart';
 
 const _seed = Color(0xFF3A5A40);
 
+/// Five tabs with Ukrainian labels ("Налаштування") need a smaller label
+/// font than Material's default to stay on one line.
+ThemeData _theme(Brightness b) => ThemeData(
+      colorSchemeSeed: _seed,
+      brightness: b,
+      navigationBarTheme: const NavigationBarThemeData(
+        labelTextStyle: WidgetStatePropertyAll(TextStyle(fontSize: 11, letterSpacing: 0)),
+      ),
+    );
+
 class HoryzontalApp extends ConsumerStatefulWidget {
   const HoryzontalApp({super.key});
 
@@ -33,8 +43,8 @@ class _HoryzontalAppState extends ConsumerState<HoryzontalApp> {
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorSchemeSeed: _seed),
-      darkTheme: ThemeData(colorSchemeSeed: _seed, brightness: Brightness.dark),
+      theme: _theme(Brightness.light),
+      darkTheme: _theme(Brightness.dark),
       themeMode: themeMode,
       locale: const Locale('uk'),
       supportedLocales: AppLocalizations.supportedLocales,

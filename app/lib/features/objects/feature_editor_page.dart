@@ -41,7 +41,8 @@ class _FeatureEditorPageState extends ConsumerState<FeatureEditorPage> {
   @override
   void initState() {
     super.initState();
-    _load();
+    // After the first frame: the default layer name comes from the localizations.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _load());
   }
 
   Future<void> _load() async {

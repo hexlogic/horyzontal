@@ -13,7 +13,7 @@ Map<String, Object?> collection(Iterable<Map<String, Object?>> features) =>
     {'type': 'FeatureCollection', 'features': features.toList()};
 
 Map<String, Object?> pointsGeoJson(Iterable<MapFeature> fs, Map<String, int> layerColors,
-        {required bool Function(String sidc) hasIcon}) =>
+        {required bool Function(String sidc) hasIcon, List<double> Function(String sidc)? offset}) =>
     collection([
       for (final f in fs)
         if (f.kind == FeatureKind.point)
@@ -24,7 +24,10 @@ Map<String, Object?> pointsGeoJson(Iterable<MapFeature> fs, Map<String, int> lay
               'id': f.id,
               'name': f.name,
               'color': hexColor(f.color ?? layerColors[f.layerId] ?? 0xFF1565C0),
-              if (f.sidc != null && hasIcon(f.sidc!)) 'icon': 'sidc-${f.sidc}',
+              if (f.sidc != null && hasIcon(f.sidc!)) ...{
+                'icon': 'sidc-${f.sidc}',
+                'offset': offset?.call(f.sidc!) ?? const [0.0, 0.0],
+              },
             },
             'geometry': {'type': 'Point', 'coordinates': lonLat(f.position)},
           },

@@ -14,8 +14,17 @@ const symbolPixelRatio = 3.0;
 class SymbolIcons {
   final _png = <String, Future<Uint8List?>>{};
 
+  /// Map icon size: milsymbol size, logical pixels.
+  static const mapSize = 34.0;
+
+  /// MapLibre `icon-offset` for [sidc] drawn with [png] at [mapSize].
+  List<double> offset(String sidc) {
+    final (dx, dy) = symbolAnchorOffset(sidc, size: mapSize * symbolPixelRatio);
+    return [dx, dy];
+  }
+
   /// [size] is the symbol size in logical pixels at [pixelRatio].
-  Future<Uint8List?> png(String sidc, {double size = 34, double pixelRatio = 3}) =>
+  Future<Uint8List?> png(String sidc, {double size = mapSize, double pixelRatio = symbolPixelRatio}) =>
       _png.putIfAbsent('$sidc@$size@$pixelRatio', () => _render(sidc, size, pixelRatio));
 
   Future<Uint8List?> _render(String sidc, double size, double pixelRatio) async {

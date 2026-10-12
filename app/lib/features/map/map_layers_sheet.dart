@@ -10,6 +10,7 @@ import 'packs.dart';
 /// Base map choice and quick layer visibility.
 Future<void> showMapLayersSheet(BuildContext context) => showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       useSafeArea: true,
       isScrollControlled: true,
       builder: (_) => const _MapLayersSheet(),

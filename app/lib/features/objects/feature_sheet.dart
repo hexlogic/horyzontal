@@ -27,6 +27,7 @@ final _featureProvider = StreamProvider.autoDispose.family<MapFeature?, String>(
 /// Object card in a bottom sheet over the map.
 Future<void> showFeatureSheet(BuildContext context, String id) => showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       useSafeArea: true,
       builder: (_) => DraggableScrollableSheet(
@@ -192,6 +193,7 @@ class FeatureDetails extends ConsumerWidget {
     }
     final pick = await showModalBottomSheet<Uri>(
       context: context,
+      useRootNavigator: true,
       builder: (context) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,

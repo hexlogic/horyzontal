@@ -80,7 +80,8 @@ class _MapPageState extends ConsumerState<MapPage> {
         style = _emptyStyle;
         noPacks = true;
       }
-    } catch (_) {
+    } catch (e) {
+      debugPrint('map style: $e');
       // No network and no cached online style: fall back to the packs.
       style = packs.any((p) => p.kind == PackKind.basemap) ? await offlineStyle(packs) : _emptyStyle;
       noPacks = !packs.any((p) => p.kind == PackKind.basemap);
@@ -144,6 +145,7 @@ class _MapPageState extends ConsumerState<MapPage> {
         // Icons are rendered at 3x for sharpness; MapLibre takes image
         // pixels as points.
         iconSize: 1 / symbolPixelRatio,
+        iconOffset: [Expressions.get, 'offset'],
         iconAllowOverlap: true,
         iconIgnorePlacement: true,
         textField: [Expressions.get, 'name'],
@@ -180,7 +182,7 @@ class _MapPageState extends ConsumerState<MapPage> {
     final icons = ref.read(symbolIconsProvider);
     for (final sidc in {for (final f in features) if (f.sidc != null) f.sidc!}) {
       if (_iconsAdded.contains(sidc)) continue;
-      final png = await icons.png(sidc, pixelRatio: symbolPixelRatio);
+      final png = await icons.png(sidc);
       if (png == null) continue;
       await map.addImage('sidc-$sidc', png);
       _iconsAdded.add(sidc);
@@ -189,7 +191,7 @@ class _MapPageState extends ConsumerState<MapPage> {
     await map.setGeoJsonSource(_src.lines, linesGeoJson(features, colors));
     await map.setGeoJsonSource(
       _src.points,
-      pointsGeoJson(features, colors, hasIcon: _iconsAdded.contains),
+      pointsGeoJson(features, colors, hasIcon: _iconsAdded.contains, offset: icons.offset),
     );
   }
 

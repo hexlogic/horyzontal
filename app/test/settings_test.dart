@@ -14,8 +14,36 @@ void main() {
       themeMode: ThemeMode.dark,
       biometrics: true,
       lockAfter: Duration(minutes: 5),
+      offlineOnly: true,
+      onlineMap: false,
+      screenshotProtection: true,
+      privacyNoticeSeen: true,
+      lastSeenVersion: '0.2.0',
+      camera: MapCamera(50.45, 30.52, 12.5),
+      symbolFavorites: ['10031000001211000000'],
+      symbolRecent: ['10061500001116000000', '10031000001211000000'],
     );
     expect(AppSettings.fromMap(s.toMap()), s);
+    expect(AppSettings.fromMap(s.toMap()).toMap(), s.toMap());
+  });
+
+  test('copyWith changes every field', () {
+    const d = AppSettings();
+    final changed = d.copyWith(
+      offlineOnly: true,
+      onlineMap: false,
+      screenshotProtection: true,
+      privacyNoticeSeen: true,
+      lastSeenVersion: 'x',
+      camera: const MapCamera(1, 2, 3),
+      symbolFavorites: ['10031000001211000000'],
+      symbolRecent: ['10031000001211000000'],
+    );
+    final a = d.toMap(), b = changed.toMap();
+    for (final k in ['offlineOnly', 'onlineMap', 'screenshotProtection', 'privacyNoticeSeen',
+        'lastSeenVersion', 'camera', 'symbolFavorites', 'symbolRecent']) {
+      expect(b[k], isNot(a[k]), reason: k);
+    }
   });
 
   test('unknown and missing values fall back to defaults', () {

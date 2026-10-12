@@ -85,6 +85,14 @@ class AppSettings {
     themeMode: themeMode ?? this.themeMode,
     biometrics: biometrics ?? this.biometrics,
     lockAfter: lockAfter ?? this.lockAfter,
+    offlineOnly: offlineOnly ?? this.offlineOnly,
+    onlineMap: onlineMap ?? this.onlineMap,
+    screenshotProtection: screenshotProtection ?? this.screenshotProtection,
+    privacyNoticeSeen: privacyNoticeSeen ?? this.privacyNoticeSeen,
+    lastSeenVersion: lastSeenVersion ?? this.lastSeenVersion,
+    camera: camera ?? this.camera,
+    symbolFavorites: symbolFavorites ?? this.symbolFavorites,
+    symbolRecent: symbolRecent ?? this.symbolRecent,
   );
 
   Map<String, String> toMap() => {
@@ -96,6 +104,14 @@ class AppSettings {
     'themeMode': themeMode.name,
     'biometrics': biometrics.toString(),
     'lockAfterSeconds': lockAfter.inSeconds.toString(),
+    'offlineOnly': offlineOnly.toString(),
+    'onlineMap': onlineMap.toString(),
+    'screenshotProtection': screenshotProtection.toString(),
+    'privacyNoticeSeen': privacyNoticeSeen.toString(),
+    'lastSeenVersion': lastSeenVersion,
+    'camera': camera.encode(),
+    'symbolFavorites': symbolFavorites.join(','),
+    'symbolRecent': symbolRecent.join(','),
   };
 
   /// Unknown or missing values fall back to defaults, so old and new app

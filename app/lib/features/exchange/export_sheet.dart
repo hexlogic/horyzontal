@@ -19,9 +19,12 @@ Future<void> showExportSheet(BuildContext context, WidgetRef ref, List<MapLayer>
   final l = context.l10n;
   final format = await showModalBottomSheet<ExportFormat>(
     context: context,
+    useRootNavigator: true,
+    isScrollControlled: true,
+    useSafeArea: true,
     builder: (context) => SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: ListView(
+        shrinkWrap: true,
         children: [
           ListTile(title: Text(l.exportLayer, style: Theme.of(context).textTheme.titleMedium)),
           for (final f in ExportFormat.values)

@@ -9,6 +9,7 @@ import 'map_focus.dart';
 /// Coordinate search in any system, with paste and "my location".
 Future<void> showSearchSheet(BuildContext context) => showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       useSafeArea: true,
       builder: (_) => const _SearchSheet(),

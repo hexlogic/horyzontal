@@ -30,6 +30,9 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 GoRouter buildRouter() => GoRouter(
       navigatorKey: rootNavigatorKey,
       initialLocation: '/map',
+      // Anything unknown (an odd link handed over by the OS) lands on the map.
+      redirect: (_, state) => state.uri.scheme == 'file' ? '/map' : null,
+      errorBuilder: (_, _) => const MapPage(),
       routes: [
         // Full-screen pickers that return a value to whoever pushed them.
         GoRoute(
