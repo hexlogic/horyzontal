@@ -6,13 +6,19 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../core/net/network.dart';
 import 'packs.dart';
+import 'relief.dart';
 
 /// Offline style for any number of region packs. The template from
 /// tools/map-pipeline/style has one `protomaps` and one `dem` source; each
 /// pack gets its own copy of them, and every template layer is repeated per
 /// pack right after itself so that draw order stays the same across regions
 /// (all water below all roads below all labels).
-String buildOfflineStyle(String template, List<PackFile> packs, String assetsPath) {
+String buildOfflineStyle(
+  String template,
+  List<PackFile> packs,
+  String assetsPath, {
+  bool relief = false,
+}) {
   final style = jsonDecode(template.replaceAll('{ASSETS_URL}', 'file://$assetsPath'))
       as Map<String, Object?>;
   final srcTemplates = (style['sources']! as Map<String, Object?>).cast<String, Object?>();
@@ -48,12 +54,29 @@ String buildOfflineStyle(String template, List<PackFile> packs, String assetsPat
   }
   style['sources'] = sources;
   style['layers'] = layers;
+  addReliefLayers(style, [for (var i = 0; i < dems.length; i++) sourceId('dem', i)], visible: relief);
   return jsonEncode(style);
 }
 
-Future<String> offlineStyle(List<PackFile> packs) async {
+Future<String> offlineStyle(List<PackFile> packs, {bool relief = false}) async {
   final template = await rootBundle.loadString('assets/map/style-offline.json');
-  return buildOfflineStyle(template, packs, await PackStore.installAssets());
+  return buildOfflineStyle(template, packs, await PackStore.installAssets(), relief: relief);
+}
+
+/// Adds the elevation packs to an online style for the elevation tint; the
+/// sources are local files, so the tint costs no network.
+String withElevationTint(String styleJson, List<PackFile> packs, {required bool visible}) {
+  final dems = [for (final p in packs) if (p.kind == PackKind.dem) p];
+  if (dems.isEmpty) return styleJson;
+  final style = jsonDecode(styleJson) as Map<String, Object?>;
+  final sources = (style['sources']! as Map<String, Object?>);
+  final ids = <String>[];
+  for (final (i, p) in dems.indexed) {
+    sources['hrz-dem-$i'] = demSource(p.path);
+    ids.add('hrz-dem-$i');
+  }
+  addReliefLayers(style, ids, visible: visible);
+  return jsonEncode(style);
 }
 
 /// Rewrites every label of the OpenFreeMap style to prefer Ukrainian names,

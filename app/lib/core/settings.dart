@@ -25,6 +25,7 @@ class AppSettings {
     this.symbolFavorites = const [],
     this.symbolRecent = const [],
     this.los = const LosParams(),
+    this.reliefTint = false,
   });
 
   final CoordinateSystem system;
@@ -55,6 +56,9 @@ class AppSettings {
   /// Last line-of-sight parameters.
   final LosParams los;
 
+  /// Elevation tint over the map, from the elevation packs.
+  final bool reliefTint;
+
   static const lockOptions = [
     Duration.zero,
     Duration(seconds: 30),
@@ -81,6 +85,7 @@ class AppSettings {
     List<String>? symbolFavorites,
     List<String>? symbolRecent,
     LosParams? los,
+    bool? reliefTint,
   }) => AppSettings(
     system: system ?? this.system,
     geoFormat: geoFormat ?? this.geoFormat,
@@ -99,6 +104,7 @@ class AppSettings {
     symbolFavorites: symbolFavorites ?? this.symbolFavorites,
     symbolRecent: symbolRecent ?? this.symbolRecent,
     los: los ?? this.los,
+    reliefTint: reliefTint ?? this.reliefTint,
   );
 
   Map<String, String> toMap() => {
@@ -119,6 +125,7 @@ class AppSettings {
     'symbolFavorites': symbolFavorites.join(','),
     'symbolRecent': symbolRecent.join(','),
     'los': los.encode(),
+    'reliefTint': reliefTint.toString(),
   };
 
   /// Unknown or missing values fall back to defaults, so old and new app
@@ -146,6 +153,7 @@ class AppSettings {
       symbolFavorites: _codes(m['symbolFavorites']),
       symbolRecent: _codes(m['symbolRecent']),
       los: LosParams.decode(m['los']) ?? d.los,
+      reliefTint: m['reliefTint'] == 'true',
     );
   }
 

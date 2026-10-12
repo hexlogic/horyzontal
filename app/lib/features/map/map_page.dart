@@ -20,6 +20,8 @@ import 'map_focus.dart';
 import 'map_layers_sheet.dart';
 import 'map_style.dart';
 import 'packs.dart';
+import 'relief.dart';
+import 'relief_legend.dart';
 import 'scale_bar.dart';
 import 'search_sheet.dart';
 import 'tools/tool_geojson.dart';
@@ -46,6 +48,10 @@ class _MapPageState extends ConsumerState<MapPage> {
   bool _styleReady = false;
   bool _noPacks = false;
   String? _styleKey;
+
+  /// Elevation tint layers in the current style, and whether they are shown.
+  int _reliefLayers = 0;
+  bool _reliefShown = false;
   MyLocationTrackingMode _tracking = MyLocationTrackingMode.none;
   bool _locationAllowed = false;
   CameraPosition? _camera;
@@ -76,16 +82,17 @@ class _MapPageState extends ConsumerState<MapPage> {
   Future<void> _loadStyle(AppSettings s, List<PackFile> packs) async {
     // Nothing goes to OpenFreeMap before the user has read the privacy note.
     final online = s.onlineMap && !s.offlineOnly && s.privacyNoticeSeen;
-    final key = online ? 'online' : 'offline:${packs.map((p) => p.path).join('|')}';
+    final key = '${online ? 'online' : 'offline'}:${packs.map((p) => p.path).join('|')}';
     if (key == _styleKey) return;
     _styleKey = key;
     String style;
     var noPacks = false;
+    final dems = packs.where((p) => p.kind == PackKind.dem).length;
     try {
       if (online) {
-        style = await onlineStyle(ref.read(netProvider));
+        style = withElevationTint(await onlineStyle(ref.read(netProvider)), packs, visible: s.reliefTint);
       } else if (packs.any((p) => p.kind == PackKind.basemap)) {
-        style = await offlineStyle(packs);
+        style = await offlineStyle(packs, relief: s.reliefTint);
       } else {
         style = _emptyStyle;
         noPacks = true;
@@ -93,12 +100,16 @@ class _MapPageState extends ConsumerState<MapPage> {
     } catch (e) {
       debugPrint('map style: $e');
       // No network and no cached online style: fall back to the packs.
-      style = packs.any((p) => p.kind == PackKind.basemap) ? await offlineStyle(packs) : _emptyStyle;
+      style = packs.any((p) => p.kind == PackKind.basemap)
+          ? await offlineStyle(packs, relief: s.reliefTint)
+          : _emptyStyle;
       noPacks = !packs.any((p) => p.kind == PackKind.basemap);
     }
     if (!mounted || key != _styleKey) return;
     setState(() {
       _style = style;
+      _reliefLayers = noPacks ? 0 : dems;
+      _reliefShown = s.reliefTint;
       _styleReady = false;
       _noPacks = noPacks;
       _iconsAdded.clear();
@@ -119,9 +130,21 @@ class _MapPageState extends ConsumerState<MapPage> {
     }
     if (!mounted || !identical(map, _map)) return;
     setState(() => _styleReady = true);
+    await _syncRelief();
     await _syncFeatures(ref.read(visibleFeaturesProvider).value ?? const []);
     await _syncSearch();
     await _syncTool();
+  }
+
+  /// Shows or hides the elevation tint without rebuilding the map.
+  Future<void> _syncRelief() async {
+    final map = _map;
+    final want = ref.read(settingsProvider).reliefTint;
+    if (map == null || !_styleReady || want == _reliefShown) return;
+    _reliefShown = want;
+    for (var i = 0; i < _reliefLayers; i++) {
+      await map.setLayerVisibility('$reliefLayerPrefix$i', want);
+    }
   }
 
   Future<void> _syncTool() async {
@@ -388,6 +411,7 @@ class _MapPageState extends ConsumerState<MapPage> {
     // the map away a moment later.
     if (packsState.hasValue) _loadStyle(settings, packsState.value!);
     ref.listen(visibleFeaturesProvider, (_, next) => _syncFeatures(next.value ?? const []));
+    ref.listen(settingsProvider.select((s) => s.reliefTint), (_, _) => _syncRelief());
     ref.listen(mapFocusProvider, (_, f) {
       if (f != null && _styleReady) _focus(f);
     });
@@ -467,7 +491,16 @@ class _MapPageState extends ConsumerState<MapPage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      if (cam != null) ScaleBar(lat: cam.target.latitude, zoom: cam.zoom),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (settings.reliefTint && _reliefLayers > 0) ...[
+                            const ReliefLegend(),
+                            const SizedBox(height: 8),
+                          ],
+                          if (cam != null) ScaleBar(lat: cam.target.latitude, zoom: cam.zoom),
+                        ],
+                      ),
                       const Spacer(),
                       Column(
                         children: [

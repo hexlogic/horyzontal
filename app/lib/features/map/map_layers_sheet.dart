@@ -26,6 +26,7 @@ class _MapLayersSheet extends ConsumerWidget {
     final layers = ref.watch(layersProvider(false)).value ?? const [];
     final packs = ref.watch(packsProvider).value ?? const <PackFile>[];
     final repo = ref.read(repositoryProvider);
+    final hasDem = packs.any((p) => p.kind == PackKind.dem);
     return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.6,
@@ -59,6 +60,15 @@ class _MapLayersSheet extends ConsumerWidget {
               context.pop();
               context.go('/map/packs');
             },
+          ),
+          SwitchListTile(
+            secondary: const Icon(Icons.terrain_outlined),
+            title: Text(l.reliefTint),
+            subtitle: Text(hasDem ? l.demSurfaceNote : l.reliefTintNoPacks),
+            value: s.reliefTint && hasDem,
+            onChanged: hasDem
+                ? (v) => ref.read(settingsProvider.notifier).update((s) => s.copyWith(reliefTint: v))
+                : null,
           ),
           const Divider(),
           ListTile(

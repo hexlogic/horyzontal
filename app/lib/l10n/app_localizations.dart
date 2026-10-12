@@ -2146,6 +2146,24 @@ abstract class AppLocalizations {
   /// **'Частина лінії поза пакетами висот'**
   String get demGaps;
 
+  /// No description provided for @reliefTint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Теплова мапа висот'**
+  String get reliefTint;
+
+  /// No description provided for @reliefTintNoPacks.
+  ///
+  /// In uk, this message translates to:
+  /// **'Потрібен пакет висот: завантажте його в офлайн-пакетах'**
+  String get reliefTintNoPacks;
+
+  /// No description provided for @reliefLegend.
+  ///
+  /// In uk, this message translates to:
+  /// **'Висота, м'**
+  String get reliefLegend;
+
   /// No description provided for @demSurfaceNote.
   ///
   /// In uk, this message translates to:

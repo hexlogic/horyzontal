@@ -38,6 +38,49 @@ void main() {
     expect(style['glyphs'], 'file:///assets/fonts/{fontstack}/{range}.pbf');
   });
 
+  test('elevation tint: one hidden layer per elevation pack, below the water', () {
+    final template = File('assets/map/style-offline.json').readAsStringSync();
+    const packs = [
+      PackFile('/p/kyiv.pmtiles', PackKind.basemap, 1, 0, 15),
+      PackFile('/p/kyiv-dem.pmtiles', PackKind.dem, 1, 0, 12),
+      PackFile('/p/lviv-dem.pmtiles', PackKind.dem, 1, 0, 12),
+    ];
+    final style = jsonDecode(buildOfflineStyle(template, packs, '/assets')) as Map<String, Object?>;
+    final layers = (style['layers']! as List).cast<Map<String, Object?>>();
+    final ids = layers.map((l) => l['id']).toList();
+    final tint = layers.where((l) => l['type'] == 'color-relief').toList();
+    expect(tint.map((l) => l['source']), ['dem_0', 'dem_1']);
+    expect(tint.map((l) => (l['layout']! as Map)['visibility']), everyElement('none'));
+    expect(ids.indexOf('hillshade_1'), lessThan(ids.indexOf('color_relief_0')));
+    expect(ids.indexOf('color_relief_1'), lessThan(ids.indexOf('water_0')));
+
+    final shown = jsonDecode(buildOfflineStyle(template, packs, '/assets', relief: true)) as Map;
+    expect(
+      (shown['layers'] as List).where((l) => l['type'] == 'color-relief').map((l) => l['layout']['visibility']),
+      everyElement('visible'),
+    );
+  });
+
+  test('elevation tint over the online style uses the local packs only', () {
+    final online = jsonEncode({
+      'sources': {'openmaptiles': {'type': 'vector', 'url': 'https://tiles.openfreemap.org/planet'}},
+      'layers': [
+        {'id': 'background', 'type': 'background'},
+        {'id': 'park', 'type': 'fill', 'source': 'openmaptiles'},
+        {'id': 'waterway_river', 'type': 'line', 'source': 'openmaptiles'},
+        {'id': 'label', 'type': 'symbol', 'source': 'openmaptiles'},
+      ],
+    });
+    expect(withElevationTint(online, const [PackFile('/p/k.pmtiles', PackKind.basemap, 1, 0, 15)], visible: true), online);
+    final style = jsonDecode(withElevationTint(
+      online,
+      const [PackFile('/p/kyiv-dem.pmtiles', PackKind.dem, 1, 0, 12)],
+      visible: true,
+    )) as Map;
+    expect((style['sources'] as Map)['hrz-dem-0']['url'], 'pmtiles://file:///p/kyiv-dem.pmtiles');
+    expect((style['layers'] as List).map((l) => l['id']), ['background', 'park', 'color_relief_0', 'waterway_river', 'label']);
+  });
+
   test('online labels prefer Ukrainian names', () {
     final patched = jsonDecode(ukrainianLabels(jsonEncode({
       'layers': [

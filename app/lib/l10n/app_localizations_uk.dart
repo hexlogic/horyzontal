@@ -1205,6 +1205,16 @@ class AppLocalizationsUk extends AppLocalizations {
   String get demGaps => 'Частина лінії поза пакетами висот';
 
   @override
+  String get reliefTint => 'Теплова мапа висот';
+
+  @override
+  String get reliefTintNoPacks =>
+      'Потрібен пакет висот: завантажте його в офлайн-пакетах';
+
+  @override
+  String get reliefLegend => 'Висота, м';
+
+  @override
   String get demSurfaceNote =>
       'Висоти Copernicus DEM — модель поверхні: вони включають ліс і будівлі';
 
