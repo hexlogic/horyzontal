@@ -24,6 +24,7 @@ import '../features/tasks/angles_page.dart';
 import '../features/tasks/converter_page.dart';
 import '../features/tasks/direct_page.dart';
 import '../features/tasks/inverse_page.dart';
+import '../features/tasks/sky_page.dart';
 import '../features/tasks/tasks_page.dart';
 import 'data/model.dart';
 import 'labels.dart';
@@ -129,6 +130,7 @@ GoRouter buildRouter() => GoRouter(
                   GoRoute(path: 'angles', builder: (_, _) => const AnglesPage()),
                   GoRoute(path: 'direct', builder: (_, _) => const DirectPage()),
                   GoRoute(path: 'inverse', builder: (_, _) => const InversePage()),
+                  GoRoute(path: 'sky', builder: (_, _) => const SkyPage()),
                 ],
               ),
             ]),

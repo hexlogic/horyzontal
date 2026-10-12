@@ -24,6 +24,7 @@ class TasksPage extends StatelessWidget {
           tile(Icons.architecture, l.taskAngles, l.taskAnglesSubtitle, '/tasks/angles'),
           tile(Icons.call_made, l.taskDirect, l.taskDirectSubtitle, '/tasks/direct'),
           tile(Icons.straighten, l.taskInverse, l.taskInverseSubtitle, '/tasks/inverse'),
+          tile(Icons.wb_twilight, l.taskSky, l.taskSkySubtitle, '/tasks/sky'),
         ],
       ),
     );

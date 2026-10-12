@@ -2146,6 +2146,246 @@ abstract class AppLocalizations {
   /// **'Частина лінії поза пакетами висот'**
   String get demGaps;
 
+  /// No description provided for @taskSky.
+  ///
+  /// In uk, this message translates to:
+  /// **'Сонце й Місяць'**
+  String get taskSky;
+
+  /// No description provided for @taskSkySubtitle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Азимут і висота, схід, захід, сутінки, фаза Місяця, таймер'**
+  String get taskSkySubtitle;
+
+  /// No description provided for @skyPlace.
+  ///
+  /// In uk, this message translates to:
+  /// **'Місце'**
+  String get skyPlace;
+
+  /// No description provided for @skyPlaceHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Вкажіть місце, щоб побачити Сонце й Місяць'**
+  String get skyPlaceHint;
+
+  /// No description provided for @skyMoment.
+  ///
+  /// In uk, this message translates to:
+  /// **'Момент'**
+  String get skyMoment;
+
+  /// No description provided for @skyNow.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зараз'**
+  String get skyNow;
+
+  /// No description provided for @skyPickDate.
+  ///
+  /// In uk, this message translates to:
+  /// **'Дата'**
+  String get skyPickDate;
+
+  /// No description provided for @skyPickTime.
+  ///
+  /// In uk, this message translates to:
+  /// **'Час'**
+  String get skyPickTime;
+
+  /// No description provided for @skyLocalTime.
+  ///
+  /// In uk, this message translates to:
+  /// **'Місцевий'**
+  String get skyLocalTime;
+
+  /// No description provided for @skySun.
+  ///
+  /// In uk, this message translates to:
+  /// **'Сонце'**
+  String get skySun;
+
+  /// No description provided for @skyMoon.
+  ///
+  /// In uk, this message translates to:
+  /// **'Місяць'**
+  String get skyMoon;
+
+  /// No description provided for @skyAltitude.
+  ///
+  /// In uk, this message translates to:
+  /// **'Висота над обрієм (з рефракцією)'**
+  String get skyAltitude;
+
+  /// No description provided for @skyPhase.
+  ///
+  /// In uk, this message translates to:
+  /// **'Фаза'**
+  String get skyPhase;
+
+  /// No description provided for @skyIllumination.
+  ///
+  /// In uk, this message translates to:
+  /// **'освітлено {percent} %'**
+  String skyIllumination(int percent);
+
+  /// No description provided for @skyEvents.
+  ///
+  /// In uk, this message translates to:
+  /// **'Найближчі події за 48 годин'**
+  String get skyEvents;
+
+  /// No description provided for @skyToMoment.
+  ///
+  /// In uk, this message translates to:
+  /// **'До вибраного моменту'**
+  String get skyToMoment;
+
+  /// No description provided for @skyDays.
+  ///
+  /// In uk, this message translates to:
+  /// **'{count} д'**
+  String skyDays(int count);
+
+  /// No description provided for @skySunrise.
+  ///
+  /// In uk, this message translates to:
+  /// **'Схід Сонця'**
+  String get skySunrise;
+
+  /// No description provided for @skySunset.
+  ///
+  /// In uk, this message translates to:
+  /// **'Захід Сонця'**
+  String get skySunset;
+
+  /// No description provided for @skySunTransit.
+  ///
+  /// In uk, this message translates to:
+  /// **'Кульмінація Сонця (полудень)'**
+  String get skySunTransit;
+
+  /// No description provided for @skyMoonrise.
+  ///
+  /// In uk, this message translates to:
+  /// **'Схід Місяця'**
+  String get skyMoonrise;
+
+  /// No description provided for @skyMoonset.
+  ///
+  /// In uk, this message translates to:
+  /// **'Захід Місяця'**
+  String get skyMoonset;
+
+  /// No description provided for @skyMoonTransit.
+  ///
+  /// In uk, this message translates to:
+  /// **'Кульмінація Місяця'**
+  String get skyMoonTransit;
+
+  /// No description provided for @skyCivilDawn.
+  ///
+  /// In uk, this message translates to:
+  /// **'Громадянський світанок, −6°'**
+  String get skyCivilDawn;
+
+  /// No description provided for @skyCivilDusk.
+  ///
+  /// In uk, this message translates to:
+  /// **'Громадянські сутінки, −6°'**
+  String get skyCivilDusk;
+
+  /// No description provided for @skyNauticalDawn.
+  ///
+  /// In uk, this message translates to:
+  /// **'Навігаційний світанок, −12°'**
+  String get skyNauticalDawn;
+
+  /// No description provided for @skyNauticalDusk.
+  ///
+  /// In uk, this message translates to:
+  /// **'Навігаційні сутінки, −12°'**
+  String get skyNauticalDusk;
+
+  /// No description provided for @skyAstronomicalDawn.
+  ///
+  /// In uk, this message translates to:
+  /// **'Астрономічний світанок, −18°'**
+  String get skyAstronomicalDawn;
+
+  /// No description provided for @skyAstronomicalDusk.
+  ///
+  /// In uk, this message translates to:
+  /// **'Астрономічні сутінки, −18°'**
+  String get skyAstronomicalDusk;
+
+  /// No description provided for @skyPolarDay.
+  ///
+  /// In uk, this message translates to:
+  /// **'За 48 годин Сонце не заходить: полярний день'**
+  String get skyPolarDay;
+
+  /// No description provided for @skyPolarNight.
+  ///
+  /// In uk, this message translates to:
+  /// **'За 48 годин Сонце не сходить: полярна ніч'**
+  String get skyPolarNight;
+
+  /// No description provided for @skyAccuracy.
+  ///
+  /// In uk, this message translates to:
+  /// **'Поза 1600–2600 роками точність знижується: обертання Землі в далекому минулому й майбутньому відоме лише наближено'**
+  String get skyAccuracy;
+
+  /// No description provided for @phaseNew.
+  ///
+  /// In uk, this message translates to:
+  /// **'Молодик'**
+  String get phaseNew;
+
+  /// No description provided for @phaseWaxingCrescent.
+  ///
+  /// In uk, this message translates to:
+  /// **'Молодий місяць, росте'**
+  String get phaseWaxingCrescent;
+
+  /// No description provided for @phaseFirstQuarter.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перша чверть'**
+  String get phaseFirstQuarter;
+
+  /// No description provided for @phaseWaxingGibbous.
+  ///
+  /// In uk, this message translates to:
+  /// **'Росте, більше половини'**
+  String get phaseWaxingGibbous;
+
+  /// No description provided for @phaseFull.
+  ///
+  /// In uk, this message translates to:
+  /// **'Повня'**
+  String get phaseFull;
+
+  /// No description provided for @phaseWaningGibbous.
+  ///
+  /// In uk, this message translates to:
+  /// **'Спадає, більше половини'**
+  String get phaseWaningGibbous;
+
+  /// No description provided for @phaseLastQuarter.
+  ///
+  /// In uk, this message translates to:
+  /// **'Остання чверть'**
+  String get phaseLastQuarter;
+
+  /// No description provided for @phaseWaningCrescent.
+  ///
+  /// In uk, this message translates to:
+  /// **'Старий місяць, спадає'**
+  String get phaseWaningCrescent;
+
   /// No description provided for @clustering.
   ///
   /// In uk, this message translates to:

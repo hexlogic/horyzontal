@@ -1205,6 +1205,132 @@ class AppLocalizationsUk extends AppLocalizations {
   String get demGaps => 'Частина лінії поза пакетами висот';
 
   @override
+  String get taskSky => 'Сонце й Місяць';
+
+  @override
+  String get taskSkySubtitle =>
+      'Азимут і висота, схід, захід, сутінки, фаза Місяця, таймер';
+
+  @override
+  String get skyPlace => 'Місце';
+
+  @override
+  String get skyPlaceHint => 'Вкажіть місце, щоб побачити Сонце й Місяць';
+
+  @override
+  String get skyMoment => 'Момент';
+
+  @override
+  String get skyNow => 'Зараз';
+
+  @override
+  String get skyPickDate => 'Дата';
+
+  @override
+  String get skyPickTime => 'Час';
+
+  @override
+  String get skyLocalTime => 'Місцевий';
+
+  @override
+  String get skySun => 'Сонце';
+
+  @override
+  String get skyMoon => 'Місяць';
+
+  @override
+  String get skyAltitude => 'Висота над обрієм (з рефракцією)';
+
+  @override
+  String get skyPhase => 'Фаза';
+
+  @override
+  String skyIllumination(int percent) {
+    return 'освітлено $percent %';
+  }
+
+  @override
+  String get skyEvents => 'Найближчі події за 48 годин';
+
+  @override
+  String get skyToMoment => 'До вибраного моменту';
+
+  @override
+  String skyDays(int count) {
+    return '$count д';
+  }
+
+  @override
+  String get skySunrise => 'Схід Сонця';
+
+  @override
+  String get skySunset => 'Захід Сонця';
+
+  @override
+  String get skySunTransit => 'Кульмінація Сонця (полудень)';
+
+  @override
+  String get skyMoonrise => 'Схід Місяця';
+
+  @override
+  String get skyMoonset => 'Захід Місяця';
+
+  @override
+  String get skyMoonTransit => 'Кульмінація Місяця';
+
+  @override
+  String get skyCivilDawn => 'Громадянський світанок, −6°';
+
+  @override
+  String get skyCivilDusk => 'Громадянські сутінки, −6°';
+
+  @override
+  String get skyNauticalDawn => 'Навігаційний світанок, −12°';
+
+  @override
+  String get skyNauticalDusk => 'Навігаційні сутінки, −12°';
+
+  @override
+  String get skyAstronomicalDawn => 'Астрономічний світанок, −18°';
+
+  @override
+  String get skyAstronomicalDusk => 'Астрономічні сутінки, −18°';
+
+  @override
+  String get skyPolarDay => 'За 48 годин Сонце не заходить: полярний день';
+
+  @override
+  String get skyPolarNight => 'За 48 годин Сонце не сходить: полярна ніч';
+
+  @override
+  String get skyAccuracy =>
+      'Поза 1600–2600 роками точність знижується: обертання Землі в далекому минулому й майбутньому відоме лише наближено';
+
+  @override
+  String get phaseNew => 'Молодик';
+
+  @override
+  String get phaseWaxingCrescent => 'Молодий місяць, росте';
+
+  @override
+  String get phaseFirstQuarter => 'Перша чверть';
+
+  @override
+  String get phaseWaxingGibbous => 'Росте, більше половини';
+
+  @override
+  String get phaseFull => 'Повня';
+
+  @override
+  String get phaseWaningGibbous => 'Спадає, більше половини';
+
+  @override
+  String get phaseLastQuarter => 'Остання чверть';
+
+  @override
+  String get phaseWaningCrescent => 'Старий місяць, спадає';
+
+  @override
   String get clustering => 'Кластеризація';
 
   @override
