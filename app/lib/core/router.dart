@@ -10,6 +10,7 @@ import '../features/layers/layer_page.dart';
 import '../features/layers/layers_page.dart';
 import '../features/map/map_page.dart';
 import '../features/map/packs_page.dart';
+import '../features/map/tools/profile_page.dart';
 import '../features/objects/feature_editor_page.dart';
 import '../features/objects/feature_sheet.dart';
 import '../features/objects/symbol_picker_page.dart';
@@ -67,6 +68,11 @@ GoRouter buildRouter() => GoRouter(
                       kind: FeatureKind.values.byName(s.uri.queryParameters['kind']!),
                       vertices: s.extra! as List<Geodetic>,
                     ),
+                  ),
+                  GoRoute(
+                    path: 'profile',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (_, s) => ProfilePage(path: s.extra! as List<Geodetic>),
                   ),
                   GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
                 ],

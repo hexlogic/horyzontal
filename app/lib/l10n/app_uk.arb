@@ -630,6 +630,21 @@
       }
     }
   },
+  "buildTool": "Побудувати",
+  "heightRange": "Висота, мін / макс",
+  "ascentDescent": "Набір / спуск висоти",
+  "noDemPack": "Немає пакета висот для цього району",
+  "noDemPackHint": "Завантажте область: пакет висот іде разом із мапою",
+  "demGaps": "Частина лінії поза пакетами висот",
+  "demSurfaceNote": "Висоти Copernicus DEM — модель поверхні: вони включають ліс і будівлі",
+  "atDistance": "На відстані {value}",
+  "@atDistance": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "favorite": "В обране",
   "favorites": "Обране",
   "recent": "Нещодавні",

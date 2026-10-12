@@ -1183,6 +1183,34 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
+  String get buildTool => 'Побудувати';
+
+  @override
+  String get heightRange => 'Висота, мін / макс';
+
+  @override
+  String get ascentDescent => 'Набір / спуск висоти';
+
+  @override
+  String get noDemPack => 'Немає пакета висот для цього району';
+
+  @override
+  String get noDemPackHint =>
+      'Завантажте область: пакет висот іде разом із мапою';
+
+  @override
+  String get demGaps => 'Частина лінії поза пакетами висот';
+
+  @override
+  String get demSurfaceNote =>
+      'Висоти Copernicus DEM — модель поверхні: вони включають ліс і будівлі';
+
+  @override
+  String atDistance(String value) {
+    return 'На відстані $value';
+  }
+
+  @override
   String get favorite => 'В обране';
 
   @override

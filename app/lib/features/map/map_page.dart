@@ -181,6 +181,13 @@ class _MapPageState extends ConsumerState<MapPage> {
         actionIcon: Icons.save_outlined,
         onAction: tool.ready ? () => _saveShape(tool) : null,
       ),
+      MapTool.profile => ToolPanel(
+        cursor: _cursor,
+        onAdd: _addCenter,
+        actionLabel: l.buildTool,
+        actionIcon: Icons.area_chart_outlined,
+        onAction: tool.ready ? () => context.push('/map/profile', extra: tool.vertices) : null,
+      ),
       _ => ToolPanel(cursor: _cursor, onAdd: _addCenter),
     };
   }

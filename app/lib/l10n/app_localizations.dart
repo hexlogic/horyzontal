@@ -2104,6 +2104,54 @@ abstract class AppLocalizations {
   /// **'{value} км²'**
   String squareKm(String value);
 
+  /// No description provided for @buildTool.
+  ///
+  /// In uk, this message translates to:
+  /// **'Побудувати'**
+  String get buildTool;
+
+  /// No description provided for @heightRange.
+  ///
+  /// In uk, this message translates to:
+  /// **'Висота, мін / макс'**
+  String get heightRange;
+
+  /// No description provided for @ascentDescent.
+  ///
+  /// In uk, this message translates to:
+  /// **'Набір / спуск висоти'**
+  String get ascentDescent;
+
+  /// No description provided for @noDemPack.
+  ///
+  /// In uk, this message translates to:
+  /// **'Немає пакета висот для цього району'**
+  String get noDemPack;
+
+  /// No description provided for @noDemPackHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантажте область: пакет висот іде разом із мапою'**
+  String get noDemPackHint;
+
+  /// No description provided for @demGaps.
+  ///
+  /// In uk, this message translates to:
+  /// **'Частина лінії поза пакетами висот'**
+  String get demGaps;
+
+  /// No description provided for @demSurfaceNote.
+  ///
+  /// In uk, this message translates to:
+  /// **'Висоти Copernicus DEM — модель поверхні: вони включають ліс і будівлі'**
+  String get demSurfaceNote;
+
+  /// No description provided for @atDistance.
+  ///
+  /// In uk, this message translates to:
+  /// **'На відстані {value}'**
+  String atDistance(String value);
+
   /// No description provided for @favorite.
   ///
   /// In uk, this message translates to:

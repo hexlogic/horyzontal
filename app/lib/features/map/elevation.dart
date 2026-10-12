@@ -20,7 +20,7 @@ class Dem {
 
   /// Heights at many points; long lists are read on a background isolate.
   Future<List<double?>> sample(List<Geodetic> pts) =>
-      pts.length <= 32 ? _reader.sample(pts) : sampleDemInIsolate(paths, pts);
+      pts.length <= 32 || paths.isEmpty ? _reader.sample(pts) : sampleDemInIsolate(paths, pts);
 
   Future<void> close() => _reader.close();
 }

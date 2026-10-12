@@ -123,6 +123,12 @@ class FeatureDetails extends ConsumerWidget {
                 onPressed: () => showPointQr(context, f),
               ),
             ],
+            if (f.kind == FeatureKind.polyline && f.vertices.length >= 2)
+              ActionChip(
+                avatar: const Icon(Icons.area_chart_outlined, size: 18),
+                label: Text(l.toolProfile),
+                onPressed: () => context.push('/map/profile', extra: f.vertices),
+              ),
             ActionChip(
               avatar: Icon(Icons.delete_outline, size: 18, color: theme.colorScheme.error),
               label: Text(l.delete),

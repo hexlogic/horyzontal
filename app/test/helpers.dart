@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' show driftRuntimeOptions;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:go_router/go_router.dart';
 import 'package:horyzontal/core/db/database.dart';
 import 'package:horyzontal/core/secure_store.dart';
@@ -20,6 +21,7 @@ Widget testApp(
   MemorySecureStore? store,
   bool pinEnabled = false,
   GoRouter? router,
+  List<Override> overrides = const [],
 }) {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true; // one per test
   final s = store ?? MemorySecureStore();
@@ -30,6 +32,7 @@ Widget testApp(
       secureStoreProvider.overrideWithValue(s),
       pinStoreProvider.overrideWithValue(PinStore(s, iterations: 10)),
       initialPinEnabledProvider.overrideWithValue(pinEnabled),
+      ...overrides,
     ],
     child: router != null
         ? MaterialApp.router(

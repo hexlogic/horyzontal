@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:horyzontal/core/dem/dem_reader.dart';
@@ -8,61 +7,12 @@ import 'package:horyzontal/core/dem/tile_source.dart';
 import 'package:horyzontal_geo/horyzontal_geo.dart';
 import 'package:image/image.dart' as img;
 
-const _z = 12, _size = 256;
-
-/// Global pixel coordinates (pixel centres at .5) of a point at zoom [_z].
-(double, double) _pixel(double lat, double lon) {
-  final n = 1 << _z;
-  final r = lat * math.pi / 180;
-  return (
-    (lon + 180) / 360 * n * _size,
-    (1 - math.log(math.tan(r) + 1 / math.cos(r)) / math.pi) / 2 * n * _size,
-  );
-}
-
-Geodetic _geo(double gx, double gy) {
-  final n = (1 << _z) * _size;
-  final lat = math.atan(_sinh(math.pi * (1 - 2 * gy / n))) * 180 / math.pi;
-  return Geodetic(lat, gx / n * 360 - 180);
-}
-
-double _sinh(double x) => (math.exp(x) - math.exp(-x)) / 2;
-
-/// Tiles rendered from a height function of global pixel coordinates.
-class FakeTiles implements TileSource {
-  FakeTiles(this.height, this.tiles, this.bounds);
-
-  final double Function(double gx, double gy) height;
-  final Set<(int, int)> tiles;
-  @override
-  final ({double west, double south, double east, double north}) bounds;
-  int reads = 0;
-
-  @override
-  int get maxZoom => _z;
-
-  @override
-  Future<Uint8List?> tile(int z, int x, int y) async {
-    if (!tiles.contains((x, y))) return null;
-    reads++;
-    final im = img.Image(width: _size, height: _size);
-    for (var py = 0; py < _size; py++) {
-      for (var px = 0; px < _size; px++) {
-        final v = ((height(x * _size + px + 0.5, y * _size + py + 0.5) + 10000) * 10).round();
-        im.setPixelRgb(px, py, v >> 16, (v >> 8) & 255, v & 255);
-      }
-    }
-    return img.encodePng(im);
-  }
-
-  @override
-  Future<void> close() async {}
-}
+import 'fake_tiles.dart';
 
 void main() {
   const kyiv = Geodetic(50.45, 30.52);
-  final (kx, ky) = _pixel(kyiv.lat, kyiv.lon);
-  final tx = kx ~/ _size, ty = ky ~/ _size;
+  final (kx, ky) = pixelAt(kyiv.lat, kyiv.lon);
+  final tx = kx ~/ tileSize, ty = ky ~/ tileSize;
   final all = {
     for (var dx = -2; dx <= 2; dx++)
       for (var dy = -2; dy <= 2; dy++) (tx + dx, ty + dy),
@@ -85,20 +35,20 @@ void main() {
     final rnd = math.Random(1);
     for (var i = 0; i < 200; i++) {
       // Within ±1.5 tiles of Kyiv; some samples fall right at tile edges.
-      final gx = kx + (rnd.nextDouble() - 0.5) * 3 * _size,
-          gy = ky + (rnd.nextDouble() - 0.5) * 3 * _size;
-      final p = _geo(gx, gy);
+      final gx = kx + (rnd.nextDouble() - 0.5) * 3 * tileSize,
+          gy = ky + (rnd.nextDouble() - 0.5) * 3 * tileSize;
+      final p = geoAt(gx, gy);
       expect(await dem.elevation(p), closeTo(plane(gx, gy), 0.06));
     }
     for (final off in [0.0, 0.3, 0.5, 0.7, 1.0]) {
-      final gx = (tx + 1) * _size - 1 + off,
-          gy = (ty + 1) * _size - 1 + off; // corner of four tiles
-      expect(await dem.elevation(_geo(gx, gy)), closeTo(plane(gx, gy), 0.06));
+      final gx = (tx + 1) * tileSize - 1 + off,
+          gy = (ty + 1) * tileSize - 1 + off; // corner of four tiles
+      expect(await dem.elevation(geoAt(gx, gy)), closeTo(plane(gx, gy), 0.06));
     }
     // Exactly on a tile edge and either side of it.
-    final edgeLon = (tx * _size) / ((1 << _z) * _size) * 360 - 180;
+    final edgeLon = (tx * tileSize) / ((1 << tileZoom) * tileSize) * 360 - 180;
     for (final dl in [-1e-6, 0.0, 1e-6]) {
-      final (gx, gy) = _pixel(kyiv.lat, edgeLon + dl);
+      final (gx, gy) = pixelAt(kyiv.lat, edgeLon + dl);
       expect(await dem.elevation(Geodetic(kyiv.lat, edgeLon + dl)), closeTo(plane(gx, gy), 0.06));
     }
   });
@@ -109,7 +59,7 @@ void main() {
     final dem = DemReader([first, second]);
     expect(await dem.elevation(kyiv), closeTo(10, 0.06));
     // One tile north is only in the second pack.
-    expect(await dem.elevation(_geo(kx, ky - _size)), closeTo(20, 0.06));
+    expect(await dem.elevation(geoAt(kx, ky - tileSize)), closeTo(20, 0.06));
   });
 
   test('outside every pack is null; tiles are cached', () async {
