@@ -2920,6 +2920,12 @@ abstract class AppLocalizations {
   /// **'Г°М′С″'**
   String get angleDmsShort;
 
+  /// No description provided for @notes040.
+  ///
+  /// In uk, this message translates to:
+  /// **'Теплова мапа висот із пакетів висот — офлайн і поверх онлайн-мапи, з легендою\nСонце й Місяць: азимут і висота на будь-який момент і місце, фаза Місяця, схід, захід, кульмінація й сутінки з таймером\nКластеризація: близькі точки об\'єднуються в кружок із числом; дотик наближає\nСвої джерела мапи: адреси XYZ/TMS/WMS із завантаженням області для роботи без мережі, файли MBTiles і PMTiles\nПланшети: бічна навігація, картка об\'єкта поруч із мапою, поворот екрана'**
+  String get notes040;
+
   /// No description provided for @notes030.
   ///
   /// In uk, this message translates to:
