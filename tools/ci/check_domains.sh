@@ -42,4 +42,11 @@ if grep -qiE '^\s+(firebase_|sentry|amplitude|mixpanel|appsflyer|google_mobile_a
   echo "Telemetry or ads dependency in app/pubspec.yaml"
   bad=1
 fi
+
+# Google ML Kit sends usage metrics to Google; QR scanning goes through ZXing.
+# The lock file also catches it coming in as a transitive dependency.
+if grep -qiE '^\s+(mobile_scanner|google_mlkit[a-z_]*|[a-z_]*mlkit[a-z_]*):' app/pubspec.yaml pubspec.lock; then
+  echo "ML Kit (or mobile_scanner, which bundles it) in the dependencies"
+  bad=1
+fi
 exit $bad

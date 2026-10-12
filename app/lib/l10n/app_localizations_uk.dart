@@ -1260,6 +1260,10 @@ class AppLocalizationsUk extends AppLocalizations {
   String get pointB => 'Точка B';
 
   @override
+  String get cameraUnavailable =>
+      'Камера недоступна. Перевірте дозвіл на камеру в системних налаштуваннях.';
+
+  @override
   String get favorite => 'В обране';
 
   @override

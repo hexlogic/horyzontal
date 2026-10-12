@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../core/data/model.dart';
@@ -14,6 +13,7 @@ import '../../../core/labels.dart';
 import '../../settings/about_page.dart';
 import '../formats/formats.dart';
 import '../import_flow.dart';
+import '../qr_scanner_view.dart';
 import 'protocol.dart';
 import 'secure_channel.dart';
 import 'transport.dart';
@@ -326,10 +326,9 @@ class _TransferPageState extends ConsumerState<TransferPage> {
               ),
             ],
           ),
-        _Stage.scanning => MobileScanner(
-            onDetect: (c) {
-              final raw = c.barcodes.map((b) => b.rawValue).whereType<String>().firstOrNull;
-              if (raw != null && _stage == _Stage.scanning) _onScanned(raw);
+        _Stage.scanning => QrScannerView(
+            onCode: (raw) {
+              if (_stage == _Stage.scanning) _onScanned(raw);
             },
           ),
         _Stage.hosting when invite != null => ListView(

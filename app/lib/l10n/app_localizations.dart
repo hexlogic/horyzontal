@@ -2242,6 +2242,12 @@ abstract class AppLocalizations {
   /// **'Точка B'**
   String get pointB;
 
+  /// No description provided for @cameraUnavailable.
+  ///
+  /// In uk, this message translates to:
+  /// **'Камера недоступна. Перевірте дозвіл на камеру в системних налаштуваннях.'**
+  String get cameraUnavailable;
+
   /// No description provided for @favorite.
   ///
   /// In uk, this message translates to:

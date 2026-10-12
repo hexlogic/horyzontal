@@ -64,3 +64,9 @@ jobs:
         working-directory: app
       - run: flutter build apk --debug
         working-directory: app
+      - name: No ML Kit in the APK
+        run: |
+          if unzip -l app/build/app/outputs/flutter-apk/app-debug.apk | grep -iE 'mlkit|barhopper|gms/vision'; then
+            echo "ML Kit native code or models in the APK"
+            exit 1
+          fi

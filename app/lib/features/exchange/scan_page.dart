@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../core/data/ids.dart';
 import '../../core/data/model.dart';
@@ -9,6 +8,7 @@ import '../../core/data/repository.dart';
 import '../../core/labels.dart';
 import '../layers/layer_picker.dart';
 import 'point_qr.dart';
+import 'qr_scanner_view.dart';
 
 /// Scans a point QR and saves it into a layer the user picks.
 class ScanPage extends ConsumerStatefulWidget {
@@ -19,19 +19,10 @@ class ScanPage extends ConsumerStatefulWidget {
 }
 
 class _ScanPageState extends ConsumerState<ScanPage> {
-  final _scanner = MobileScannerController(formats: const [BarcodeFormat.qrCode]);
   bool _busy = false;
 
-  @override
-  void dispose() {
-    _scanner.dispose();
-    super.dispose();
-  }
-
-  Future<void> _onDetect(BarcodeCapture capture) async {
+  Future<void> _onCode(String text) async {
     if (_busy) return;
-    final text = capture.barcodes.map((b) => b.rawValue).whereType<String>().firstOrNull;
-    if (text == null) return;
     final qr = PointQr.decode(text);
     final l = context.l10n;
     if (qr == null) {
@@ -40,13 +31,10 @@ class _ScanPageState extends ConsumerState<ScanPage> {
         ..showSnackBar(SnackBar(content: Text(l.qrNotAPoint)));
       return;
     }
-    _busy = true;
-    await _scanner.stop();
-    if (!mounted) return;
+    setState(() => _busy = true);
     final layer = await pickLayer(context, ref, title: l.saveToLayer);
     if (layer == null) {
-      _busy = false;
-      await _scanner.start();
+      if (mounted) setState(() => _busy = false);
       return;
     }
     final repo = ref.read(repositoryProvider);
@@ -76,7 +64,7 @@ class _ScanPageState extends ConsumerState<ScanPage> {
       appBar: AppBar(title: Text(l.scanQr)),
       body: Stack(
         children: [
-          MobileScanner(controller: _scanner, onDetect: _onDetect),
+          QrScannerView(onCode: _onCode, paused: _busy),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
