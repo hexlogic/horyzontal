@@ -26,6 +26,7 @@ class AppSettings {
     this.symbolRecent = const [],
     this.los = const LosParams(),
     this.reliefTint = false,
+    this.clustering = true,
   });
 
   final CoordinateSystem system;
@@ -59,6 +60,9 @@ class AppSettings {
   /// Elevation tint over the map, from the elevation packs.
   final bool reliefTint;
 
+  /// Nearby point objects merge into numbered clusters when zoomed out.
+  final bool clustering;
+
   static const lockOptions = [
     Duration.zero,
     Duration(seconds: 30),
@@ -86,6 +90,7 @@ class AppSettings {
     List<String>? symbolRecent,
     LosParams? los,
     bool? reliefTint,
+    bool? clustering,
   }) => AppSettings(
     system: system ?? this.system,
     geoFormat: geoFormat ?? this.geoFormat,
@@ -105,6 +110,7 @@ class AppSettings {
     symbolRecent: symbolRecent ?? this.symbolRecent,
     los: los ?? this.los,
     reliefTint: reliefTint ?? this.reliefTint,
+    clustering: clustering ?? this.clustering,
   );
 
   Map<String, String> toMap() => {
@@ -126,6 +132,7 @@ class AppSettings {
     'symbolRecent': symbolRecent.join(','),
     'los': los.encode(),
     'reliefTint': reliefTint.toString(),
+    'clustering': clustering.toString(),
   };
 
   /// Unknown or missing values fall back to defaults, so old and new app
@@ -154,6 +161,7 @@ class AppSettings {
       symbolRecent: _codes(m['symbolRecent']),
       los: LosParams.decode(m['los']) ?? d.los,
       reliefTint: m['reliefTint'] == 'true',
+      clustering: m['clustering'] != 'false',
     );
   }
 

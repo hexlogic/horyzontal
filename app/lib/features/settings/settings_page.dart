@@ -118,6 +118,13 @@ class SettingsPage extends ConsumerWidget {
             onTap: () => context.go('/settings/packs'),
           ),
           SwitchListTile(
+            secondary: const Icon(Icons.bubble_chart_outlined),
+            title: Text(l.clustering),
+            subtitle: Text(l.clusteringHint),
+            value: s.clustering,
+            onChanged: (v) => ctl.update((s) => s.copyWith(clustering: v)),
+          ),
+          SwitchListTile(
             secondary: const Icon(Icons.cloud_off),
             title: Text(l.offlineOnly),
             subtitle: Text(l.offlineOnlyHint),

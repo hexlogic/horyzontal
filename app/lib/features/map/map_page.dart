@@ -35,6 +35,10 @@ const _emptyStyle =
 
 const _src = (points: 'hrz-points', lines: 'hrz-lines', radius: 'hrz-radius', search: 'hrz-search');
 
+/// Points stop clustering above this zoom.
+const _clusterMaxZoom = 14.0;
+const _clusterLayers = {'hrz-clusters', 'hrz-cluster-count'};
+
 class MapPage extends ConsumerStatefulWidget {
   const MapPage({super.key});
 
@@ -52,6 +56,9 @@ class _MapPageState extends ConsumerState<MapPage> {
   /// Elevation tint layers in the current style, and whether they are shown.
   int _reliefLayers = 0;
   bool _reliefShown = false;
+
+  /// Whether the current style's point source clusters.
+  bool _clustered = false;
   MyLocationTrackingMode _tracking = MyLocationTrackingMode.none;
   bool _locationAllowed = false;
   CameraPosition? _camera;
@@ -82,7 +89,7 @@ class _MapPageState extends ConsumerState<MapPage> {
   Future<void> _loadStyle(AppSettings s, List<PackFile> packs) async {
     // Nothing goes to OpenFreeMap before the user has read the privacy note.
     final online = s.onlineMap && !s.offlineOnly && s.privacyNoticeSeen;
-    final key = '${online ? 'online' : 'offline'}:${packs.map((p) => p.path).join('|')}';
+    final key = '${online ? 'online' : 'offline'}:${s.clustering}:${packs.map((p) => p.path).join('|')}';
     if (key == _styleKey) return;
     _styleKey = key;
     String style;
@@ -110,6 +117,7 @@ class _MapPageState extends ConsumerState<MapPage> {
       _style = style;
       _reliefLayers = noPacks ? 0 : dems;
       _reliefShown = s.reliefTint;
+      _clustered = s.clustering;
       _styleReady = false;
       _noPacks = noPacks;
       _iconsAdded.clear();
@@ -234,7 +242,19 @@ class _MapPageState extends ConsumerState<MapPage> {
     final empty = collection(const []);
     await map.addGeoJsonSource(_src.radius, empty, promoteId: 'id');
     await map.addGeoJsonSource(_src.lines, empty, promoteId: 'id');
-    await map.addGeoJsonSource(_src.points, empty, promoteId: 'id');
+    if (_clustered) {
+      await map.addSource(
+        _src.points,
+        GeojsonSourceProperties(
+          data: empty,
+          cluster: true,
+          clusterRadius: 50,
+          clusterMaxZoom: _clusterMaxZoom,
+        ),
+      );
+    } else {
+      await map.addGeoJsonSource(_src.points, empty, promoteId: 'id');
+    }
     await map.addGeoJsonSource(_src.search, empty, promoteId: 'id');
     await map.addFillLayer(
       _src.radius,
@@ -268,7 +288,7 @@ class _MapPageState extends ConsumerState<MapPage> {
         circleStrokeColor: '#ffffff',
         circleStrokeWidth: 2,
       ),
-      filter: ['!', ['has', 'icon']],
+      filter: ['all', ['!', ['has', 'point_count']], ['!', ['has', 'icon']]],
     );
     await map.addSymbolLayer(
       _src.points,
@@ -290,7 +310,34 @@ class _MapPageState extends ConsumerState<MapPage> {
         textHaloWidth: 1.5,
         textOptional: true,
       ),
+      filter: ['!', ['has', 'point_count']],
     );
+    if (_clustered) {
+      await map.addCircleLayer(
+        _src.points,
+        'hrz-clusters',
+        const CircleLayerProperties(
+          circleRadius: ['step', ['get', 'point_count'], 14, 10, 18, 50, 22],
+          circleColor: '#37474f',
+          circleStrokeColor: '#ffffff',
+          circleStrokeWidth: 2,
+        ),
+        filter: ['has', 'point_count'],
+      );
+      await map.addSymbolLayer(
+        _src.points,
+        'hrz-cluster-count',
+        const SymbolLayerProperties(
+          textField: [Expressions.get, 'point_count_abbreviated'],
+          textFont: ['Noto Sans Regular'],
+          textSize: 13,
+          textColor: '#ffffff',
+          textAllowOverlap: true,
+          textIgnorePlacement: true,
+        ),
+        filter: ['has', 'point_count'],
+      );
+    }
     await map.addCircleLayer(
       _src.search,
       'hrz-search',
@@ -348,7 +395,9 @@ class _MapPageState extends ConsumerState<MapPage> {
       _searchMarker = f.point;
       await _syncSearch();
     }
-    final zoom = math.max(_camera?.zoom ?? 14, 14).toDouble();
+    // An object shown from the journal must not hide inside a cluster.
+    final minZoom = f.featureId != null && _clustered ? _clusterMaxZoom + 1 : 14.0;
+    final zoom = math.max(_camera?.zoom ?? minZoom, minZoom).toDouble();
     await _map?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(f.point.lat, f.point.lon), zoom));
   }
 
@@ -390,6 +439,22 @@ class _MapPageState extends ConsumerState<MapPage> {
     if (next == MyLocationTrackingMode.none) {
       _map?.animateCamera(CameraUpdate.bearingTo(0));
     }
+  }
+
+  /// Zooms in to where the tapped cluster splits.
+  Future<void> _expandCluster(math.Point<double> pt) async {
+    final map = _map;
+    if (map == null || ref.read(mapToolProvider).active) return;
+    final hits = await map.queryRenderedFeatures(pt, ['hrz-clusters'], null);
+    if (hits.isEmpty) return;
+    final hit = hits.first as Map;
+    final id = (hit['properties']?['cluster_id'] as num?)?.toInt();
+    final coords = hit['geometry']?['coordinates'] as List?;
+    if (id == null || coords == null) return;
+    final zoom = await map.getClusterExpansionZoom(_src.points, id);
+    final target = LatLng((coords[1] as num).toDouble(), (coords[0] as num).toDouble());
+    final next = math.max(zoom.toDouble(), (_camera?.zoom ?? 0) + 1);
+    await map.animateCamera(CameraUpdate.newLatLngZoom(target, next + 0.5));
   }
 
   void _onFeatureTap(String id) {
@@ -454,9 +519,13 @@ class _MapPageState extends ConsumerState<MapPage> {
               onMapCreated: (c) {
                 _map = c;
                 _styleReady = false;
-                c.onFeatureTapped.add((_, _, id, layerId, _) {
-                  // Radius polygons carry '<id>-r'; everything else the object id.
-                  if (layerId.startsWith('hrz-')) _onFeatureTap(id.replaceAll(RegExp(r'-r$'), ''));
+                c.onFeatureTapped.add((pt, _, id, layerId, _) {
+                  if (_clusterLayers.contains(layerId)) {
+                    _expandCluster(pt);
+                  } else if (layerId.startsWith('hrz-')) {
+                    // Radius polygons carry '<id>-r'; everything else the object id.
+                    _onFeatureTap(id.replaceAll(RegExp(r'-r$'), ''));
+                  }
                 });
               },
               onStyleLoadedCallback: () async {

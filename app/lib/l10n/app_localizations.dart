@@ -2146,6 +2146,18 @@ abstract class AppLocalizations {
   /// **'Частина лінії поза пакетами висот'**
   String get demGaps;
 
+  /// No description provided for @clustering.
+  ///
+  /// In uk, this message translates to:
+  /// **'Кластеризація'**
+  String get clustering;
+
+  /// No description provided for @clusteringHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Близькі точки об\'єднуються в кружок із числом, коли мапу віддалено'**
+  String get clusteringHint;
+
   /// No description provided for @reliefTint.
   ///
   /// In uk, this message translates to:

@@ -1205,6 +1205,13 @@ class AppLocalizationsUk extends AppLocalizations {
   String get demGaps => 'Частина лінії поза пакетами висот';
 
   @override
+  String get clustering => 'Кластеризація';
+
+  @override
+  String get clusteringHint =>
+      'Близькі точки об\'єднуються в кружок із числом, коли мапу віддалено';
+
+  @override
   String get reliefTint => 'Теплова мапа висот';
 
   @override

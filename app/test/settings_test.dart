@@ -22,6 +22,8 @@ void main() {
       camera: MapCamera(50.45, 30.52, 12.5),
       symbolFavorites: ['10031000001211000000'],
       symbolRecent: ['10061500001116000000', '10031000001211000000'],
+      reliefTint: true,
+      clustering: false,
     );
     expect(AppSettings.fromMap(s.toMap()), s);
     expect(AppSettings.fromMap(s.toMap()).toMap(), s.toMap());
@@ -38,10 +40,12 @@ void main() {
       camera: const MapCamera(1, 2, 3),
       symbolFavorites: ['10031000001211000000'],
       symbolRecent: ['10031000001211000000'],
+      reliefTint: true,
+      clustering: false,
     );
     final a = d.toMap(), b = changed.toMap();
     for (final k in ['offlineOnly', 'onlineMap', 'screenshotProtection', 'privacyNoticeSeen',
-        'lastSeenVersion', 'camera', 'symbolFavorites', 'symbolRecent']) {
+        'lastSeenVersion', 'camera', 'symbolFavorites', 'symbolRecent', 'reliefTint', 'clustering']) {
       expect(b[k], isNot(a[k]), reason: k);
     }
   });
@@ -51,5 +55,7 @@ void main() {
     expect(s.system, const AppSettings().system);
     expect(s.lockAfter, const AppSettings().lockAfter);
     expect(s.callsign, 'A');
+    expect(s.clustering, isTrue);
+    expect(s.reliefTint, isFalse);
   });
 }
