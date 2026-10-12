@@ -155,6 +155,22 @@ class MilSymbol {
         v.mobility;
   }
 
+  /// Whether milsymbol draws this SIDC as a single point symbol.
+  ///
+  /// milsymbol's control measures (symbol set 25) are only the tactical
+  /// points: lines and areas are missing from its table, so their icon is
+  /// not found ([validIcon] false, a question mark is drawn), and hierarchy
+  /// entries draw nothing. Every other symbol set is drawn as a point when
+  /// its icon code is known. Letter SIDCs are not supported, so false.
+  bool get isPointSymbol =>
+      metadata.numberSIDC &&
+      validIcon &&
+      (!metadata.controlMeasure || drawInstructions.any((d) => d is! List || d.isNotEmpty));
+
+  /// [isPointSymbol] for [sidc] with default options (one symbol build,
+  /// about 0.05 ms once the icon tables of the symbol set are cached).
+  static bool isPoint(String sidc) => MilSymbol(sidc).isPointSymbol;
+
   SymbolValidity validity() => SymbolValidity(
     affiliation: metadata.affiliation,
     dimension: metadata.dimension,

@@ -86,6 +86,17 @@ void main() {
     expect(json.containsKey('fill'), isFalse);
   });
 
+  test('point symbols', () {
+    expect(MilSymbol.isPoint('10031000001211000000'), isTrue); // infantry
+    expect(MilSymbol.isPoint('10031000001299000000'), isFalse); // unknown entity
+    expect(MilSymbol.isPoint('10032500001301000000'), isTrue); // action point
+    expect(MilSymbol.isPoint('10032500001401000000'), isFalse); // boundary (line)
+    expect(MilSymbol.isPoint('10032500001510000000'), isFalse); // area
+    expect(MilSymbol.isPoint('10032500001310000000'), isFalse); // hierarchy only
+    expect(MilSymbol.isPoint('10032500000000000000'), isFalse); // nothing drawn
+    expect(MilSymbol.isPoint('SFGPUCI----K'), isFalse);
+  });
+
   test('octagon debug part', () {
     MilSymbol.showOctagon();
     expect(MilSymbol('10031000001211000000').asSvg(), contains('stroke="rgb(0,0,255)"'));

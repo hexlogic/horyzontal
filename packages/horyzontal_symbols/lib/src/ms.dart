@@ -118,7 +118,16 @@ class Ms {
   final Map<String, NumberIcons> _iconCache = {};
 
   /// Maximum number of cached icon table entries.
-  static const _cacheLimit = 128;
+  static const _cacheLimit = 64;
+
+  /// Icon parts the icon symbol part reads directly (entity subtypes 95-98);
+  /// everything else is reached through the tables.
+  static const directParts = [
+    'GR.IC.FF.HEADQUARTERS OR HEADQUARTERS ELEMENT',
+    'GR.IC.FF.DIVISION AND BELOW SUPPORT',
+    'GR.IC.FF.CORPS SUPPORT',
+    'GR.IC.FF.THEATRE SUPPORT',
+  ];
 
   void reset() {
     colorModes = {};
@@ -247,7 +256,9 @@ class Ms {
       f(sId, m1, m2, bbox, symbolSet, parts, std2525, edition);
     }
     if (_iconCache.length >= _cacheLimit) _iconCache.clear();
-    return _iconCache[k] = NumberIcons(sId, m1, m2, bbox, parts);
+    // Keep only what the tables reference (about a tenth of all parts).
+    final direct = {for (final p in directParts) p: parts[p]};
+    return _iconCache[k] = NumberIcons(sId, m1, m2, bbox, direct);
   }
 }
 

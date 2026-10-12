@@ -35,13 +35,6 @@ const _equipmentNoScale = [
   250000,
 ];
 
-const _ffParts = [
-  'GR.IC.FF.HEADQUARTERS OR HEADQUARTERS ELEMENT',
-  'GR.IC.FF.DIVISION AND BELOW SUPPORT',
-  'GR.IC.FF.CORPS SUPPORT',
-  'GR.IC.FF.THEATRE SUPPORT',
-];
-
 /// Drawn for unknown icon codes: a question mark.
 JsArray _undefinedIcon(Object? iconColor) => [
   <String, Object?>{
@@ -142,7 +135,7 @@ SymbolPartResult icon(MilSymbol s, Ms ms) {
             : metadata.modifier2;
         m1 = {k1: _clone(m1[k1], seen)};
         m2 = {k2: _clone(m2[k2], seen)};
-        iconParts = {for (final k in _ffParts) k: _clone(iconParts[k], seen)};
+        iconParts = {for (final k in Ms.directParts) k: _clone(iconParts[k], seen)};
       }
 
       // Put all this togheter and return the Icon. ============================================
