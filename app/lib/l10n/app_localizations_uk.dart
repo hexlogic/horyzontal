@@ -1133,6 +1133,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get toCrosshair => 'До перехрестя';
 
   @override
+  String get backShort => 'зворотний';
+
+  @override
   String get vertexAngle => 'Кут при вершині';
 
   @override
@@ -1209,6 +1212,52 @@ class AppLocalizationsUk extends AppLocalizations {
   String atDistance(String value) {
     return 'На відстані $value';
   }
+
+  @override
+  String get losVisible => 'Пряма видимість є';
+
+  @override
+  String losBlocked(String value) {
+    return 'Перешкода на відстані $value від A';
+  }
+
+  @override
+  String get minClearance => 'Найменший просвіт над перешкодою';
+
+  @override
+  String get mastA => 'Щогла A, м';
+
+  @override
+  String get mastB => 'Щогла B, м';
+
+  @override
+  String get refraction => 'Рефракція';
+
+  @override
+  String get refractionNone => 'Без рефракції';
+
+  @override
+  String get refractionOptical => 'Оптична, k = 0.13';
+
+  @override
+  String get refractionRadio => 'Радіо, 4/3 Землі';
+
+  @override
+  String get frequencyMhz => 'Частота, МГц (для зони Френеля)';
+
+  @override
+  String get fresnelClear => 'Перша зона Френеля вільна щонайменше на 60%';
+
+  @override
+  String fresnelBlocked(String value) {
+    return 'Перша зона Френеля перекрита: просвіт $value% радіуса';
+  }
+
+  @override
+  String get pointA => 'Точка A';
+
+  @override
+  String get pointB => 'Точка B';
 
   @override
   String get favorite => 'В обране';

@@ -176,13 +176,13 @@ class _Readouts extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _Line(
-              label: v.length == 2 ? l.distance : l.toCrosshair,
-              text: formatDistance(l, r.distance),
+            _Pair(
+              _Line(label: v.length == 2 ? l.distance : l.toCrosshair, text: formatDistance(l, r.distance)),
+              dh == null ? null : _Line(label: l.heightDiff, text: formatSignedMetres(l, dh)),
             ),
             _Line(
-              label: angleKindName(l, kind),
-              text: '${angle(r.forward.of(kind))}   ↩ ${angle(r.back.of(kind))}',
+              label: '${angleKindName(l, kind)} / ${l.backShort}',
+              text: '${angle(r.forward.of(kind))} / ${angle(r.back.of(kind))}',
               onTap: onCycleKind,
               trailing: Icons.sync,
             ),
@@ -191,7 +191,6 @@ class _Readouts extends ConsumerWidget {
                 label: '${l.deltaXY} (${systemName(l, frame.system)})',
                 text: 'ΔX ${formatSignedMetres(l, r.dx)}   ΔY ${formatSignedMetres(l, r.dy)}',
               ),
-              if (dh != null) _Line(label: l.heightDiff, text: formatSignedMetres(l, dh)),
               if (dev != null && dev.distance > 0)
                 _Line(
                   label: l.deviation,
@@ -217,17 +216,19 @@ class _Readouts extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (tool == MapTool.polygon) ...[
-              _Line(
-                label: l.area,
-                text: r.polygon != null
-                    ? formatArea(l, r.polygon!.area)
-                    : r.withNext != null
-                    ? '→ ${formatArea(l, r.withNext!)}'
-                    : '—',
-              ),
-              _Line(label: l.perimeter, text: formatDistance(l, r.metrics.length)),
-            ] else
+            if (tool == MapTool.polygon)
+              _Pair(
+                _Line(
+                  label: l.area,
+                  text: r.polygon != null
+                      ? formatArea(l, r.polygon!.area)
+                      : r.withNext != null
+                      ? '→ ${formatArea(l, r.withNext!)}'
+                      : '—',
+                ),
+                _Line(label: l.perimeter, text: formatDistance(l, r.metrics.length)),
+              )
+            else
               _Line(
                 label: l.length,
                 text: [
@@ -236,14 +237,15 @@ class _Readouts extends ConsumerWidget {
                 ].join('   '),
               ),
             if (next != null)
-              _Line(
-                label: '${l.toCrosshair}, ${angleKindName(l, kind).toLowerCase()}',
-                text:
-                    '${formatDistance(l, next.length)}   ${angle(angleContextAt(v.last, frame).fromTrue(next.azimuth1).of(kind))}',
-                onTap: onCycleKind,
-                trailing: Icons.sync,
+              _Pair(
+                _Line(
+                  label: '${l.toCrosshair}, ${angleKindName(l, kind).toLowerCase()}',
+                  text:
+                      '${formatDistance(l, next.length)}   ${angle(angleContextAt(v.last, frame).fromTrue(next.azimuth1).of(kind))}',
+                  onTap: onCycleKind,
+                ),
+                r.nextAngle == null ? null : _Line(label: l.vertexAngle, text: angle(r.nextAngle!)),
               ),
-            if (r.nextAngle != null) _Line(label: l.vertexAngle, text: angle(r.nextAngle!)),
           ],
         );
     }
@@ -265,7 +267,7 @@ class _Line extends StatelessWidget {
     return InkWell(
       onTap: onTap ?? (muted ? null : () => copyToClipboard(context, text)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3),
+        padding: const EdgeInsets.symmetric(vertical: 2),
         child: Row(
           children: [
             Expanded(
@@ -281,7 +283,7 @@ class _Line extends StatelessWidget {
                     ),
                   Text(
                     text,
-                    style: (muted ? theme.textTheme.bodySmall : theme.textTheme.bodyLarge)
+                    style: (muted ? theme.textTheme.bodySmall : theme.textTheme.bodyMedium)
                         ?.copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
                   ),
                 ],
@@ -294,4 +296,19 @@ class _Line extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Two readouts side by side.
+class _Pair extends StatelessWidget {
+  const _Pair(this.a, this.b);
+  final Widget a;
+  final Widget? b;
+
+  @override
+  Widget build(BuildContext context) => b == null
+      ? a
+      : Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [Expanded(child: a), const SizedBox(width: 12), Expanded(child: b!)],
+        );
 }

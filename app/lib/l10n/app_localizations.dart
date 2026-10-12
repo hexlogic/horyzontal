@@ -2032,6 +2032,12 @@ abstract class AppLocalizations {
   /// **'До перехрестя'**
   String get toCrosshair;
 
+  /// No description provided for @backShort.
+  ///
+  /// In uk, this message translates to:
+  /// **'зворотний'**
+  String get backShort;
+
   /// No description provided for @vertexAngle.
   ///
   /// In uk, this message translates to:
@@ -2151,6 +2157,90 @@ abstract class AppLocalizations {
   /// In uk, this message translates to:
   /// **'На відстані {value}'**
   String atDistance(String value);
+
+  /// No description provided for @losVisible.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пряма видимість є'**
+  String get losVisible;
+
+  /// No description provided for @losBlocked.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перешкода на відстані {value} від A'**
+  String losBlocked(String value);
+
+  /// No description provided for @minClearance.
+  ///
+  /// In uk, this message translates to:
+  /// **'Найменший просвіт над перешкодою'**
+  String get minClearance;
+
+  /// No description provided for @mastA.
+  ///
+  /// In uk, this message translates to:
+  /// **'Щогла A, м'**
+  String get mastA;
+
+  /// No description provided for @mastB.
+  ///
+  /// In uk, this message translates to:
+  /// **'Щогла B, м'**
+  String get mastB;
+
+  /// No description provided for @refraction.
+  ///
+  /// In uk, this message translates to:
+  /// **'Рефракція'**
+  String get refraction;
+
+  /// No description provided for @refractionNone.
+  ///
+  /// In uk, this message translates to:
+  /// **'Без рефракції'**
+  String get refractionNone;
+
+  /// No description provided for @refractionOptical.
+  ///
+  /// In uk, this message translates to:
+  /// **'Оптична, k = 0.13'**
+  String get refractionOptical;
+
+  /// No description provided for @refractionRadio.
+  ///
+  /// In uk, this message translates to:
+  /// **'Радіо, 4/3 Землі'**
+  String get refractionRadio;
+
+  /// No description provided for @frequencyMhz.
+  ///
+  /// In uk, this message translates to:
+  /// **'Частота, МГц (для зони Френеля)'**
+  String get frequencyMhz;
+
+  /// No description provided for @fresnelClear.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перша зона Френеля вільна щонайменше на 60%'**
+  String get fresnelClear;
+
+  /// No description provided for @fresnelBlocked.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перша зона Френеля перекрита: просвіт {value}% радіуса'**
+  String fresnelBlocked(String value);
+
+  /// No description provided for @pointA.
+  ///
+  /// In uk, this message translates to:
+  /// **'Точка A'**
+  String get pointA;
+
+  /// No description provided for @pointB.
+  ///
+  /// In uk, this message translates to:
+  /// **'Точка B'**
+  String get pointB;
 
   /// No description provided for @favorite.
   ///

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:horyzontal/core/dem/dem_reader.dart';
 import 'package:horyzontal/features/map/elevation.dart';
+import 'package:horyzontal/core/settings.dart';
+import 'package:horyzontal/features/map/tools/los_page.dart';
 import 'package:horyzontal/features/map/tools/profile_page.dart';
 import 'package:horyzontal_geo/horyzontal_geo.dart';
 
@@ -53,5 +55,39 @@ void main() {
     expect(find.textContaining('+19'), findsOneWidget); // ascent
     expect(find.textContaining('Початкова точка'), findsOneWidget);
     expect(find.text('Висоти Copernicus DEM — модель поверхні: вони включають ліс і будівлі'), findsOneWidget);
+  });
+
+  Future<void> pumpLoaded(WidgetTester tester, Widget page, {AppSettings settings = const AppSettings()}) async {
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final dem = ridgeDem();
+    await tester.pumpWidget(testApp(page, settings: settings, overrides: [demProvider.overrideWith((ref) async => dem)]));
+    for (var i = 0; i < 10 && find.byType(CircularProgressIndicator).evaluate().isNotEmpty; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 200)));
+      await tester.pump();
+    }
+  }
+
+  testWidgets('the ridge blocks low masts, tall ones see over it', (tester) async {
+    await pumpLoaded(tester, const LosPage(a: a, b: b));
+    expect(find.textContaining('Перешкода на відстані'), findsOneWidget);
+
+    await pumpLoaded(
+      tester,
+      const LosPage(a: a, b: b, key: ValueKey(2)),
+      settings: const AppSettings(los: LosParams(mastA: 250, mastB: 250, frequencyMhz: 2400)),
+    );
+    expect(find.text('Пряма видимість є'), findsOneWidget);
+    expect(find.textContaining('зона Френеля'), findsOneWidget);
+  });
+
+  test('line-of-sight parameters survive the settings round trip', () {
+    const s = AppSettings(los: LosParams(mastA: 12, mastB: 3.5, k: 0.25, frequencyMhz: 433));
+    final back = AppSettings.fromMap(s.toMap());
+    expect(back.los.mastB, 3.5);
+    expect(back.los.k, 0.25);
+    expect(back.los.frequencyMhz, 433);
+    expect(AppSettings.fromMap(const AppSettings().toMap()).los.frequencyMhz, isNull);
   });
 }

@@ -10,6 +10,7 @@ import '../features/layers/layer_page.dart';
 import '../features/layers/layers_page.dart';
 import '../features/map/map_page.dart';
 import '../features/map/packs_page.dart';
+import '../features/map/tools/los_page.dart';
 import '../features/map/tools/profile_page.dart';
 import '../features/objects/feature_editor_page.dart';
 import '../features/objects/feature_sheet.dart';
@@ -73,6 +74,14 @@ GoRouter buildRouter() => GoRouter(
                     path: 'profile',
                     parentNavigatorKey: rootNavigatorKey,
                     builder: (_, s) => ProfilePage(path: s.extra! as List<Geodetic>),
+                  ),
+                  GoRoute(
+                    path: 'los',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (_, s) {
+                      final ab = s.extra! as List<Geodetic>;
+                      return LosPage(a: ab[0], b: ab[1]);
+                    },
                   ),
                   GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
                 ],

@@ -188,7 +188,14 @@ class _MapPageState extends ConsumerState<MapPage> {
         actionIcon: Icons.area_chart_outlined,
         onAction: tool.ready ? () => context.push('/map/profile', extra: tool.vertices) : null,
       ),
-      _ => ToolPanel(cursor: _cursor, onAdd: _addCenter),
+      MapTool.lineOfSight => ToolPanel(
+        cursor: _cursor,
+        onAdd: _addCenter,
+        actionLabel: l.buildTool,
+        actionIcon: Icons.cell_tower,
+        onAction: tool.ready ? () => context.push('/map/los', extra: tool.vertices) : null,
+      ),
+      MapTool.ruler => ToolPanel(cursor: _cursor, onAdd: _addCenter),
     };
   }
 

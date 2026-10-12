@@ -24,6 +24,7 @@ class AppSettings {
     this.camera = const MapCamera(48.9, 31.2, 5.3),
     this.symbolFavorites = const [],
     this.symbolRecent = const [],
+    this.los = const LosParams(),
   });
 
   final CoordinateSystem system;
@@ -51,6 +52,9 @@ class AppSettings {
   /// SIDCs starred in the symbol picker, and the last ones used.
   final List<String> symbolFavorites, symbolRecent;
 
+  /// Last line-of-sight parameters.
+  final LosParams los;
+
   static const lockOptions = [
     Duration.zero,
     Duration(seconds: 30),
@@ -76,6 +80,7 @@ class AppSettings {
     MapCamera? camera,
     List<String>? symbolFavorites,
     List<String>? symbolRecent,
+    LosParams? los,
   }) => AppSettings(
     system: system ?? this.system,
     geoFormat: geoFormat ?? this.geoFormat,
@@ -93,6 +98,7 @@ class AppSettings {
     camera: camera ?? this.camera,
     symbolFavorites: symbolFavorites ?? this.symbolFavorites,
     symbolRecent: symbolRecent ?? this.symbolRecent,
+    los: los ?? this.los,
   );
 
   Map<String, String> toMap() => {
@@ -112,6 +118,7 @@ class AppSettings {
     'camera': camera.encode(),
     'symbolFavorites': symbolFavorites.join(','),
     'symbolRecent': symbolRecent.join(','),
+    'los': los.encode(),
   };
 
   /// Unknown or missing values fall back to defaults, so old and new app
@@ -138,6 +145,7 @@ class AppSettings {
       camera: MapCamera.decode(m['camera']) ?? d.camera,
       symbolFavorites: _codes(m['symbolFavorites']),
       symbolRecent: _codes(m['symbolRecent']),
+      los: LosParams.decode(m['los']) ?? d.los,
     );
   }
 
@@ -160,6 +168,25 @@ class MapCamera {
     final p = s?.split(',').map(double.tryParse).toList();
     if (p == null || p.length != 3 || p.contains(null)) return null;
     return MapCamera(p[0]!, p[1]!, p[2]!);
+  }
+}
+
+/// Antenna heights above the ground at both ends, refraction coefficient and
+/// an optional radio frequency for the Fresnel zone.
+@immutable
+class LosParams {
+  const LosParams({this.mastA = 2, this.mastB = 2, this.k = 0.13, this.frequencyMhz});
+  final double mastA, mastB, k;
+  final double? frequencyMhz;
+
+  String encode() => '$mastA,$mastB,$k,${frequencyMhz ?? ''}';
+
+  static LosParams? decode(String? s) {
+    final p = s?.split(',');
+    if (p == null || p.length != 4) return null;
+    final a = double.tryParse(p[0]), b = double.tryParse(p[1]), k = double.tryParse(p[2]);
+    if (a == null || b == null || k == null) return null;
+    return LosParams(mastA: a, mastB: b, k: k, frequencyMhz: double.tryParse(p[3]));
   }
 }
 

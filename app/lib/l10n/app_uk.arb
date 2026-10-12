@@ -569,6 +569,7 @@
   "area": "Площа",
   "lastSegment": "Останній відрізок",
   "toCrosshair": "До перехрестя",
+  "backShort": "зворотний",
   "vertexAngle": "Кут при вершині",
   "deviation": "Відхилення перехрестя",
   "deltaXY": "Прирости",
@@ -645,6 +646,34 @@
       }
     }
   },
+  "losVisible": "Пряма видимість є",
+  "losBlocked": "Перешкода на відстані {value} від A",
+  "@losBlocked": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "minClearance": "Найменший просвіт над перешкодою",
+  "mastA": "Щогла A, м",
+  "mastB": "Щогла B, м",
+  "refraction": "Рефракція",
+  "refractionNone": "Без рефракції",
+  "refractionOptical": "Оптична, k = 0.13",
+  "refractionRadio": "Радіо, 4/3 Землі",
+  "frequencyMhz": "Частота, МГц (для зони Френеля)",
+  "fresnelClear": "Перша зона Френеля вільна щонайменше на 60%",
+  "fresnelBlocked": "Перша зона Френеля перекрита: просвіт {value}% радіуса",
+  "@fresnelBlocked": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "pointA": "Точка A",
+  "pointB": "Точка B",
   "favorite": "В обране",
   "favorites": "Обране",
   "recent": "Нещодавні",
