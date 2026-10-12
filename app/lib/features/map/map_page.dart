@@ -98,6 +98,21 @@ class _MapPageState extends ConsumerState<MapPage> {
   Future<void> _onStyleLoaded() async {
     final map = _map;
     if (map == null) return;
+    try {
+      await _addObjectLayers(map);
+    } catch (e) {
+      // The map was rebuilt with another style while this ran; the new
+      // controller sets its layers up itself.
+      if (identical(map, _map)) rethrow;
+      return;
+    }
+    if (!mounted || !identical(map, _map)) return;
+    setState(() => _styleReady = true);
+    await _syncFeatures(ref.read(visibleFeaturesProvider).value ?? const []);
+    await _syncSearch();
+  }
+
+  Future<void> _addObjectLayers(MapLibreMapController map) async {
     final empty = collection(const []);
     await map.addGeoJsonSource(_src.radius, empty, promoteId: 'id');
     await map.addGeoJsonSource(_src.lines, empty, promoteId: 'id');
@@ -169,9 +184,6 @@ class _MapPageState extends ConsumerState<MapPage> {
       ),
       enableInteraction: false,
     );
-    setState(() => _styleReady = true);
-    await _syncFeatures(ref.read(visibleFeaturesProvider).value ?? const []);
-    await _syncSearch();
   }
 
   Future<void> _syncFeatures(List<MapFeature> features) async {
@@ -270,8 +282,10 @@ class _MapPageState extends ConsumerState<MapPage> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final settings = ref.watch(settingsProvider);
-    final packs = ref.watch(packsProvider).value ?? const <PackFile>[];
-    _loadStyle(settings, packs);
+    final packsState = ref.watch(packsProvider);
+    // Wait for the pack list: building a style without it first would throw
+    // the map away a moment later.
+    if (packsState.hasValue) _loadStyle(settings, packsState.value!);
     ref.listen(visibleFeaturesProvider, (_, next) => _syncFeatures(next.value ?? const []));
     ref.listen(mapFocusProvider, (_, f) {
       if (f != null && _styleReady) _focus(f);
@@ -307,6 +321,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                   _locationAllowed ? MyLocationRenderMode.compass : MyLocationRenderMode.normal,
               onMapCreated: (c) {
                 _map = c;
+                _styleReady = false;
                 c.onFeatureTapped.add((_, _, id, layerId, _) {
                   // Radius polygons carry '<id>-r'; everything else the object id.
                   if (layerId.startsWith('hrz-')) _onFeatureTap(id.replaceAll(RegExp(r'-r$'), ''));
