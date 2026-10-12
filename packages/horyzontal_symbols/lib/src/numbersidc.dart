@@ -16,6 +16,7 @@ import 'numbersidc/sidc/landequipment.dart';
 import 'numbersidc/sidc/landinstallation.dart';
 import 'numbersidc/sidc/landunit.dart';
 import 'numbersidc/sidc/space.dart';
+import 'numbersidc/sidc/spacemissile.dart';
 
 // One module per milsymbol file in src/numbersidc/sidc. Modules that are
 // not ported yet are listed as comments in the lists below, at their
@@ -102,12 +103,20 @@ const space = SymbolSetModule(
   icons: spaceIcons,
 );
 
+/// Symbol set 06, space missile.
+const spacemissile = SymbolSetModule(
+  name: 'spacemissile',
+  symbolSets: ['06'],
+  iconParts: spaceIconParts,
+  icons: spacemissileIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
   airmissile,
   space,
-  // spacemissile,
+  spacemissile,
   landunit,
   landcivilian,
   landequipment,
@@ -126,7 +135,7 @@ const List<SymbolSetModule> std2525d = [
   air,
   airmissile,
   space,
-  // spacemissile,
+  spacemissile,
   landunit,
   landcivilian,
   landequipment,
@@ -146,7 +155,7 @@ const List<SymbolSetModule> std2525e = [
   air,
   airmissile,
   space,
-  // spacemissile,
+  spacemissile,
   landunit,
   landcivilian,
   landequipment,

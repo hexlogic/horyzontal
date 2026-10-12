@@ -11,7 +11,8 @@
     "dismountedindividual",
     "air",
     "airmissile",
-    "space"
+    "space",
+    "spacemissile"
   ],
   "files": [
     {
@@ -95,6 +96,22 @@
         "05"
       ],
       "count": 135,
+      "errors": 0
+    },
+    {
+      "name": "spacemissile.jsonl.gz",
+      "sets": [
+        "06"
+      ],
+      "count": 5,
+      "errors": 0
+    },
+    {
+      "name": "spacemissile-modifiers.jsonl.gz",
+      "sets": [
+        "06"
+      ],
+      "count": 125,
       "errors": 0
     },
     {
