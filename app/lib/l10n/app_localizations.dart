@@ -1918,6 +1918,174 @@ abstract class AppLocalizations {
   /// **'{n, plural, one{{n} вершина} few{{n} вершини} many{{n} вершин} other{{n} вершини}}'**
   String vertices(int n);
 
+  /// No description provided for @tools.
+  ///
+  /// In uk, this message translates to:
+  /// **'Інструменти'**
+  String get tools;
+
+  /// No description provided for @toolRuler.
+  ///
+  /// In uk, this message translates to:
+  /// **'Лінійка'**
+  String get toolRuler;
+
+  /// No description provided for @toolPolyline.
+  ///
+  /// In uk, this message translates to:
+  /// **'Полілінія'**
+  String get toolPolyline;
+
+  /// No description provided for @toolPolygon.
+  ///
+  /// In uk, this message translates to:
+  /// **'Полігон'**
+  String get toolPolygon;
+
+  /// No description provided for @toolProfile.
+  ///
+  /// In uk, this message translates to:
+  /// **'Профіль висот'**
+  String get toolProfile;
+
+  /// No description provided for @toolLos.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видимість'**
+  String get toolLos;
+
+  /// No description provided for @toolHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Наведіть перехрестя і натисніть «Точка» або торкніться карти'**
+  String get toolHint;
+
+  /// No description provided for @addPoint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Точка'**
+  String get addPoint;
+
+  /// No description provided for @undoPoint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Прибрати останню точку'**
+  String get undoPoint;
+
+  /// No description provided for @clearPoints.
+  ///
+  /// In uk, this message translates to:
+  /// **'Почати заново'**
+  String get clearPoints;
+
+  /// No description provided for @closeTool.
+  ///
+  /// In uk, this message translates to:
+  /// **'Закрити інструмент'**
+  String get closeTool;
+
+  /// No description provided for @length.
+  ///
+  /// In uk, this message translates to:
+  /// **'Довжина'**
+  String get length;
+
+  /// No description provided for @perimeter.
+  ///
+  /// In uk, this message translates to:
+  /// **'Периметр'**
+  String get perimeter;
+
+  /// No description provided for @area.
+  ///
+  /// In uk, this message translates to:
+  /// **'Площа'**
+  String get area;
+
+  /// No description provided for @lastSegment.
+  ///
+  /// In uk, this message translates to:
+  /// **'Останній відрізок'**
+  String get lastSegment;
+
+  /// No description provided for @toCrosshair.
+  ///
+  /// In uk, this message translates to:
+  /// **'До перехрестя'**
+  String get toCrosshair;
+
+  /// No description provided for @vertexAngle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Кут при вершині'**
+  String get vertexAngle;
+
+  /// No description provided for @deviation.
+  ///
+  /// In uk, this message translates to:
+  /// **'Відхилення перехрестя'**
+  String get deviation;
+
+  /// No description provided for @deltaXY.
+  ///
+  /// In uk, this message translates to:
+  /// **'Прирости'**
+  String get deltaXY;
+
+  /// No description provided for @heightDiff.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перевищення'**
+  String get heightDiff;
+
+  /// No description provided for @angleKindCycle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Змінити вид кута'**
+  String get angleKindCycle;
+
+  /// No description provided for @rangeOver.
+  ///
+  /// In uk, this message translates to:
+  /// **'переліт {value}'**
+  String rangeOver(String value);
+
+  /// No description provided for @rangeShort.
+  ///
+  /// In uk, this message translates to:
+  /// **'недоліт {value}'**
+  String rangeShort(String value);
+
+  /// No description provided for @deviationRight.
+  ///
+  /// In uk, this message translates to:
+  /// **'вправо {value}'**
+  String deviationRight(String value);
+
+  /// No description provided for @deviationLeft.
+  ///
+  /// In uk, this message translates to:
+  /// **'вліво {value}'**
+  String deviationLeft(String value);
+
+  /// No description provided for @squareMetres.
+  ///
+  /// In uk, this message translates to:
+  /// **'{value} м²'**
+  String squareMetres(String value);
+
+  /// No description provided for @hectares.
+  ///
+  /// In uk, this message translates to:
+  /// **'{value} га'**
+  String hectares(String value);
+
+  /// No description provided for @squareKm.
+  ///
+  /// In uk, this message translates to:
+  /// **'{value} км²'**
+  String squareKm(String value);
+
   /// No description provided for @favorite.
   ///
   /// In uk, this message translates to:

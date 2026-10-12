@@ -1075,6 +1075,105 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
+  String get tools => 'Інструменти';
+
+  @override
+  String get toolRuler => 'Лінійка';
+
+  @override
+  String get toolPolyline => 'Полілінія';
+
+  @override
+  String get toolPolygon => 'Полігон';
+
+  @override
+  String get toolProfile => 'Профіль висот';
+
+  @override
+  String get toolLos => 'Видимість';
+
+  @override
+  String get toolHint =>
+      'Наведіть перехрестя і натисніть «Точка» або торкніться карти';
+
+  @override
+  String get addPoint => 'Точка';
+
+  @override
+  String get undoPoint => 'Прибрати останню точку';
+
+  @override
+  String get clearPoints => 'Почати заново';
+
+  @override
+  String get closeTool => 'Закрити інструмент';
+
+  @override
+  String get length => 'Довжина';
+
+  @override
+  String get perimeter => 'Периметр';
+
+  @override
+  String get area => 'Площа';
+
+  @override
+  String get lastSegment => 'Останній відрізок';
+
+  @override
+  String get toCrosshair => 'До перехрестя';
+
+  @override
+  String get vertexAngle => 'Кут при вершині';
+
+  @override
+  String get deviation => 'Відхилення перехрестя';
+
+  @override
+  String get deltaXY => 'Прирости';
+
+  @override
+  String get heightDiff => 'Перевищення';
+
+  @override
+  String get angleKindCycle => 'Змінити вид кута';
+
+  @override
+  String rangeOver(String value) {
+    return 'переліт $value';
+  }
+
+  @override
+  String rangeShort(String value) {
+    return 'недоліт $value';
+  }
+
+  @override
+  String deviationRight(String value) {
+    return 'вправо $value';
+  }
+
+  @override
+  String deviationLeft(String value) {
+    return 'вліво $value';
+  }
+
+  @override
+  String squareMetres(String value) {
+    return '$value м²';
+  }
+
+  @override
+  String hectares(String value) {
+    return '$value га';
+  }
+
+  @override
+  String squareKm(String value) {
+    return '$value км²';
+  }
+
+  @override
   String get favorite => 'В обране';
 
   @override

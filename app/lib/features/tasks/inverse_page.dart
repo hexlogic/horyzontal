@@ -62,7 +62,11 @@ class _InversePageState extends ConsumerState<InversePage> {
             AngleSetTiles(set: result.forward, format: _outFormat),
             AngleSetTiles(set: result.back, format: _outFormat, back: true),
             AngleContextTiles(at: result.atA, format: _outFormat),
-            CopyTile(label: l.gridDistance, value: formatDistance(l, result.gridDistance), dense: true),
+            CopyTile(
+              label: l.gridDistance,
+              value: formatDistance(l, result.gridDistance),
+              dense: true,
+            ),
             CopyTile(
               label: l.ellipsoidDistance,
               value: formatDistance(l, result.ellipsoidDistance),

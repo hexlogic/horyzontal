@@ -550,6 +550,83 @@
       }
     }
   },
+  "tools": "Інструменти",
+  "toolRuler": "Лінійка",
+  "toolPolyline": "Полілінія",
+  "toolPolygon": "Полігон",
+  "toolProfile": "Профіль висот",
+  "toolLos": "Видимість",
+  "toolHint": "Наведіть перехрестя і натисніть «Точка» або торкніться карти",
+  "addPoint": "Точка",
+  "undoPoint": "Прибрати останню точку",
+  "clearPoints": "Почати заново",
+  "closeTool": "Закрити інструмент",
+  "length": "Довжина",
+  "perimeter": "Периметр",
+  "area": "Площа",
+  "lastSegment": "Останній відрізок",
+  "toCrosshair": "До перехрестя",
+  "vertexAngle": "Кут при вершині",
+  "deviation": "Відхилення перехрестя",
+  "deltaXY": "Прирости",
+  "heightDiff": "Перевищення",
+  "angleKindCycle": "Змінити вид кута",
+  "rangeOver": "переліт {value}",
+  "@rangeOver": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "rangeShort": "недоліт {value}",
+  "@rangeShort": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "deviationRight": "вправо {value}",
+  "@deviationRight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "deviationLeft": "вліво {value}",
+  "@deviationLeft": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "squareMetres": "{value} м²",
+  "@squareMetres": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "hectares": "{value} га",
+  "@hectares": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "squareKm": "{value} км²",
+  "@squareKm": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "favorite": "В обране",
   "favorites": "Обране",
   "recent": "Нещодавні",

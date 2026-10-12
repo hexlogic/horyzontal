@@ -63,7 +63,10 @@ void main() {
   const kyiv = Geodetic(50.45, 30.52);
   final (kx, ky) = _pixel(kyiv.lat, kyiv.lon);
   final tx = kx ~/ _size, ty = ky ~/ _size;
-  final all = {for (var dx = -2; dx <= 2; dx++) for (var dy = -2; dy <= 2; dy++) (tx + dx, ty + dy)};
+  final all = {
+    for (var dx = -2; dx <= 2; dx++)
+      for (var dy = -2; dy <= 2; dy++) (tx + dx, ty + dy),
+  };
   const wide = (west: 29.0, south: 49.0, east: 32.0, north: 52.0);
   double plane(double gx, double gy) => 150 + 0.3 * (gx - kx) - 0.2 * (gy - ky);
 
@@ -82,12 +85,14 @@ void main() {
     final rnd = math.Random(1);
     for (var i = 0; i < 200; i++) {
       // Within ±1.5 tiles of Kyiv; some samples fall right at tile edges.
-      final gx = kx + (rnd.nextDouble() - 0.5) * 3 * _size, gy = ky + (rnd.nextDouble() - 0.5) * 3 * _size;
+      final gx = kx + (rnd.nextDouble() - 0.5) * 3 * _size,
+          gy = ky + (rnd.nextDouble() - 0.5) * 3 * _size;
       final p = _geo(gx, gy);
       expect(await dem.elevation(p), closeTo(plane(gx, gy), 0.06));
     }
     for (final off in [0.0, 0.3, 0.5, 0.7, 1.0]) {
-      final gx = (tx + 1) * _size - 1 + off, gy = (ty + 1) * _size - 1 + off; // corner of four tiles
+      final gx = (tx + 1) * _size - 1 + off,
+          gy = (ty + 1) * _size - 1 + off; // corner of four tiles
       expect(await dem.elevation(_geo(gx, gy)), closeTo(plane(gx, gy), 0.06));
     }
     // Exactly on a tile edge and either side of it.
@@ -118,7 +123,11 @@ void main() {
   // The real pack is not committed: build it with tools/map-pipeline/build_dem.py.
   final out = Directory('../tools/map-pipeline/out');
   final packs = out.existsSync()
-      ? out.listSync().whereType<File>().where((f) => f.path.contains('kyiv-dem') && f.path.endsWith('.pmtiles')).toList()
+      ? out
+            .listSync()
+            .whereType<File>()
+            .where((f) => f.path.contains('kyiv-dem') && f.path.endsWith('.pmtiles'))
+            .toList()
       : <File>[];
   test('heights from a Kyiv pack match Copernicus', () async {
     final ref = File('test/fixtures/kyiv-dem-reference.csv')

@@ -28,7 +28,10 @@ class Dem {
 /// Null when there is no elevation pack on the device.
 final demProvider = FutureProvider<Dem?>((ref) async {
   final packs = await ref.watch(packsProvider.future);
-  final paths = [for (final p in packs) if (p.kind == PackKind.dem) p.path];
+  final paths = [
+    for (final p in packs)
+      if (p.kind == PackKind.dem) p.path,
+  ];
   if (paths.isEmpty) return null;
   final dem = await Dem.open(paths);
   ref.onDispose(dem.close);

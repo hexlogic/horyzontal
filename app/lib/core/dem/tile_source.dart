@@ -18,7 +18,8 @@ abstract interface class TileSource {
 class PmTilesSource implements TileSource {
   PmTilesSource._(this._archive);
 
-  static Future<PmTilesSource> open(String path) async => PmTilesSource._(await PmTilesArchive.from(path));
+  static Future<PmTilesSource> open(String path) async =>
+      PmTilesSource._(await PmTilesArchive.from(path));
 
   final PmTilesArchive _archive;
 

@@ -48,7 +48,9 @@ class DemReader {
     return null;
   }
 
-  Future<List<double?>> sample(List<Geodetic> pts) async => [for (final p in pts) await elevation(p)];
+  Future<List<double?>> sample(List<Geodetic> pts) async => [
+    for (final p in pts) await elevation(p),
+  ];
 
   Future<void> close() async {
     for (final s in sources) {
@@ -77,7 +79,9 @@ class DemReader {
           ? home
           : await _tile(source, _div(x, size), _div(y, size));
       // A missing neighbour (edge of the pack): clamp into the home tile.
-      if (t == null || t.size != size) return home.at((x - hx).clamp(0, size - 1), (y - hy).clamp(0, size - 1));
+      if (t == null || t.size != size) {
+        return home.at((x - hx).clamp(0, size - 1), (y - hy).clamp(0, size - 1));
+      }
       return t.at(x - _div(x, size) * size, y - _div(y, size) * size);
     }
 
@@ -113,11 +117,12 @@ class DemReader {
 
 /// [DemReader.sample] on a background isolate: decoding WebP in Dart takes
 /// tens of milliseconds a tile, too slow for the UI thread on long profiles.
-Future<List<double?>> sampleDemInIsolate(List<String> paths, List<Geodetic> pts) => Isolate.run(() async {
-  final reader = DemReader([for (final p in paths) await PmTilesSource.open(p)]);
-  try {
-    return await reader.sample(pts);
-  } finally {
-    await reader.close();
-  }
-});
+Future<List<double?>> sampleDemInIsolate(List<String> paths, List<Geodetic> pts) =>
+    Isolate.run(() async {
+      final reader = DemReader([for (final p in paths) await PmTilesSource.open(p)]);
+      try {
+        return await reader.sample(pts);
+      } finally {
+        await reader.close();
+      }
+    });

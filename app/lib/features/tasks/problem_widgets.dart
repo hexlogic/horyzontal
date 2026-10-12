@@ -174,7 +174,9 @@ class _FrameDialogState extends State<_FrameDialog> {
         TextButton(onPressed: () => Navigator.pop(context, (null,)), child: Text(l.frameAuto)),
         TextButton(onPressed: () => Navigator.pop(context), child: Text(l.cancel)),
         FilledButton(
-          onPressed: zone == null ? null : () => Navigator.pop(context, (PlaneFrame(_system, zone),)),
+          onPressed: zone == null
+              ? null
+              : () => Navigator.pop(context, (PlaneFrame(_system, zone),)),
           child: const Text('OK'),
         ),
       ],
@@ -196,7 +198,8 @@ class AngleKindSelector extends StatelessWidget {
       isExpanded: true,
       decoration: InputDecoration(labelText: l.angleKind, border: const OutlineInputBorder()),
       items: [
-        for (final k in AngleKind.values) DropdownMenuItem(value: k, child: Text(angleKindName(l, k))),
+        for (final k in AngleKind.values)
+          DropdownMenuItem(value: k, child: Text(angleKindName(l, k))),
       ],
       onChanged: (k) {
         if (k != null) onChanged(k);
@@ -287,7 +290,8 @@ class GeoFormatSelector extends StatelessWidget {
       isExpanded: true,
       decoration: InputDecoration(labelText: l.geoFormat, border: const OutlineInputBorder()),
       items: [
-        for (final f in GeoFormat.values) DropdownMenuItem(value: f, child: Text(geoFormatName(l, f))),
+        for (final f in GeoFormat.values)
+          DropdownMenuItem(value: f, child: Text(geoFormatName(l, f))),
       ],
       onChanged: (f) {
         if (f != null) onChanged(f);

@@ -10,7 +10,10 @@ void main() {
 
   test('plane frame: typed grid wins, else default grid, else СК-42', () {
     final typed = PointValue(kyiv, CoordinateSystem.usk2000Gk, zone: 5);
-    expect(planeFrameFor(typed, CoordinateSystem.wgs84), const PlaneFrame(CoordinateSystem.usk2000Gk, 5));
+    expect(
+      planeFrameFor(typed, CoordinateSystem.wgs84),
+      const PlaneFrame(CoordinateSystem.usk2000Gk, 5),
+    );
     const wgs = PointValue(kyiv, CoordinateSystem.wgs84);
     expect(planeFrameFor(wgs, CoordinateSystem.usk2000Tm3).system, CoordinateSystem.usk2000Tm3);
     expect(planeFrameFor(wgs, CoordinateSystem.mgrs), const PlaneFrame(CoordinateSystem.utm, 36));
@@ -65,17 +68,42 @@ void main() {
   test('ground distance near a zone edge', () {
     const start = Geodetic(49.9, 35.6); // 2.6° east of the zone 6 meridian
     for (final az in [10.0, 80.0, 200.0]) {
-      final d = solveDirect(start, 30000, az, AngleKind.grid, ProblemMethod.plane, sk42zone6, groundDistance: true, at: at);
+      final d = solveDirect(
+        start,
+        30000,
+        az,
+        AngleKind.grid,
+        ProblemMethod.plane,
+        sk42zone6,
+        groundDistance: true,
+        at: at,
+      );
       final i = solveInverse(start, d.end, ProblemMethod.ellipsoid, sk42zone6, at: at);
       expect(i.ellipsoidDistance, closeTo(30000, 0.05));
-      final grid = solveDirect(start, 30000, az, AngleKind.grid, ProblemMethod.plane, sk42zone6, at: at);
+      final grid = solveDirect(
+        start,
+        30000,
+        az,
+        AngleKind.grid,
+        ProblemMethod.plane,
+        sk42zone6,
+        at: at,
+      );
       final j = solveInverse(start, grid.end, ProblemMethod.ellipsoid, sk42zone6, at: at);
       expect(j.ellipsoidDistance, lessThan(29990)); // grid metres are longer here
     }
   });
 
   test('magnetic azimuth on the ellipsoid uses the declination at the start', () {
-    final d = solveDirect(kyiv, 5000, 45, AngleKind.magnetic, ProblemMethod.ellipsoid, sk42zone6, at: at);
+    final d = solveDirect(
+      kyiv,
+      5000,
+      45,
+      AngleKind.magnetic,
+      ProblemMethod.ellipsoid,
+      sk42zone6,
+      at: at,
+    );
     final i = solveInverse(kyiv, d.end, ProblemMethod.ellipsoid, sk42zone6, at: at);
     expect(i.forward.trueAzimuth, closeTo(45 + declinationAt(kyiv, at), 1e-6));
     expect(i.forward.magnetic, closeTo(45, 1e-6));

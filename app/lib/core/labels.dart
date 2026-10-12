@@ -52,6 +52,18 @@ String formatDistance(AppLocalizations l, double metres) => metres < 10000
     ? l.metres(metres.toStringAsFixed(2))
     : l.kilometres((metres / 1000).toStringAsFixed(3));
 
+/// Square metres below a hectare, hectares below 100 km², then km².
+String formatArea(AppLocalizations l, double m2) {
+  final a = m2.abs();
+  if (a < 1e4) return l.squareMetres(a.toStringAsFixed(1));
+  if (a < 1e8) return l.hectares((a / 1e4).toStringAsFixed(a < 1e6 ? 4 : 2));
+  return l.squareKm((a / 1e6).toStringAsFixed(2));
+}
+
+/// Signed metres: `+12 м`, `-3 м`.
+String formatSignedMetres(AppLocalizations l, double m) =>
+    l.metres('${m >= 0 ? '+' : '−'}${m.abs().toStringAsFixed(m.abs() < 100 ? 1 : 0)}');
+
 /// Display text of [wgs] in [system] with the user's geographic format.
 /// The 3° cadastral grid keeps centimetres, as surveyors expect.
 String formatPoint(Geodetic wgs, CoordinateSystem system, GeoFormat geoFormat, {int? zone}) =>

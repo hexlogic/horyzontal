@@ -22,6 +22,11 @@ import 'map_style.dart';
 import 'packs.dart';
 import 'scale_bar.dart';
 import 'search_sheet.dart';
+import 'tools/tool_geojson.dart';
+import 'tools/tool_layers.dart';
+import 'tools/tool_panel.dart';
+import 'tools/tool_state.dart';
+import 'tools/tools_sheet.dart';
 
 const _emptyStyle =
     '{"version":8,"sources":{},"layers":[{"id":"bg","type":"background","paint":{"background-color":"#ece8df"}}]}';
@@ -48,6 +53,10 @@ class _MapPageState extends ConsumerState<MapPage> {
   final _iconsAdded = <String>{};
   Timer? _saveCamera;
 
+  /// Map centre while a tool is active, updated as the map moves.
+  final _cursor = ValueNotifier<Geodetic?>(null);
+  bool _toolSyncScheduled = false;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +68,7 @@ class _MapPageState extends ConsumerState<MapPage> {
   @override
   void dispose() {
     _saveCamera?.cancel();
+    _cursor.dispose();
     super.dispose();
   }
 
@@ -83,7 +93,9 @@ class _MapPageState extends ConsumerState<MapPage> {
     } catch (e) {
       debugPrint('map style: $e');
       // No network and no cached online style: fall back to the packs.
-      style = packs.any((p) => p.kind == PackKind.basemap) ? await offlineStyle(packs) : _emptyStyle;
+      style = packs.any((p) => p.kind == PackKind.basemap)
+          ? await offlineStyle(packs)
+          : _emptyStyle;
       noPacks = !packs.any((p) => p.kind == PackKind.basemap);
     }
     if (!mounted || key != _styleKey) return;
@@ -100,6 +112,7 @@ class _MapPageState extends ConsumerState<MapPage> {
     if (map == null) return;
     try {
       await _addObjectLayers(map);
+      await addToolLayers(map);
     } catch (e) {
       // The map was rebuilt with another style while this ran; the new
       // controller sets its layers up itself.
@@ -110,6 +123,58 @@ class _MapPageState extends ConsumerState<MapPage> {
     setState(() => _styleReady = true);
     await _syncFeatures(ref.read(visibleFeaturesProvider).value ?? const []);
     await _syncSearch();
+    await _syncTool();
+  }
+
+  Future<void> _syncTool() async {
+    final map = _map;
+    if (map == null || !_styleReady) return;
+    await map.setGeoJsonSource(toolSource, toolGeoJson(ref.read(mapToolProvider), _cursor.value));
+  }
+
+  /// Follows the crosshair with the tool's rubber band, about 30 times a second.
+  void _onCameraMove(CameraPosition c) {
+    if (!ref.read(mapToolProvider).active) return;
+    _cursor.value = Geodetic(c.target.latitude, c.target.longitude);
+    if (_toolSyncScheduled) return;
+    _toolSyncScheduled = true;
+    Future.delayed(const Duration(milliseconds: 33), () {
+      _toolSyncScheduled = false;
+      if (mounted) _syncTool();
+    });
+  }
+
+  void _addCenter() {
+    final c = _cursor.value ?? _centerOf(_map?.cameraPosition);
+    if (c != null) ref.read(mapToolProvider.notifier).add(c);
+  }
+
+  static Geodetic? _centerOf(CameraPosition? c) =>
+      c == null ? null : Geodetic(c.target.latitude, c.target.longitude);
+
+  /// A tap while a tool is active adds a vertex, snapped to a point object
+  /// under the finger.
+  Future<void> _onMapClick(math.Point<double> pt, LatLng ll) async {
+    if (!ref.read(mapToolProvider).active) return;
+    var g = Geodetic(ll.latitude, ll.longitude);
+    try {
+      final hits =
+          await _map?.queryRenderedFeatures(pt, ['hrz-dots', 'hrz-symbols'], null) ?? const [];
+      final ids = {
+        for (final h in hits)
+          if (h case {'properties': {'id': final String id}}) id,
+      };
+      final features = ref.read(visibleFeaturesProvider).value ?? const [];
+      for (final f in features) {
+        if (ids.contains(f.id) && f.kind == FeatureKind.point) {
+          g = f.position;
+          break;
+        }
+      }
+    } catch (e) {
+      debugPrint('snap: $e');
+    }
+    ref.read(mapToolProvider.notifier).add(g);
   }
 
   Future<void> _addObjectLayers(MapLibreMapController map) async {
@@ -127,14 +192,22 @@ class _MapPageState extends ConsumerState<MapPage> {
     await map.addLineLayer(
       _src.radius,
       'hrz-radius-line',
-      const LineLayerProperties(lineColor: [Expressions.get, 'color'], lineWidth: 1.5, lineDasharray: [3, 2]),
+      const LineLayerProperties(
+        lineColor: [Expressions.get, 'color'],
+        lineWidth: 1.5,
+        lineDasharray: [3, 2],
+      ),
       enableInteraction: false,
     );
     await map.addFillLayer(
       _src.lines,
       'hrz-polygons',
       const FillLayerProperties(fillColor: [Expressions.get, 'color'], fillOpacity: 0.2),
-      filter: ['==', ['get', 'polygon'], true],
+      filter: [
+        '==',
+        ['get', 'polygon'],
+        true,
+      ],
     );
     await map.addLineLayer(
       _src.lines,
@@ -150,7 +223,10 @@ class _MapPageState extends ConsumerState<MapPage> {
         circleStrokeColor: '#ffffff',
         circleStrokeWidth: 2,
       ),
-      filter: ['!', ['has', 'icon']],
+      filter: [
+        '!',
+        ['has', 'icon'],
+      ],
     );
     await map.addSymbolLayer(
       _src.points,
@@ -192,7 +268,10 @@ class _MapPageState extends ConsumerState<MapPage> {
     final layers = await ref.read(repositoryProvider).layers();
     final colors = {for (final l in layers) l.id: l.color};
     final icons = ref.read(symbolIconsProvider);
-    for (final sidc in {for (final f in features) if (f.sidc != null) f.sidc!}) {
+    for (final sidc in {
+      for (final f in features)
+        if (f.sidc != null) f.sidc!,
+    }) {
       if (_iconsAdded.contains(sidc)) continue;
       final png = await icons.png(sidc);
       if (png == null) continue;
@@ -238,9 +317,15 @@ class _MapPageState extends ConsumerState<MapPage> {
     final c = _map?.cameraPosition;
     if (c == null) return;
     setState(() => _camera = c);
+    if (ref.read(mapToolProvider).active) {
+      _cursor.value = _centerOf(c);
+      _syncTool();
+    }
     _saveCamera?.cancel();
     _saveCamera = Timer(const Duration(seconds: 2), () {
-      ref.read(settingsProvider.notifier).update(
+      ref
+          .read(settingsProvider.notifier)
+          .update(
             (s) => s.copyWith(camera: MapCamera(c.target.latitude, c.target.longitude, c.zoom)),
           );
     });
@@ -248,14 +333,18 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   void _cycleTracking() {
     if (!_locationAllowed) {
-      ensureLocationPermission().then((_) {
-        if (mounted) setState(() => _locationAllowed = true);
-        _cycleTracking();
-      }, onError: (_) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.errLocation)));
-        }
-      });
+      ensureLocationPermission().then(
+        (_) {
+          if (mounted) setState(() => _locationAllowed = true);
+          _cycleTracking();
+        },
+        onError: (_) {
+          if (mounted) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(context.l10n.errLocation)));
+          }
+        },
+      );
       return;
     }
     final next = switch (_tracking) {
@@ -271,10 +360,12 @@ class _MapPageState extends ConsumerState<MapPage> {
   }
 
   void _onFeatureTap(String id) {
+    if (ref.read(mapToolProvider).active) return; // the map click adds a vertex
     showFeatureSheet(context, id);
   }
 
   Future<void> _onLongPress(LatLng p) async {
+    if (ref.read(mapToolProvider).active) return;
     context.go('/map/new?lat=${p.latitude}&lon=${p.longitude}');
   }
 
@@ -290,105 +381,136 @@ class _MapPageState extends ConsumerState<MapPage> {
     ref.listen(mapFocusProvider, (_, f) {
       if (f != null && _styleReady) _focus(f);
     });
+    ref.listen(mapToolProvider, (prev, next) {
+      if (next.active && !(prev?.active ?? false)) _cursor.value = _centerOf(_map?.cameraPosition);
+      _syncTool();
+    });
+    final tool = ref.watch(mapToolProvider);
 
     final cam = _camera;
     final center = cam == null ? null : Geodetic(cam.target.latitude, cam.target.longitude);
     final style = _style;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          if (style != null)
-            MapLibreMap(
-              key: ValueKey(_styleKey),
-              styleString: style,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(settings.camera.lat, settings.camera.lon),
-                zoom: settings.camera.zoom,
+    return PopScope(
+      canPop: !tool.active,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) ref.read(mapToolProvider.notifier).close();
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            if (style != null)
+              MapLibreMap(
+                key: ValueKey(_styleKey),
+                styleString: style,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(settings.camera.lat, settings.camera.lon),
+                  zoom: settings.camera.zoom,
+                ),
+                trackCameraPosition: true,
+                featureTapsTriggersMapClick: true,
+                compassEnabled: true,
+                compassViewPosition: CompassViewPosition.topLeft,
+                compassViewMargins: const math.Point(16, 110),
+                logoEnabled: false,
+                // Under the search bar, opposite the compass, so that the tool
+                // panel never covers it: OSM (ODbL), OpenFreeMap, Protomaps and
+                // Copernicus credits come from the style's sources.
+                attributionButtonPosition: AttributionButtonPosition.topRight,
+                attributionButtonMargins: const math.Point(16, 110),
+                myLocationEnabled: _locationAllowed,
+                myLocationTrackingMode: _tracking,
+                myLocationRenderMode: _locationAllowed
+                    ? MyLocationRenderMode.compass
+                    : MyLocationRenderMode.normal,
+                onMapCreated: (c) {
+                  _map = c;
+                  _styleReady = false;
+                  c.onFeatureTapped.add((_, _, id, layerId, _) {
+                    // Radius polygons carry '<id>-r'; everything else the object id.
+                    if (layerId.startsWith('hrz-')) {
+                      _onFeatureTap(id.replaceAll(RegExp(r'-r$'), ''));
+                    }
+                  });
+                },
+                onStyleLoadedCallback: () async {
+                  await _onStyleLoaded();
+                  final f = ref.read(mapFocusProvider);
+                  if (f != null) await _focus(f);
+                },
+                onCameraIdle: _onCameraIdle,
+                onCameraMove: _onCameraMove,
+                onMapClick: _onMapClick,
+                onMapLongClick: (_, p) => _onLongPress(p),
+                onCameraTrackingDismissed: () =>
+                    setState(() => _tracking = MyLocationTrackingMode.none),
               ),
-              trackCameraPosition: true,
-              compassEnabled: true,
-              compassViewPosition: CompassViewPosition.topLeft,
-              compassViewMargins: const math.Point(16, 110),
-              logoEnabled: false,
-              // Above the scale bar, clear of the buttons: OSM (ODbL), OpenFreeMap,
-              // Protomaps and Copernicus credits come from the style's sources.
-              attributionButtonPosition: AttributionButtonPosition.bottomLeft,
-              attributionButtonMargins: const math.Point(12, 150),
-              myLocationEnabled: _locationAllowed,
-              myLocationTrackingMode: _tracking,
-              myLocationRenderMode:
-                  _locationAllowed ? MyLocationRenderMode.compass : MyLocationRenderMode.normal,
-              onMapCreated: (c) {
-                _map = c;
-                _styleReady = false;
-                c.onFeatureTapped.add((_, _, id, layerId, _) {
-                  // Radius polygons carry '<id>-r'; everything else the object id.
-                  if (layerId.startsWith('hrz-')) _onFeatureTap(id.replaceAll(RegExp(r'-r$'), ''));
-                });
-              },
-              onStyleLoadedCallback: () async {
-                await _onStyleLoaded();
-                final f = ref.read(mapFocusProvider);
-                if (f != null) await _focus(f);
-              },
-              onCameraIdle: _onCameraIdle,
-              onMapLongClick: (_, p) => _onLongPress(p),
-              onCameraTrackingDismissed: () => setState(() => _tracking = MyLocationTrackingMode.none),
+            // Crosshair at the centre: the readout below is its position.
+            const IgnorePointer(
+              child: Center(child: Icon(Icons.add, size: 28, color: Colors.black54)),
             ),
-          // Crosshair at the centre: the readout below is its position.
-          const IgnorePointer(child: Center(child: Icon(Icons.add, size: 28, color: Colors.black54))),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                children: [
-                  _TopBar(onSearch: () => showSearchSheet(context)),
-                  if (_noPacks)
-                    Card(
-                      child: ListTile(
-                        leading: const Icon(Icons.download_for_offline_outlined),
-                        title: Text(l.noPacksTitle),
-                        subtitle: Text(settings.offlineOnly ? l.noPacksOffline : l.noPacksHint),
-                        onTap: () => context.go('/map/packs'),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: [
+                    _TopBar(onSearch: () => showSearchSheet(context)),
+                    if (_noPacks)
+                      Card(
+                        child: ListTile(
+                          leading: const Icon(Icons.download_for_offline_outlined),
+                          title: Text(l.noPacksTitle),
+                          subtitle: Text(settings.offlineOnly ? l.noPacksOffline : l.noPacksHint),
+                          onTap: () => context.go('/map/packs'),
+                        ),
                       ),
+                    const Spacer(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        if (cam != null) ScaleBar(lat: cam.target.latitude, zoom: cam.zoom),
+                        const Spacer(),
+                        Column(
+                          children: [
+                            FloatingActionButton.small(
+                              heroTag: 'tools',
+                              tooltip: l.tools,
+                              onPressed: () => showToolsSheet(context, ref),
+                              child: const Icon(Icons.straighten),
+                            ),
+                            const SizedBox(height: 8),
+                            FloatingActionButton.small(
+                              heroTag: 'layers',
+                              tooltip: l.mapLayers,
+                              onPressed: () => showMapLayersSheet(context),
+                              child: const Icon(Icons.layers_outlined),
+                            ),
+                            const SizedBox(height: 8),
+                            FloatingActionButton.small(
+                              heroTag: 'location',
+                              tooltip: l.myLocation,
+                              onPressed: _cycleTracking,
+                              child: Icon(switch (_tracking) {
+                                MyLocationTrackingMode.none => Icons.location_searching,
+                                MyLocationTrackingMode.tracking => Icons.my_location,
+                                _ => Icons.explore,
+                              }),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  const Spacer(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      if (cam != null) ScaleBar(lat: cam.target.latitude, zoom: cam.zoom),
-                      const Spacer(),
-                      Column(
-                        children: [
-                          FloatingActionButton.small(
-                            heroTag: 'layers',
-                            tooltip: l.mapLayers,
-                            onPressed: () => showMapLayersSheet(context),
-                            child: const Icon(Icons.layers_outlined),
-                          ),
-                          const SizedBox(height: 8),
-                          FloatingActionButton.small(
-                            heroTag: 'location',
-                            tooltip: l.myLocation,
-                            onPressed: _cycleTracking,
-                            child: Icon(switch (_tracking) {
-                              MyLocationTrackingMode.none => Icons.location_searching,
-                              MyLocationTrackingMode.tracking => Icons.my_location,
-                              _ => Icons.explore,
-                            }),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  if (center != null) _CenterReadout(center: center),
-                ],
+                    const SizedBox(height: 8),
+                    if (tool.active)
+                      ToolPanel(cursor: _cursor, onAdd: _addCenter)
+                    else if (center != null)
+                      _CenterReadout(center: center),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -414,7 +536,9 @@ class _TopBar extends StatelessWidget {
             children: [
               const Icon(Icons.search),
               const SizedBox(width: 12),
-              Expanded(child: Text(l.searchCoordinates, style: Theme.of(context).textTheme.bodyLarge)),
+              Expanded(
+                child: Text(l.searchCoordinates, style: Theme.of(context).textTheme.bodyLarge),
+              ),
             ],
           ),
         ),
@@ -448,7 +572,10 @@ class _CenterReadout extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Row(
             children: [
-              Text('${systemName(context.l10n, s.system)}  ', style: Theme.of(context).textTheme.labelSmall),
+              Text(
+                '${systemName(context.l10n, s.system)}  ',
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
               Expanded(
                 child: Text(
                   text,
