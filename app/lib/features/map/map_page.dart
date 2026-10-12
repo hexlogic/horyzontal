@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -15,10 +16,15 @@ import '../../core/settings.dart';
 import '../../core/widgets/copy_tile.dart';
 import '../objects/feature_sheet.dart';
 import '../objects/symbol_icons.dart';
+import '../sources/map_source.dart';
+import '../sources/source_store.dart';
+import '../sources/source_style.dart';
+import '../sources/sources_repository.dart';
 import 'geojson.dart';
 import 'map_focus.dart';
 import 'map_layers_sheet.dart';
 import 'map_style.dart';
+import 'map_view.dart';
 import 'packs.dart';
 import 'relief.dart';
 import 'relief_legend.dart';
@@ -59,6 +65,9 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   /// Whether the current style's point source clusters.
   bool _clustered = false;
+
+  /// Opacity of each user source layer in the current style, by layer id.
+  final _sourceOpacity = <String, double>{};
   MyLocationTrackingMode _tracking = MyLocationTrackingMode.none;
   bool _locationAllowed = false;
   CameraPosition? _camera;
@@ -85,11 +94,20 @@ class _MapPageState extends ConsumerState<MapPage> {
     super.dispose();
   }
 
-  /// Rebuilds the style when the base map choice or the installed packs change.
-  Future<void> _loadStyle(AppSettings s, List<PackFile> packs) async {
-    // Nothing goes to OpenFreeMap before the user has read the privacy note.
-    final online = s.onlineMap && !s.offlineOnly && s.privacyNoticeSeen;
-    final key = '${online ? 'online' : 'offline'}:${s.clustering}:${packs.map((p) => p.path).join('|')}';
+  /// Rebuilds the style when the base map choice, the installed packs or the
+  /// user's map sources change.
+  Future<void> _loadStyle(
+    AppSettings s,
+    List<PackFile> packs,
+    List<MapSource> sources,
+    Map<String, (int, DateTime)> files,
+  ) async {
+    // Nothing goes to OpenFreeMap or a user's tile server before the user
+    // has read the privacy note.
+    final network = !s.offlineOnly && s.privacyNoticeSeen;
+    final online = s.onlineMap && network;
+    final key = '${online ? 'online' : 'offline'}:${s.clustering}:${packs.map((p) => p.path).join('|')}'
+        ':${userSourcesKey(sources, files, network: network)}';
     if (key == _styleKey) return;
     _styleKey = key;
     String style;
@@ -112,12 +130,33 @@ class _MapPageState extends ConsumerState<MapPage> {
           : _emptyStyle;
       noPacks = !packs.any((p) => p.kind == PackKind.basemap);
     }
+    final opacity = <String, double>{};
+    if (sources.any((x) => x.enabled)) {
+      final json = jsonDecode(style) as Map<String, Object?>;
+      addUserSources(
+        json,
+        sources,
+        network: network,
+        dir: (await ref.read(sourceStoreProvider).dir()).path,
+        downloaded: files.keys.toSet(),
+      );
+      for (final l in (json['layers']! as List<Object?>).cast<Map<String, Object?>>()) {
+        final id = l['id']! as String;
+        if (id.startsWith(userSourcePrefix)) opacity[id] = ((l['paint']! as Map)['raster-opacity']! as num).toDouble();
+      }
+      // A map from the user's own files is a map: no "download a region" card.
+      if (opacity.isNotEmpty) noPacks = false;
+      style = jsonEncode(json);
+    }
     if (!mounted || key != _styleKey) return;
     setState(() {
       _style = style;
       _reliefLayers = noPacks ? 0 : dems;
       _reliefShown = s.reliefTint;
       _clustered = s.clustering;
+      _sourceOpacity
+        ..clear()
+        ..addAll(opacity);
       _styleReady = false;
       _noPacks = noPacks;
       _iconsAdded.clear();
@@ -142,6 +181,20 @@ class _MapPageState extends ConsumerState<MapPage> {
     await _syncFeatures(ref.read(visibleFeaturesProvider).value ?? const []);
     await _syncSearch();
     await _syncTool();
+  }
+
+  /// Applies changed source opacity without rebuilding the map.
+  Future<void> _syncSourceOpacity(List<MapSource> sources) async {
+    final map = _map;
+    if (map == null || !_styleReady) return;
+    for (final s in sources) {
+      for (final id in userLayerIds(s)) {
+        final cur = _sourceOpacity[id];
+        if (cur == null || cur == s.opacity) continue;
+        _sourceOpacity[id] = s.opacity;
+        await map.setLayerProperties(id, RasterLayerProperties(rasterOpacity: s.opacity));
+      }
+    }
   }
 
   /// Shows or hides the elevation tint without rebuilding the map.
@@ -404,6 +457,14 @@ class _MapPageState extends ConsumerState<MapPage> {
   void _onCameraIdle() {
     final c = _map?.cameraPosition;
     if (c == null) return;
+    _map?.getVisibleRegion().then((r) {
+      ref.read(visibleBoundsProvider.notifier).set((
+        south: r.southwest.latitude,
+        west: r.southwest.longitude,
+        north: r.northeast.latitude,
+        east: r.northeast.longitude,
+      ));
+    }, onError: (_) {});
     setState(() => _camera = c);
     if (ref.read(mapToolProvider).active) {
       _cursor.value = _centerOf(c);
@@ -474,7 +535,12 @@ class _MapPageState extends ConsumerState<MapPage> {
     final packsState = ref.watch(packsProvider);
     // Wait for the pack list: building a style without it first would throw
     // the map away a moment later.
-    if (packsState.hasValue) _loadStyle(settings, packsState.value!);
+    final sources = ref.watch(sourcesProvider);
+    final files = ref.watch(sourceFilesProvider);
+    if (packsState.hasValue && sources.hasValue && files.hasValue) {
+      _loadStyle(settings, packsState.value!, sources.value!, files.value!);
+    }
+    ref.listen(sourcesProvider, (_, next) => _syncSourceOpacity(next.value ?? const []));
     ref.listen(visibleFeaturesProvider, (_, next) => _syncFeatures(next.value ?? const []));
     ref.listen(settingsProvider.select((s) => s.reliefTint), (_, _) => _syncRelief());
     ref.listen(mapFocusProvider, (_, f) {

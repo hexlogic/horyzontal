@@ -117,6 +117,13 @@ class SettingsPage extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go('/settings/packs'),
           ),
+          ListTile(
+            leading: const Icon(Icons.layers_outlined),
+            title: Text(l.mapSources),
+            subtitle: Text(l.mapSourcesSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go('/settings/sources'),
+          ),
           SwitchListTile(
             secondary: const Icon(Icons.bubble_chart_outlined),
             title: Text(l.clustering),

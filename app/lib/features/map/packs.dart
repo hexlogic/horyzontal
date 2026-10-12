@@ -10,6 +10,7 @@ import 'package:pmtiles/pmtiles.dart';
 
 import '../../core/net/network.dart';
 import '../../core/settings.dart';
+import '../sources/sources_repository.dart';
 
 /// A region from the bundled catalogue (tools/map-pipeline/regions).
 class Region {
@@ -103,18 +104,39 @@ class PackStore {
     return out;
   }
 
-  /// Reads the PMTiles header; null if the file is not a usable archive.
+  /// Reads the PMTiles header; null if the file is not a usable archive or
+  /// not a pack at all: a raster picture map is a map source, not a pack,
+  /// and must not be read as heights.
   static Future<PackFile?> inspect(String path) async {
     try {
       final a = await PmTilesArchive.from(path);
       try {
-        final kind = a.tileType == TileType.mvt ? PackKind.basemap : PackKind.dem;
+        final PackKind kind;
+        if (a.tileType == TileType.mvt) {
+          kind = PackKind.basemap;
+        } else if (await _isElevation(a, path)) {
+          kind = PackKind.dem;
+        } else {
+          return null;
+        }
         return PackFile(path, kind, await File(path).length(), a.header.minZoom, a.header.maxZoom);
       } finally {
         await a.close();
       }
     } catch (_) {
       return null;
+    }
+  }
+
+  /// Terrain-RGB: tools/map-pipeline/build_dem.py writes `encoding` into the
+  /// metadata; packs named `*-dem.pmtiles` count too.
+  static Future<bool> _isElevation(PmTilesArchive a, String path) async {
+    if (path.endsWith('-dem.pmtiles')) return true;
+    try {
+      final m = await a.metadata;
+      return m is Map && (m['encoding'] == 'mapbox' || m['encoding'] == 'terrarium');
+    } catch (_) {
+      return false;
     }
   }
 
@@ -236,7 +258,10 @@ Stream<DownloadProgress> downloadFile(Net net, RemoteFile f, Directory destDir,
 final packStoreProvider = Provider<PackStore>((ref) => PackStore());
 
 final netProvider = Provider<Net>(
-  (ref) => Net(offlineOnly: () => ref.read(settingsProvider).offlineOnly),
+  (ref) => Net(
+    offlineOnly: () => ref.read(settingsProvider).offlineOnly,
+    userHosts: () => ref.read(sourceHostsProvider),
+  ),
 );
 
 /// Installed packs; invalidate after installing or deleting.

@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/data/repository.dart';
 import '../../core/labels.dart';
 import '../../core/settings.dart';
+import '../sources/map_source.dart';
+import '../sources/sources_repository.dart';
 import 'packs.dart';
 
 /// Base map choice and quick layer visibility.
@@ -27,6 +29,7 @@ class _MapLayersSheet extends ConsumerWidget {
     final packs = ref.watch(packsProvider).value ?? const <PackFile>[];
     final repo = ref.read(repositoryProvider);
     final hasDem = packs.any((p) => p.kind == PackKind.dem);
+    final sources = ref.watch(sourcesProvider).value ?? const <MapSource>[];
     return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.6,
@@ -72,6 +75,18 @@ class _MapLayersSheet extends ConsumerWidget {
           ),
           const Divider(),
           ListTile(
+            title: Text(l.mapSources, style: Theme.of(context).textTheme.titleMedium),
+            trailing: TextButton(
+              onPressed: () {
+                context.pop();
+                context.go('/map/sources');
+              },
+              child: Text(l.manageLayers),
+            ),
+          ),
+          for (final src in sources) _SourceTile(source: src),
+          const Divider(),
+          ListTile(
             title: Text(l.layers, style: Theme.of(context).textTheme.titleMedium),
             trailing: TextButton(
               onPressed: () {
@@ -90,6 +105,48 @@ class _MapLayersSheet extends ConsumerWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+/// A user source: on/off and how opaque, applied when the slider is let go.
+class _SourceTile extends ConsumerStatefulWidget {
+  const _SourceTile({required this.source});
+  final MapSource source;
+
+  @override
+  ConsumerState<_SourceTile> createState() => _SourceTileState();
+}
+
+class _SourceTileState extends ConsumerState<_SourceTile> {
+  late double _opacity = widget.source.opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = widget.source;
+    final repo = ref.read(sourcesRepositoryProvider);
+    return Column(
+      children: [
+        SwitchListTile(
+          secondary: Icon(s.kind == MapSourceKind.url ? Icons.cloud_outlined : Icons.insert_drive_file_outlined),
+          title: Text(s.name),
+          value: s.enabled,
+          onChanged: (v) => repo.setEnabled(s.id, v),
+        ),
+        if (s.enabled)
+          Padding(
+            padding: const EdgeInsets.only(left: 56, right: 8),
+            child: Slider(
+              value: _opacity,
+              min: 0.1,
+              label: '${(_opacity * 100).round()} %',
+              divisions: 9,
+              semanticFormatterCallback: (v) => '${context.l10n.sourceOpacity} ${(v * 100).round()} %',
+              onChanged: (v) => setState(() => _opacity = v),
+              onChangeEnd: (v) => repo.setOpacity(s.id, v),
+            ),
+          ),
+      ],
     );
   }
 }

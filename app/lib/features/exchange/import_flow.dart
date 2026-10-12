@@ -11,6 +11,8 @@ import '../../core/data/repository.dart';
 import '../../core/labels.dart';
 import '../../l10n/app_localizations.dart';
 import '../map/packs.dart';
+import '../sources/source_store.dart' show SourceImportException;
+import '../sources/sources_page.dart';
 import 'formats/formats.dart';
 
 /// Writes imported layers without duplicating what is already there: a
@@ -56,10 +58,23 @@ Future<void> importPath(BuildContext context, WidgetRef ref, String path) async 
   final l = context.l10n;
   final messenger = ScaffoldMessenger.of(context);
   final name = path.split('/').last;
-  if (name.toLowerCase().endsWith('.pmtiles')) {
+  final lower = name.toLowerCase();
+  if (lower.endsWith('.pmtiles')) {
+    // A region or elevation pack; a raster picture map is a map source.
     final pack = await ref.read(packStoreProvider).import(path);
     ref.invalidate(packsProvider);
-    messenger.showSnackBar(SnackBar(content: Text(pack == null ? l.importFailed(name) : l.packImported(name))));
+    if (pack != null) {
+      messenger.showSnackBar(SnackBar(content: Text(l.packImported(name))));
+      return;
+    }
+  }
+  if (lower.endsWith('.pmtiles') || lower.endsWith('.mbtiles')) {
+    try {
+      final s = await importSourceFile(ref, path, fileName: name);
+      messenger.showSnackBar(SnackBar(content: Text(l.sourceImported(s.name))));
+    } on SourceImportException catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(importProblemText(l, e.problem, name))));
+    }
     return;
   }
   final Uint8List bytes;

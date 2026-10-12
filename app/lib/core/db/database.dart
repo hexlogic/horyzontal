@@ -61,13 +61,46 @@ class Features extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+/// A map source the user added: an XYZ/TMS URL template, or a raster
+/// MBTiles/PMTiles file kept in Documents/sources.
+@DataClassName('TileSourceRow')
+class TileSources extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+
+  /// `url` or `file`.
+  TextColumn get kind => text()();
+
+  /// URL template with {z} {x} {y} (or {-y}), {s}, {bbox-epsg-3857}.
+  TextColumn get url => text().nullable()();
+
+  /// `xyz` or `tms` (rows counted from the south).
+  TextColumn get scheme => text().withDefault(const Constant('xyz'))();
+
+  /// Comma-separated values for {s}.
+  TextColumn get subdomains => text().withDefault(const Constant(''))();
+
+  /// File name in Documents/sources for `file` sources.
+  TextColumn get file => text().nullable()();
+  IntColumn get minZoom => integer().withDefault(const Constant(0))();
+  IntColumn get maxZoom => integer().withDefault(const Constant(19))();
+  IntColumn get tileSize => integer().withDefault(const Constant(256))();
+  TextColumn get attribution => text().withDefault(const Constant(''))();
+  BoolColumn get enabled => boolean().withDefault(const Constant(true))();
+  RealColumn get opacity => real().withDefault(const Constant(1.0))();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 /// The app database, encrypted with SQLCipher (AES-256).
-@DriftDatabase(tables: [SettingsEntries, Layers, Features])
+@DriftDatabase(tables: [SettingsEntries, Layers, Features, TileSources])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -76,6 +109,7 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(layers);
             await m.createTable(features);
           }
+          if (from < 3) await m.createTable(tileSources);
         },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');

@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @notAPack.
   ///
   /// In uk, this message translates to:
-  /// **'{name} не є пакетом PMTiles'**
+  /// **'{name} не є пакетом області. Растрові мапи MBTiles і PMTiles додавайте в «Джерела мапи»'**
   String notAPack(String name);
 
   /// No description provided for @objectsCount.
@@ -2385,6 +2385,288 @@ abstract class AppLocalizations {
   /// In uk, this message translates to:
   /// **'Старий місяць, спадає'**
   String get phaseWaningCrescent;
+
+  /// No description provided for @mapSources.
+  ///
+  /// In uk, this message translates to:
+  /// **'Джерела мапи'**
+  String get mapSources;
+
+  /// No description provided for @mapSourcesSubtitle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Свої онлайн-джерела тайлів, файли MBTiles і PMTiles'**
+  String get mapSourcesSubtitle;
+
+  /// No description provided for @sourcesNote.
+  ///
+  /// In uk, this message translates to:
+  /// **'Онлайн-джерело бачить, який район ви переглядаєте, а за умови його використання відповідаєте ви. Файли MBTiles і PMTiles та завантажені області працюють без мережі.'**
+  String get sourcesNote;
+
+  /// No description provided for @sourcesEmpty.
+  ///
+  /// In uk, this message translates to:
+  /// **'Джерел ще немає. Додайте адресу тайлів або файл.'**
+  String get sourcesEmpty;
+
+  /// No description provided for @sourceAddUrl.
+  ///
+  /// In uk, this message translates to:
+  /// **'Додати за адресою'**
+  String get sourceAddUrl;
+
+  /// No description provided for @sourceAddFile.
+  ///
+  /// In uk, this message translates to:
+  /// **'Додати файл'**
+  String get sourceAddFile;
+
+  /// No description provided for @sourceNew.
+  ///
+  /// In uk, this message translates to:
+  /// **'Нове джерело'**
+  String get sourceNew;
+
+  /// No description provided for @sourceName.
+  ///
+  /// In uk, this message translates to:
+  /// **'Назва'**
+  String get sourceName;
+
+  /// No description provided for @sourceUrl.
+  ///
+  /// In uk, this message translates to:
+  /// **'Адреса тайлів'**
+  String get sourceUrl;
+
+  /// No description provided for @sourceUrlHelp.
+  ///
+  /// In uk, this message translates to:
+  /// **'Шаблон з {xyz}; {sub} — піддомени, {tms} — рядки знизу (TMS), {wms} — запит WMS'**
+  String sourceUrlHelp(Object xyz, Object sub, Object tms, Object wms);
+
+  /// No description provided for @sourceSubdomains.
+  ///
+  /// In uk, this message translates to:
+  /// **'Піддомени через кому'**
+  String get sourceSubdomains;
+
+  /// No description provided for @sourceTms.
+  ///
+  /// In uk, this message translates to:
+  /// **'Рядки рахуються знизу (TMS)'**
+  String get sourceTms;
+
+  /// No description provided for @sourceMinZoom.
+  ///
+  /// In uk, this message translates to:
+  /// **'Мін. зум'**
+  String get sourceMinZoom;
+
+  /// No description provided for @sourceMaxZoom.
+  ///
+  /// In uk, this message translates to:
+  /// **'Макс. зум'**
+  String get sourceMaxZoom;
+
+  /// No description provided for @sourceTileSize.
+  ///
+  /// In uk, this message translates to:
+  /// **'Розмір тайла, px'**
+  String get sourceTileSize;
+
+  /// No description provided for @sourceAttribution.
+  ///
+  /// In uk, this message translates to:
+  /// **'Атрибуція'**
+  String get sourceAttribution;
+
+  /// No description provided for @sourceTest.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перевірити'**
+  String get sourceTest;
+
+  /// No description provided for @sourceTestOk.
+  ///
+  /// In uk, this message translates to:
+  /// **'Тайл отримано: {size}, {format}'**
+  String sourceTestOk(Object size, Object format);
+
+  /// No description provided for @sourceTestEmpty.
+  ///
+  /// In uk, this message translates to:
+  /// **'Сервер відповів, але тайла в цьому місці немає'**
+  String get sourceTestEmpty;
+
+  /// No description provided for @sourceTestFailed.
+  ///
+  /// In uk, this message translates to:
+  /// **'Не вдалося: {error}'**
+  String sourceTestFailed(Object error);
+
+  /// No description provided for @sourceOfflineBlocked.
+  ///
+  /// In uk, this message translates to:
+  /// **'Мережу вимкнено режимом «Тільки офлайн»'**
+  String get sourceOfflineBlocked;
+
+  /// No description provided for @errTemplateEmpty.
+  ///
+  /// In uk, this message translates to:
+  /// **'Вкажіть адресу'**
+  String get errTemplateEmpty;
+
+  /// No description provided for @errTemplateHttps.
+  ///
+  /// In uk, this message translates to:
+  /// **'Адреса має починатися з https://'**
+  String get errTemplateHttps;
+
+  /// No description provided for @errTemplateHost.
+  ///
+  /// In uk, this message translates to:
+  /// **'В адресі немає сервера'**
+  String get errTemplateHost;
+
+  /// No description provided for @errTemplateTiles.
+  ///
+  /// In uk, this message translates to:
+  /// **'Потрібні {xyz} (або {tms}) чи {wms}'**
+  String errTemplateTiles(Object xyz, Object tms, Object wms);
+
+  /// No description provided for @errTemplateQuadkey.
+  ///
+  /// In uk, this message translates to:
+  /// **'Адреси з quadkey не підтримуються'**
+  String get errTemplateQuadkey;
+
+  /// No description provided for @errTemplateSubdomains.
+  ///
+  /// In uk, this message translates to:
+  /// **'Вкажіть піддомени для {sub}'**
+  String errTemplateSubdomains(Object sub);
+
+  /// No description provided for @errZoomRange.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зум від 0 до 24, мінімальний не більший за максимальний'**
+  String get errZoomRange;
+
+  /// No description provided for @sourceFileInfo.
+  ///
+  /// In uk, this message translates to:
+  /// **'Файл · зум {min}–{max} · {size}'**
+  String sourceFileInfo(Object min, Object max, Object size);
+
+  /// No description provided for @sourceDownloaded.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантажено: {size}'**
+  String sourceDownloaded(Object size);
+
+  /// No description provided for @sourceDownloadArea.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантажити видиму область'**
+  String get sourceDownloadArea;
+
+  /// No description provided for @sourceDeleteDownloaded.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видалити завантажене'**
+  String get sourceDeleteDownloaded;
+
+  /// No description provided for @sourceDownloadTitle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантаження області'**
+  String get sourceDownloadTitle;
+
+  /// No description provided for @sourceDownloadZooms.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зум {min}–{max}'**
+  String sourceDownloadZooms(Object min, Object max);
+
+  /// No description provided for @sourceDownloadTiles.
+  ///
+  /// In uk, this message translates to:
+  /// **'{count} тайлів, приблизно {size}'**
+  String sourceDownloadTiles(Object count, Object size);
+
+  /// No description provided for @sourceDownloadTooMany.
+  ///
+  /// In uk, this message translates to:
+  /// **'Більше {max} тайлів: зменште зум або область'**
+  String sourceDownloadTooMany(Object max);
+
+  /// No description provided for @sourceDownloadTerms.
+  ///
+  /// In uk, this message translates to:
+  /// **'Багато сервісів забороняють масове завантаження тайлів: перевірте умови джерела.'**
+  String get sourceDownloadTerms;
+
+  /// No description provided for @sourceDownloadNoArea.
+  ///
+  /// In uk, this message translates to:
+  /// **'Відкрийте мапу на потрібній області й поверніться сюди'**
+  String get sourceDownloadNoArea;
+
+  /// No description provided for @sourceDownloadStart.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантажити'**
+  String get sourceDownloadStart;
+
+  /// No description provided for @sourceDownloading.
+  ///
+  /// In uk, this message translates to:
+  /// **'{done} з {total} · {size}'**
+  String sourceDownloading(Object done, Object total, Object size);
+
+  /// No description provided for @sourceDownloadDone.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантажено {done} тайлів, не вдалося {failed}'**
+  String sourceDownloadDone(Object done, Object failed);
+
+  /// No description provided for @sourceDeleteQuestion.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видалити джерело «{name}»?'**
+  String sourceDeleteQuestion(Object name);
+
+  /// No description provided for @importVector.
+  ///
+  /// In uk, this message translates to:
+  /// **'{name}: це векторна мапа, її місце в офлайн-пакетах'**
+  String importVector(Object name);
+
+  /// No description provided for @importElevation.
+  ///
+  /// In uk, this message translates to:
+  /// **'{name}: це пакет висот, його місце в офлайн-пакетах'**
+  String importElevation(Object name);
+
+  /// No description provided for @importUnreadable.
+  ///
+  /// In uk, this message translates to:
+  /// **'{name}: не вдалося прочитати як MBTiles чи PMTiles'**
+  String importUnreadable(Object name);
+
+  /// No description provided for @sourceOpacity.
+  ///
+  /// In uk, this message translates to:
+  /// **'Непрозорість'**
+  String get sourceOpacity;
+
+  /// No description provided for @sourceImported.
+  ///
+  /// In uk, this message translates to:
+  /// **'Додано джерело мапи «{name}»'**
+  String sourceImported(Object name);
 
   /// No description provided for @clustering.
   ///

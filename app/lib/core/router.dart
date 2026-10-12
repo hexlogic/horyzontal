@@ -10,6 +10,8 @@ import '../features/layers/layer_page.dart';
 import '../features/layers/layers_page.dart';
 import '../features/map/map_page.dart';
 import '../features/map/packs_page.dart';
+import '../features/sources/source_edit_page.dart';
+import '../features/sources/sources_page.dart';
 import '../features/map/tools/los_page.dart';
 import '../features/map/tools/profile_page.dart';
 import '../features/objects/feature_editor_page.dart';
@@ -85,6 +87,13 @@ GoRouter buildRouter() => GoRouter(
                     },
                   ),
                   GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
+                  GoRoute(
+                    path: 'sources',
+                    builder: (_, _) => const SourcesPage(base: '/map/sources'),
+                    routes: [
+                      GoRoute(path: 'edit', builder: (_, s) => SourceEditPage(id: s.uri.queryParameters['id'])),
+                    ],
+                  ),
                 ],
               ),
             ]),
@@ -145,6 +154,13 @@ GoRouter buildRouter() => GoRouter(
                   GoRoute(path: 'about', builder: (_, _) => const AboutPage()),
                   GoRoute(path: 'whats-new', builder: (_, _) => const WhatsNewPage()),
                   GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
+                  GoRoute(
+                    path: 'sources',
+                    builder: (_, _) => const SourcesPage(base: '/settings/sources'),
+                    routes: [
+                      GoRoute(path: 'edit', builder: (_, s) => SourceEditPage(id: s.uri.queryParameters['id'])),
+                    ],
+                  ),
                   GoRoute(path: 'wipe', builder: (_, _) => const WipePage()),
                   GoRoute(
                     path: 'pin/:mode',

@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-/// Every host the app may contact. Online tiles come from OpenFreeMap, map
-/// packs from this repository's GitHub Releases (GitHub redirects downloads
-/// to its asset hosts). User-added tile sources join in stage 4.
+/// Every host the app contacts on its own. Online tiles come from
+/// OpenFreeMap, map packs from this repository's GitHub Releases (GitHub
+/// redirects downloads to its asset hosts). Hosts of tile sources the user
+/// adds are allowed on top of these, see [Net.userHosts].
 /// tools/ci/check_domains.sh keeps code URLs within this list.
 const allowedHosts = {
   'tiles.openfreemap.org',
@@ -29,12 +30,15 @@ class NetworkBlocked implements Exception {
   String toString() => 'NetworkBlocked($reason)';
 }
 
-/// HTTP client that refuses hosts outside [allowedHosts] (also after
-/// redirects) and anything at all in offline-only mode.
+/// HTTP client that refuses hosts outside [allowedHosts] and [userHosts]
+/// (also after redirects) and anything at all in offline-only mode.
 class Net {
-  Net({required this.offlineOnly});
+  Net({required this.offlineOnly, Set<String> Function()? userHosts}) : userHosts = userHosts ?? (() => const {});
 
   final bool Function() offlineOnly;
+
+  /// Hosts of the tile sources the user added.
+  final Set<String> Function() userHosts;
 
   static bool _debugOverride(Uri u) =>
       packsBaseUrl.startsWith('http://') && u.toString().startsWith(packsBaseUrl);
@@ -42,14 +46,14 @@ class Net {
   void check(Uri u) {
     if (offlineOnly()) throw const NetworkBlocked('offline-only');
     if (u.scheme != 'https' && !_debugOverride(u)) throw NetworkBlocked('scheme ${u.scheme}');
-    if (!allowedHosts.contains(u.host) && !_debugOverride(u)) {
+    if (!allowedHosts.contains(u.host) && !userHosts().contains(u.host) && !_debugOverride(u)) {
       throw NetworkBlocked('host ${u.host}');
     }
   }
 
   /// GET with manual redirects so every hop is checked. [headers] e.g. Range.
-  Future<HttpClientResponse> get(Uri url, {Map<String, String> headers = const {}}) async {
-    final client = HttpClient()
+  Future<HttpClientResponse> get(Uri url, {Map<String, String> headers = const {}, HttpClient? client}) async {
+    client ??= HttpClient()
       ..connectionTimeout = const Duration(seconds: 20)
       ..userAgent = 'Horyzontal';
     var u = url;

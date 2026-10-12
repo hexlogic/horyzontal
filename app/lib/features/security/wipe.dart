@@ -7,7 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import '../../core/db/database.dart';
 import '../../core/secure_store.dart';
 
-/// Emergency wipe: the database and its key, PIN, settings, map tile cache,
+/// Emergency wipe: the database and its key, PIN, settings, map sources and
+/// their files and downloaded areas (Documents/sources), map tile cache,
 /// exports and received files; offline map packs only when [packs]. The app
 /// quits afterwards and starts empty next time.
 Future<void> emergencyWipe(AppDatabase db, {required bool packs}) async {

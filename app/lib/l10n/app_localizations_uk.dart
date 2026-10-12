@@ -1001,7 +1001,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String notAPack(String name) {
-    return '$name не є пакетом PMTiles';
+    return '$name не є пакетом області. Растрові мапи MBTiles і PMTiles додавайте в «Джерела мапи»';
   }
 
   @override
@@ -1329,6 +1329,187 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get phaseWaningCrescent => 'Старий місяць, спадає';
+
+  @override
+  String get mapSources => 'Джерела мапи';
+
+  @override
+  String get mapSourcesSubtitle =>
+      'Свої онлайн-джерела тайлів, файли MBTiles і PMTiles';
+
+  @override
+  String get sourcesNote =>
+      'Онлайн-джерело бачить, який район ви переглядаєте, а за умови його використання відповідаєте ви. Файли MBTiles і PMTiles та завантажені області працюють без мережі.';
+
+  @override
+  String get sourcesEmpty => 'Джерел ще немає. Додайте адресу тайлів або файл.';
+
+  @override
+  String get sourceAddUrl => 'Додати за адресою';
+
+  @override
+  String get sourceAddFile => 'Додати файл';
+
+  @override
+  String get sourceNew => 'Нове джерело';
+
+  @override
+  String get sourceName => 'Назва';
+
+  @override
+  String get sourceUrl => 'Адреса тайлів';
+
+  @override
+  String sourceUrlHelp(Object xyz, Object sub, Object tms, Object wms) {
+    return 'Шаблон з $xyz; $sub — піддомени, $tms — рядки знизу (TMS), $wms — запит WMS';
+  }
+
+  @override
+  String get sourceSubdomains => 'Піддомени через кому';
+
+  @override
+  String get sourceTms => 'Рядки рахуються знизу (TMS)';
+
+  @override
+  String get sourceMinZoom => 'Мін. зум';
+
+  @override
+  String get sourceMaxZoom => 'Макс. зум';
+
+  @override
+  String get sourceTileSize => 'Розмір тайла, px';
+
+  @override
+  String get sourceAttribution => 'Атрибуція';
+
+  @override
+  String get sourceTest => 'Перевірити';
+
+  @override
+  String sourceTestOk(Object size, Object format) {
+    return 'Тайл отримано: $size, $format';
+  }
+
+  @override
+  String get sourceTestEmpty =>
+      'Сервер відповів, але тайла в цьому місці немає';
+
+  @override
+  String sourceTestFailed(Object error) {
+    return 'Не вдалося: $error';
+  }
+
+  @override
+  String get sourceOfflineBlocked => 'Мережу вимкнено режимом «Тільки офлайн»';
+
+  @override
+  String get errTemplateEmpty => 'Вкажіть адресу';
+
+  @override
+  String get errTemplateHttps => 'Адреса має починатися з https://';
+
+  @override
+  String get errTemplateHost => 'В адресі немає сервера';
+
+  @override
+  String errTemplateTiles(Object xyz, Object tms, Object wms) {
+    return 'Потрібні $xyz (або $tms) чи $wms';
+  }
+
+  @override
+  String get errTemplateQuadkey => 'Адреси з quadkey не підтримуються';
+
+  @override
+  String errTemplateSubdomains(Object sub) {
+    return 'Вкажіть піддомени для $sub';
+  }
+
+  @override
+  String get errZoomRange =>
+      'Зум від 0 до 24, мінімальний не більший за максимальний';
+
+  @override
+  String sourceFileInfo(Object min, Object max, Object size) {
+    return 'Файл · зум $min–$max · $size';
+  }
+
+  @override
+  String sourceDownloaded(Object size) {
+    return 'Завантажено: $size';
+  }
+
+  @override
+  String get sourceDownloadArea => 'Завантажити видиму область';
+
+  @override
+  String get sourceDeleteDownloaded => 'Видалити завантажене';
+
+  @override
+  String get sourceDownloadTitle => 'Завантаження області';
+
+  @override
+  String sourceDownloadZooms(Object min, Object max) {
+    return 'Зум $min–$max';
+  }
+
+  @override
+  String sourceDownloadTiles(Object count, Object size) {
+    return '$count тайлів, приблизно $size';
+  }
+
+  @override
+  String sourceDownloadTooMany(Object max) {
+    return 'Більше $max тайлів: зменште зум або область';
+  }
+
+  @override
+  String get sourceDownloadTerms =>
+      'Багато сервісів забороняють масове завантаження тайлів: перевірте умови джерела.';
+
+  @override
+  String get sourceDownloadNoArea =>
+      'Відкрийте мапу на потрібній області й поверніться сюди';
+
+  @override
+  String get sourceDownloadStart => 'Завантажити';
+
+  @override
+  String sourceDownloading(Object done, Object total, Object size) {
+    return '$done з $total · $size';
+  }
+
+  @override
+  String sourceDownloadDone(Object done, Object failed) {
+    return 'Завантажено $done тайлів, не вдалося $failed';
+  }
+
+  @override
+  String sourceDeleteQuestion(Object name) {
+    return 'Видалити джерело «$name»?';
+  }
+
+  @override
+  String importVector(Object name) {
+    return '$name: це векторна мапа, її місце в офлайн-пакетах';
+  }
+
+  @override
+  String importElevation(Object name) {
+    return '$name: це пакет висот, його місце в офлайн-пакетах';
+  }
+
+  @override
+  String importUnreadable(Object name) {
+    return '$name: не вдалося прочитати як MBTiles чи PMTiles';
+  }
+
+  @override
+  String get sourceOpacity => 'Непрозорість';
+
+  @override
+  String sourceImported(Object name) {
+    return 'Додано джерело мапи «$name»';
+  }
 
   @override
   String get clustering => 'Кластеризація';
