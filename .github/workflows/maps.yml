@@ -1,0 +1,95 @@
+name: Map packs
+
+# Monthly rebuild of the 25 region packs (Protomaps basemap + Copernicus
+# heights) into the `maps` release, which the app downloads from.
+on:
+  schedule:
+    - cron: '0 3 2 * *'
+  workflow_dispatch:
+    inputs:
+      regions:
+        description: 'Space-separated region ids (empty = all)'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  regions:
+    runs-on: ubuntu-latest
+    outputs:
+      list: ${{ steps.list.outputs.list }}
+      build: ${{ steps.build.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        run: |
+          if [ -n "${{ github.event.inputs.regions }}" ]; then
+            ids="${{ github.event.inputs.regions }}"
+          else
+            ids=$(python3 -c 'import json; print(" ".join(r["id"] for r in json.load(open("tools/map-pipeline/regions/index.json"))))')
+          fi
+          echo "list=$(python3 -c 'import json,sys; print(json.dumps(sys.argv[1].split()))' "$ids")" >> "$GITHUB_OUTPUT"
+      - id: build
+        # One Protomaps build for the whole run, so every region matches.
+        run: |
+          b=$(curl -fsSL https://build-metadata.protomaps.dev/builds.json | python3 -c 'import json,sys; print(json.load(sys.stdin)[-1]["key"].removesuffix(".pmtiles"))')
+          echo "build=$b" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: regions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        region: ${{ fromJson(needs.regions.outputs.list) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -yq gdal-bin python3-gdal
+          curl -fsSL -o pmtiles.tgz https://github.com/protomaps/go-pmtiles/releases/download/v1.28.0/go-pmtiles_1.28.0_Linux_x86_64.tar.gz
+          tar xzf pmtiles.tgz pmtiles && sudo mv pmtiles /usr/local/bin/
+      - name: Build ${{ matrix.region }}
+        working-directory: tools/map-pipeline
+        env:
+          BUILD: ${{ needs.regions.outputs.build }}
+          PYTHON: python3
+        run: ./build_region.sh ${{ matrix.region }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pack-${{ matrix.region }}
+          path: tools/map-pipeline/out/${{ matrix.region }}*.pmtiles
+          retention-days: 3
+
+  release:
+    needs: [regions, build]
+    if: always() && needs.build.result != 'cancelled'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: pack-*
+          merge-multiple: true
+          path: out
+      - name: Keep packs of regions that failed this time
+        run: |
+          gh release view maps >/dev/null 2>&1 || gh release create maps --title 'Офлайн-карти' --notes 'Пакети областей для Горизонталі. Оновлюється щомісяця.' --latest=false
+          for id in $(python3 -c 'import json; print(" ".join(r["id"] for r in json.load(open("tools/map-pipeline/regions/index.json"))))'); do
+            for f in "$id.pmtiles" "$id-dem.pmtiles"; do
+              [ -f "out/$f" ] || gh release download maps -p "$f" -D out 2>/dev/null || true
+            done
+          done
+      - name: Manifest
+        run: python3 tools/map-pipeline/manifest.py out ${{ needs.regions.outputs.build }}
+      - name: Upload
+        # Packs first, manifest last: the app never sees a manifest that
+        # points at files not uploaded yet.
+        run: |
+          gh release upload maps out/*.pmtiles --clobber
+          gh release upload maps out/packs.json --clobber

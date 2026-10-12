@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:horyzontal_geo/horyzontal_geo.dart';
 
 import '../l10n/app_localizations.dart';
+import 'data/model.dart';
 
 extension L10nContext on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this);
@@ -61,3 +62,21 @@ String formatPoint(Geodetic wgs, CoordinateSystem system, GeoFormat geoFormat, {
       zone: zone,
       metreDecimals: system == CoordinateSystem.usk2000Tm3 ? 2 : 0,
     );
+
+IconData featureKindIcon(FeatureKind k) => switch (k) {
+      FeatureKind.point => Icons.place,
+      FeatureKind.polyline => Icons.timeline,
+      FeatureKind.polygon => Icons.pentagon_outlined,
+    };
+
+String featureKindName(AppLocalizations l, FeatureKind k) => switch (k) {
+      FeatureKind.point => l.kindPoint,
+      FeatureKind.polyline => l.kindPolyline,
+      FeatureKind.polygon => l.kindPolygon,
+    };
+
+String featureKindNamePlural(AppLocalizations l, FeatureKind k) => switch (k) {
+      FeatureKind.point => l.kindPoints,
+      FeatureKind.polyline => l.kindPolylines,
+      FeatureKind.polygon => l.kindPolygons,
+    };

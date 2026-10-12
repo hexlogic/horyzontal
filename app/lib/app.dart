@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'core/app_services.dart';
 import 'core/router.dart';
 import 'core/settings.dart';
 import 'features/security/lock_screen.dart';
@@ -44,7 +45,7 @@ class _HoryzontalAppState extends ConsumerState<HoryzontalApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       routerConfig: _router,
-      builder: (context, child) => LockGate(child: child!),
+      builder: (context, child) => LockGate(child: AppServices(child: child!)),
     );
   }
 }

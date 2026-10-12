@@ -895,8 +895,1028 @@ abstract class AppLocalizations {
   /// No description provided for @aboutDataText.
   ///
   /// In uk, this message translates to:
-  /// **'Магнітне поле: World Magnetic Model WMM2025, NOAA NCEI і BGS. Геоїд: EGM2008, NGA. Геодезичні задачі: алгоритми C. F. F. Karney (GeographicLib, MIT).'**
+  /// **'Мапа: © учасники OpenStreetMap (ODbL), OpenFreeMap, Protomaps. Висоти: Copernicus DEM GLO-30 © DLR e.V. 2010–2014 і © Airbus Defence and Space GmbH 2014–2018, надано в рамках COPERNICUS Європейським Союзом та ESA. Магнітне поле: World Magnetic Model WMM2025, NOAA NCEI і BGS. Геоїд: EGM2008, NGA. Геодезичні задачі: алгоритми C. F. F. Karney (GeographicLib, MIT). Умовні знаки: milsymbol © Måns Beckman (MIT), каталог кодів за Esri Joint Military Symbology XML (Apache-2.0).'**
   String get aboutDataText;
+
+  /// No description provided for @tabMap.
+  ///
+  /// In uk, this message translates to:
+  /// **'Мапа'**
+  String get tabMap;
+
+  /// No description provided for @tabJournal.
+  ///
+  /// In uk, this message translates to:
+  /// **'Журнал'**
+  String get tabJournal;
+
+  /// No description provided for @addPointHere.
+  ///
+  /// In uk, this message translates to:
+  /// **'Додати точку'**
+  String get addPointHere;
+
+  /// No description provided for @altitudeM.
+  ///
+  /// In uk, this message translates to:
+  /// **'Висота, м'**
+  String get altitudeM;
+
+  /// No description provided for @appleMaps.
+  ///
+  /// In uk, this message translates to:
+  /// **'Apple Maps'**
+  String get appleMaps;
+
+  /// No description provided for @googleMaps.
+  ///
+  /// In uk, this message translates to:
+  /// **'Google Maps'**
+  String get googleMaps;
+
+  /// No description provided for @otherMapsApp.
+  ///
+  /// In uk, this message translates to:
+  /// **'Інший застосунок карт'**
+  String get otherMapsApp;
+
+  /// No description provided for @archive.
+  ///
+  /// In uk, this message translates to:
+  /// **'Архів'**
+  String get archive;
+
+  /// No description provided for @archiveEmpty.
+  ///
+  /// In uk, this message translates to:
+  /// **'В архіві немає шарів'**
+  String get archiveEmpty;
+
+  /// No description provided for @author.
+  ///
+  /// In uk, this message translates to:
+  /// **'Автор'**
+  String get author;
+
+  /// No description provided for @baseMap.
+  ///
+  /// In uk, this message translates to:
+  /// **'Основа мапи'**
+  String get baseMap;
+
+  /// No description provided for @close.
+  ///
+  /// In uk, this message translates to:
+  /// **'Закрити'**
+  String get close;
+
+  /// No description provided for @defaultLayerName.
+  ///
+  /// In uk, this message translates to:
+  /// **'Мої об\'єкти'**
+  String get defaultLayerName;
+
+  /// No description provided for @delete.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видалити'**
+  String get delete;
+
+  /// No description provided for @deleteLayer.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видалити шар'**
+  String get deleteLayer;
+
+  /// No description provided for @deleteObjectQuestion.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видалити об\'єкт?'**
+  String get deleteObjectQuestion;
+
+  /// No description provided for @description.
+  ///
+  /// In uk, this message translates to:
+  /// **'Опис'**
+  String get description;
+
+  /// No description provided for @distanceAzimuthFromMe.
+  ///
+  /// In uk, this message translates to:
+  /// **'Від мене: відстань · азимут'**
+  String get distanceAzimuthFromMe;
+
+  /// No description provided for @donate.
+  ///
+  /// In uk, this message translates to:
+  /// **'Підтримати проєкт'**
+  String get donate;
+
+  /// No description provided for @donateHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Банка monobank'**
+  String get donateHint;
+
+  /// No description provided for @download.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантажити'**
+  String get download;
+
+  /// No description provided for @downloadFailed.
+  ///
+  /// In uk, this message translates to:
+  /// **'не вдалося завантажити'**
+  String get downloadFailed;
+
+  /// No description provided for @edit.
+  ///
+  /// In uk, this message translates to:
+  /// **'Редагувати'**
+  String get edit;
+
+  /// No description provided for @emergencyWipe.
+  ///
+  /// In uk, this message translates to:
+  /// **'Екстрене видалення'**
+  String get emergencyWipe;
+
+  /// No description provided for @emergencyWipeHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Стерти всі дані на цьому пристрої'**
+  String get emergencyWipeHint;
+
+  /// No description provided for @encrypt.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зашифрувати'**
+  String get encrypt;
+
+  /// No description provided for @encryptQuestion.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зашифрувати файл паролем?'**
+  String get encryptQuestion;
+
+  /// No description provided for @encryptText.
+  ///
+  /// In uk, this message translates to:
+  /// **'Без пароля файл прочитає будь-хто, хто його отримає. Пароль передайте іншим каналом.'**
+  String get encryptText;
+
+  /// No description provided for @noEncryption.
+  ///
+  /// In uk, this message translates to:
+  /// **'Без шифрування'**
+  String get noEncryption;
+
+  /// No description provided for @exportFormats.
+  ///
+  /// In uk, this message translates to:
+  /// **'.hrz, KML, KMZ, GPX, CoT, пакет ATAK'**
+  String get exportFormats;
+
+  /// No description provided for @exportLayer.
+  ///
+  /// In uk, this message translates to:
+  /// **'Експорт шару'**
+  String get exportLayer;
+
+  /// No description provided for @exportPassword.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пароль для файлу'**
+  String get exportPassword;
+
+  /// No description provided for @formatAtakHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Zip для ATAK: точки як CoT, лінії й полігони як KML'**
+  String get formatAtakHint;
+
+  /// No description provided for @formatAtakPackage.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пакет даних ATAK'**
+  String get formatAtakPackage;
+
+  /// No description provided for @formatCotHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Точки для ATAK і WinTAK'**
+  String get formatCotHint;
+
+  /// No description provided for @formatGpxHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Навігатори, OsmAnd, Garmin'**
+  String get formatGpxHint;
+
+  /// No description provided for @formatHrz.
+  ///
+  /// In uk, this message translates to:
+  /// **'Горизонталь (.hrz)'**
+  String get formatHrz;
+
+  /// No description provided for @formatHrzHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Без втрат, для іншої Горизонталі; можна з паролем'**
+  String get formatHrzHint;
+
+  /// No description provided for @formatKmlHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Google Earth, ATAK, OsmAnd, QGIS'**
+  String get formatKmlHint;
+
+  /// No description provided for @hidden.
+  ///
+  /// In uk, this message translates to:
+  /// **'прихований'**
+  String get hidden;
+
+  /// No description provided for @importAction.
+  ///
+  /// In uk, this message translates to:
+  /// **'Імпортувати'**
+  String get importAction;
+
+  /// No description provided for @importFile.
+  ///
+  /// In uk, this message translates to:
+  /// **'Імпорт файлу'**
+  String get importFile;
+
+  /// No description provided for @importPack.
+  ///
+  /// In uk, this message translates to:
+  /// **'Імпорт пакета'**
+  String get importPack;
+
+  /// No description provided for @importPassword.
+  ///
+  /// In uk, this message translates to:
+  /// **'Файл зашифровано. Пароль'**
+  String get importPassword;
+
+  /// No description provided for @importQuestion.
+  ///
+  /// In uk, this message translates to:
+  /// **'Імпортувати шари?'**
+  String get importQuestion;
+
+  /// No description provided for @journalEmpty.
+  ///
+  /// In uk, this message translates to:
+  /// **'Тут з\'являться точки, лінії й полігони. Довге натискання на мапі створює точку.'**
+  String get journalEmpty;
+
+  /// No description provided for @kindPoint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Точка'**
+  String get kindPoint;
+
+  /// No description provided for @kindPoints.
+  ///
+  /// In uk, this message translates to:
+  /// **'Точки'**
+  String get kindPoints;
+
+  /// No description provided for @kindPolygon.
+  ///
+  /// In uk, this message translates to:
+  /// **'Полігон'**
+  String get kindPolygon;
+
+  /// No description provided for @kindPolygons.
+  ///
+  /// In uk, this message translates to:
+  /// **'Полігони'**
+  String get kindPolygons;
+
+  /// No description provided for @kindPolyline.
+  ///
+  /// In uk, this message translates to:
+  /// **'Полілінія'**
+  String get kindPolyline;
+
+  /// No description provided for @kindPolylines.
+  ///
+  /// In uk, this message translates to:
+  /// **'Полілінії'**
+  String get kindPolylines;
+
+  /// No description provided for @layer.
+  ///
+  /// In uk, this message translates to:
+  /// **'Шар'**
+  String get layer;
+
+  /// No description provided for @layerName.
+  ///
+  /// In uk, this message translates to:
+  /// **'Назва шару'**
+  String get layerName;
+
+  /// No description provided for @layers.
+  ///
+  /// In uk, this message translates to:
+  /// **'Шари'**
+  String get layers;
+
+  /// No description provided for @manageLayers.
+  ///
+  /// In uk, this message translates to:
+  /// **'Керувати'**
+  String get manageLayers;
+
+  /// No description provided for @mapLayers.
+  ///
+  /// In uk, this message translates to:
+  /// **'Шари мапи'**
+  String get mapLayers;
+
+  /// No description provided for @mapOffline.
+  ///
+  /// In uk, this message translates to:
+  /// **'Офлайн'**
+  String get mapOffline;
+
+  /// No description provided for @mapOnline.
+  ///
+  /// In uk, this message translates to:
+  /// **'Онлайн'**
+  String get mapOnline;
+
+  /// No description provided for @name.
+  ///
+  /// In uk, this message translates to:
+  /// **'Назва'**
+  String get name;
+
+  /// No description provided for @newLayer.
+  ///
+  /// In uk, this message translates to:
+  /// **'Новий шар'**
+  String get newLayer;
+
+  /// No description provided for @newPoint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Нова точка'**
+  String get newPoint;
+
+  /// No description provided for @noLayers.
+  ///
+  /// In uk, this message translates to:
+  /// **'Шарів ще немає'**
+  String get noLayers;
+
+  /// No description provided for @noMapsApp.
+  ///
+  /// In uk, this message translates to:
+  /// **'Немає застосунку карт для маршруту'**
+  String get noMapsApp;
+
+  /// No description provided for @noPacksHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Завантажте область, щоб мапа працювала без інтернету'**
+  String get noPacksHint;
+
+  /// No description provided for @noPacksOffline.
+  ///
+  /// In uk, this message translates to:
+  /// **'Імпортуйте файл пакета або вимкніть режим «Тільки офлайн»'**
+  String get noPacksOffline;
+
+  /// No description provided for @noPacksTitle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Немає офлайн-пакетів'**
+  String get noPacksTitle;
+
+  /// No description provided for @nothingFound.
+  ///
+  /// In uk, this message translates to:
+  /// **'Нічого не знайдено'**
+  String get nothingFound;
+
+  /// No description provided for @object.
+  ///
+  /// In uk, this message translates to:
+  /// **'Об\'єкт'**
+  String get object;
+
+  /// No description provided for @offlinePacks.
+  ///
+  /// In uk, this message translates to:
+  /// **'Офлайн-пакети карт'**
+  String get offlinePacks;
+
+  /// No description provided for @packNoHeights.
+  ///
+  /// In uk, this message translates to:
+  /// **'без висот'**
+  String get packNoHeights;
+
+  /// No description provided for @packNotAvailable.
+  ///
+  /// In uk, this message translates to:
+  /// **'недоступно для завантаження'**
+  String get packNotAvailable;
+
+  /// No description provided for @packUpdate.
+  ///
+  /// In uk, this message translates to:
+  /// **'Оновити'**
+  String get packUpdate;
+
+  /// No description provided for @packsAttribution.
+  ///
+  /// In uk, this message translates to:
+  /// **'Карта: © учасники OpenStreetMap (ODbL), Protomaps. Висоти: Copernicus DEM GLO-30 © DLR, Airbus, ESA. Пакети з github.com/hexlogic/horyzontal.'**
+  String get packsAttribution;
+
+  /// No description provided for @packsLoading.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перевіряю доступні пакети…'**
+  String get packsLoading;
+
+  /// No description provided for @packsManifestError.
+  ///
+  /// In uk, this message translates to:
+  /// **'Список пакетів недоступний (немає мережі?). Можна імпортувати файл.'**
+  String get packsManifestError;
+
+  /// No description provided for @packsOfflineOnly.
+  ///
+  /// In uk, this message translates to:
+  /// **'Режим «Тільки офлайн»: завантаження вимкнено'**
+  String get packsOfflineOnly;
+
+  /// No description provided for @packsOther.
+  ///
+  /// In uk, this message translates to:
+  /// **'Інші файли'**
+  String get packsOther;
+
+  /// No description provided for @password.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пароль'**
+  String get password;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Щонайменше 8 символів'**
+  String get passwordHint;
+
+  /// No description provided for @privacyOfflineOnly.
+  ///
+  /// In uk, this message translates to:
+  /// **'Тільки офлайн'**
+  String get privacyOfflineOnly;
+
+  /// No description provided for @privacyOk.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зрозуміло'**
+  String get privacyOk;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In uk, this message translates to:
+  /// **'Приватність'**
+  String get privacyTitle;
+
+  /// No description provided for @privacyText.
+  ///
+  /// In uk, this message translates to:
+  /// **'Горизонталь не має аналітики, реклами й облікових записів, а ваші об\'єкти зберігаються лише на пристрої, зашифрованими.\n\nОнлайн-мапа завантажує тайли з OpenFreeMap: за запитами провайдер бачить приблизний район, який ви переглядаєте. Якщо це неприйнятно, увімкніть режим «Тільки офлайн» і користуйтеся завантаженими пакетами областей. Режим можна змінити в налаштуваннях.'**
+  String get privacyText;
+
+  /// No description provided for @qrCode.
+  ///
+  /// In uk, this message translates to:
+  /// **'QR-код'**
+  String get qrCode;
+
+  /// No description provided for @qrNotAPoint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Це не QR-код точки Горизонталі'**
+  String get qrNotAPoint;
+
+  /// No description provided for @radius.
+  ///
+  /// In uk, this message translates to:
+  /// **'Радіус'**
+  String get radius;
+
+  /// No description provided for @radiusM.
+  ///
+  /// In uk, this message translates to:
+  /// **'Радіус, м'**
+  String get radiusM;
+
+  /// No description provided for @receiveWifi.
+  ///
+  /// In uk, this message translates to:
+  /// **'Отримати по Wi-Fi'**
+  String get receiveWifi;
+
+  /// No description provided for @renameLayer.
+  ///
+  /// In uk, this message translates to:
+  /// **'Перейменувати'**
+  String get renameLayer;
+
+  /// No description provided for @route.
+  ///
+  /// In uk, this message translates to:
+  /// **'Маршрут'**
+  String get route;
+
+  /// No description provided for @save.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зберегти'**
+  String get save;
+
+  /// No description provided for @saveToLayer.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зберегти в шар'**
+  String get saveToLayer;
+
+  /// No description provided for @scanQr.
+  ///
+  /// In uk, this message translates to:
+  /// **'Сканувати QR'**
+  String get scanQr;
+
+  /// No description provided for @scanQrHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Наведіть камеру на QR-код точки'**
+  String get scanQrHint;
+
+  /// No description provided for @screenshotProtection.
+  ///
+  /// In uk, this message translates to:
+  /// **'Заборонити знімки екрана'**
+  String get screenshotProtection;
+
+  /// No description provided for @screenshotProtectionHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Також приховує вміст у переліку застосунків'**
+  String get screenshotProtectionHint;
+
+  /// No description provided for @searchByName.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пошук за назвою'**
+  String get searchByName;
+
+  /// No description provided for @searchCoordinates.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пошук за координатами'**
+  String get searchCoordinates;
+
+  /// No description provided for @sendWifi.
+  ///
+  /// In uk, this message translates to:
+  /// **'Передати по Wi-Fi'**
+  String get sendWifi;
+
+  /// No description provided for @showOnMap.
+  ///
+  /// In uk, this message translates to:
+  /// **'Показати на мапі'**
+  String get showOnMap;
+
+  /// No description provided for @swipeToHide.
+  ///
+  /// In uk, this message translates to:
+  /// **'Проведіть шар убік, щоб сховати або показати його на мапі'**
+  String get swipeToHide;
+
+  /// No description provided for @symbol.
+  ///
+  /// In uk, this message translates to:
+  /// **'Умовний знак'**
+  String get symbol;
+
+  /// No description provided for @symbolNone.
+  ///
+  /// In uk, this message translates to:
+  /// **'Без знака'**
+  String get symbolNone;
+
+  /// No description provided for @toArchive.
+  ///
+  /// In uk, this message translates to:
+  /// **'В архів'**
+  String get toArchive;
+
+  /// No description provided for @unarchive.
+  ///
+  /// In uk, this message translates to:
+  /// **'З архіву'**
+  String get unarchive;
+
+  /// No description provided for @unnamed.
+  ///
+  /// In uk, this message translates to:
+  /// **'Без назви'**
+  String get unnamed;
+
+  /// No description provided for @whatsNew.
+  ///
+  /// In uk, this message translates to:
+  /// **'Що нового'**
+  String get whatsNew;
+
+  /// No description provided for @settingsMap.
+  ///
+  /// In uk, this message translates to:
+  /// **'Мапа'**
+  String get settingsMap;
+
+  /// No description provided for @offlineOnly.
+  ///
+  /// In uk, this message translates to:
+  /// **'Тільки офлайн'**
+  String get offlineOnly;
+
+  /// No description provided for @offlineOnlyHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Жодних мережевих запитів: ні онлайн-мапи, ні завантаження пакетів'**
+  String get offlineOnlyHint;
+
+  /// No description provided for @wipeHold.
+  ///
+  /// In uk, this message translates to:
+  /// **'Утримуйте 3 секунди, щоб стерти'**
+  String get wipeHold;
+
+  /// No description provided for @wipePacks.
+  ///
+  /// In uk, this message translates to:
+  /// **'Також видалити офлайн-пакети карт'**
+  String get wipePacks;
+
+  /// No description provided for @wipeText.
+  ///
+  /// In uk, this message translates to:
+  /// **'Буде стерто базу з усіма шарами й об\'єктами, ключ шифрування, PIN-код, налаштування, кеш мапи, експортовані й отримані файли. Відновити це неможливо. Застосунок закриється.'**
+  String get wipeText;
+
+  /// No description provided for @wrongPassword.
+  ///
+  /// In uk, this message translates to:
+  /// **'Невірний пароль'**
+  String get wrongPassword;
+
+  /// No description provided for @transferBadQr.
+  ///
+  /// In uk, this message translates to:
+  /// **'Це не запрошення до передачі Горизонталі'**
+  String get transferBadQr;
+
+  /// No description provided for @transferBothReceive.
+  ///
+  /// In uk, this message translates to:
+  /// **'Обидва пристрої чекають на отримання. На одному з них оберіть передачу.'**
+  String get transferBothReceive;
+
+  /// No description provided for @transferBothSend.
+  ///
+  /// In uk, this message translates to:
+  /// **'Обидва пристрої передають. На одному з них оберіть отримання.'**
+  String get transferBothSend;
+
+  /// No description provided for @transferChecksum.
+  ///
+  /// In uk, this message translates to:
+  /// **'Дані пошкоджено під час передачі, спробуйте ще раз'**
+  String get transferChecksum;
+
+  /// No description provided for @transferConnecting.
+  ///
+  /// In uk, this message translates to:
+  /// **'Підключаюся…'**
+  String get transferConnecting;
+
+  /// No description provided for @transferDeclined.
+  ///
+  /// In uk, this message translates to:
+  /// **'Імпорт скасовано'**
+  String get transferDeclined;
+
+  /// No description provided for @transferLayersToSend.
+  ///
+  /// In uk, this message translates to:
+  /// **'Шари для передачі'**
+  String get transferLayersToSend;
+
+  /// No description provided for @transferHowTo.
+  ///
+  /// In uk, this message translates to:
+  /// **'QR показує один телефон, інший сканує. Якщо один з телефонів Android — QR показує Android: iPhone не вміє створювати точку доступу. Між двома iPhone працює напряму, без мережі. Дані шифруються ключем з QR-коду.'**
+  String get transferHowTo;
+
+  /// No description provided for @transferNeedsIphone.
+  ///
+  /// In uk, this message translates to:
+  /// **'Цей QR-код для передачі між двома iPhone. Покажіть QR на цьому пристрої.'**
+  String get transferNeedsIphone;
+
+  /// No description provided for @transferPermission.
+  ///
+  /// In uk, this message translates to:
+  /// **'Потрібен дозвіл на роботу з Wi-Fi'**
+  String get transferPermission;
+
+  /// No description provided for @transferReceiving.
+  ///
+  /// In uk, this message translates to:
+  /// **'Отримую шари…'**
+  String get transferReceiving;
+
+  /// No description provided for @transferSameNetwork.
+  ///
+  /// In uk, this message translates to:
+  /// **'Обидва в одній мережі Wi-Fi'**
+  String get transferSameNetwork;
+
+  /// No description provided for @transferSameNetworkHint.
+  ///
+  /// In uk, this message translates to:
+  /// **'Без точки доступу: через спільний роутер'**
+  String get transferSameNetworkHint;
+
+  /// No description provided for @transferScanButton.
+  ///
+  /// In uk, this message translates to:
+  /// **'Сканувати QR іншого телефона'**
+  String get transferScanButton;
+
+  /// No description provided for @transferSending.
+  ///
+  /// In uk, this message translates to:
+  /// **'Передаю шари…'**
+  String get transferSending;
+
+  /// No description provided for @transferSent.
+  ///
+  /// In uk, this message translates to:
+  /// **'Шари передано'**
+  String get transferSent;
+
+  /// No description provided for @transferShowQr.
+  ///
+  /// In uk, this message translates to:
+  /// **'Відскануйте цей QR на іншому телефоні'**
+  String get transferShowQr;
+
+  /// No description provided for @transferShowQrButton.
+  ///
+  /// In uk, this message translates to:
+  /// **'Показати QR'**
+  String get transferShowQrButton;
+
+  /// No description provided for @transferStarting.
+  ///
+  /// In uk, this message translates to:
+  /// **'Запускаю…'**
+  String get transferStarting;
+
+  /// No description provided for @created.
+  ///
+  /// In uk, this message translates to:
+  /// **'Створено {date}'**
+  String created(String date);
+
+  /// No description provided for @updated.
+  ///
+  /// In uk, this message translates to:
+  /// **'змінено {date}'**
+  String updated(String date);
+
+  /// No description provided for @deleteLayerQuestion.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видалити шар «{name}»?'**
+  String deleteLayerQuestion(String name);
+
+  /// No description provided for @deleteLayerText.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, =0{У шарі немає об\'єктів.} one{Разом з ним буде видалено {n} об\'єкт.} few{Разом з ним буде видалено {n} об\'єкти.} many{Разом з ним буде видалено {n} об\'єктів.} other{Разом з ним буде видалено {n} об\'єкта.}}'**
+  String deleteLayerText(int n);
+
+  /// No description provided for @deletePackQuestion.
+  ///
+  /// In uk, this message translates to:
+  /// **'Видалити пакет «{name}»?'**
+  String deletePackQuestion(String name);
+
+  /// No description provided for @downloading.
+  ///
+  /// In uk, this message translates to:
+  /// **'{received} з {total}'**
+  String downloading(String received, String total);
+
+  /// No description provided for @gigabytes.
+  ///
+  /// In uk, this message translates to:
+  /// **'{value} ГБ'**
+  String gigabytes(String value);
+
+  /// No description provided for @megabytes.
+  ///
+  /// In uk, this message translates to:
+  /// **'{value} МБ'**
+  String megabytes(String value);
+
+  /// No description provided for @importFailed.
+  ///
+  /// In uk, this message translates to:
+  /// **'Не вдалося імпортувати {name}'**
+  String importFailed(String name);
+
+  /// No description provided for @importWarnings.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, one{{n} елемент пропущено} few{{n} елементи пропущено} many{{n} елементів пропущено} other{{n} елемента пропущено}}'**
+  String importWarnings(int n);
+
+  /// No description provided for @imported.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, one{Імпортовано {n} об\'єкт} few{Імпортовано {n} об\'єкти} many{Імпортовано {n} об\'єктів} other{Імпортовано {n} об\'єкта}}'**
+  String imported(int n);
+
+  /// No description provided for @notAPack.
+  ///
+  /// In uk, this message translates to:
+  /// **'{name} не є пакетом PMTiles'**
+  String notAPack(String name);
+
+  /// No description provided for @objectsCount.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, one{{n} об\'єкт} few{{n} об\'єкти} many{{n} об\'єктів} other{{n} об\'єкта}}'**
+  String objectsCount(int n);
+
+  /// No description provided for @packImported.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пакет {name} додано'**
+  String packImported(String name);
+
+  /// No description provided for @packsBuild.
+  ///
+  /// In uk, this message translates to:
+  /// **'Збірка карт {build}'**
+  String packsBuild(String build);
+
+  /// No description provided for @packsInstalled.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, =0{Не встановлено} one{{n} область} few{{n} області} many{{n} областей} other{{n} області}}'**
+  String packsInstalled(int n);
+
+  /// No description provided for @packsSummary.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, =0{Немає файлів} one{{n} файл, {size}} few{{n} файли, {size}} many{{n} файлів, {size}} other{{n} файлу, {size}}}'**
+  String packsSummary(int n, String size);
+
+  /// No description provided for @transferFailed.
+  ///
+  /// In uk, this message translates to:
+  /// **'Не вдалося: {error}'**
+  String transferFailed(String error);
+
+  /// No description provided for @transferJoinFailed.
+  ///
+  /// In uk, this message translates to:
+  /// **'Не вдалося підключитися до мережі {ssid}. Підключіться вручну в налаштуваннях Wi-Fi, пароль: {psk}'**
+  String transferJoinFailed(String ssid, String psk);
+
+  /// No description provided for @transferManual.
+  ///
+  /// In uk, this message translates to:
+  /// **'Якщо не підключається: мережа {ssid}, пароль {psk}'**
+  String transferManual(String ssid, String psk);
+
+  /// No description provided for @vertices.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, one{{n} вершина} few{{n} вершини} many{{n} вершин} other{{n} вершини}}'**
+  String vertices(int n);
+
+  /// No description provided for @favorite.
+  ///
+  /// In uk, this message translates to:
+  /// **'В обране'**
+  String get favorite;
+
+  /// No description provided for @favorites.
+  ///
+  /// In uk, this message translates to:
+  /// **'Обране'**
+  String get favorites;
+
+  /// No description provided for @recent.
+  ///
+  /// In uk, this message translates to:
+  /// **'Нещодавні'**
+  String get recent;
+
+  /// No description provided for @symbolSearch.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пошук знака: піхота, танк, міномет…'**
+  String get symbolSearch;
+
+  /// No description provided for @sidcIdentity.
+  ///
+  /// In uk, this message translates to:
+  /// **'Належність'**
+  String get sidcIdentity;
+
+  /// No description provided for @sidcSet.
+  ///
+  /// In uk, this message translates to:
+  /// **'Набір знаків'**
+  String get sidcSet;
+
+  /// No description provided for @sidcEntity.
+  ///
+  /// In uk, this message translates to:
+  /// **'Тип'**
+  String get sidcEntity;
+
+  /// No description provided for @sidcEntityNone.
+  ///
+  /// In uk, this message translates to:
+  /// **'Не вибрано'**
+  String get sidcEntityNone;
+
+  /// No description provided for @sidcStatus.
+  ///
+  /// In uk, this message translates to:
+  /// **'Стан'**
+  String get sidcStatus;
+
+  /// No description provided for @sidcHq.
+  ///
+  /// In uk, this message translates to:
+  /// **'Штаб, тактична група, макет'**
+  String get sidcHq;
+
+  /// No description provided for @sidcEchelon.
+  ///
+  /// In uk, this message translates to:
+  /// **'Ешелон'**
+  String get sidcEchelon;
+
+  /// No description provided for @sidcMobility.
+  ///
+  /// In uk, this message translates to:
+  /// **'Рухомість'**
+  String get sidcMobility;
+
+  /// No description provided for @sidcModifier1.
+  ///
+  /// In uk, this message translates to:
+  /// **'Модифікатор 1'**
+  String get sidcModifier1;
+
+  /// No description provided for @sidcModifier2.
+  ///
+  /// In uk, this message translates to:
+  /// **'Модифікатор 2'**
+  String get sidcModifier2;
+
+  /// No description provided for @sidcChooseThis.
+  ///
+  /// In uk, this message translates to:
+  /// **'Вибрати «{name}»'**
+  String sidcChooseThis(String name);
 }
 
 class _AppLocalizationsDelegate

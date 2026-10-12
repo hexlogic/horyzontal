@@ -1,13 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:horyzontal_geo/horyzontal_geo.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/labels.dart';
 import '../../core/settings.dart';
 import '../../l10n/app_localizations.dart';
 import '../security/lock.dart';
+
+/// monobank jar for donations; the row stays hidden while this is empty.
+/// The app only hands the link to the browser, it never calls it itself.
+const donateUrl = String.fromEnvironment('DONATE_URL');
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -138,12 +145,38 @@ class SettingsPage extends ConsumerWidget {
               (s, v) => s.copyWith(lockAfter: v),
             ),
           ],
+          if (Platform.isAndroid)
+            SwitchListTile(
+              secondary: const Icon(Icons.screenshot_monitor_outlined),
+              title: Text(l.screenshotProtection),
+              subtitle: Text(l.screenshotProtectionHint),
+              value: s.screenshotProtection,
+              onChanged: (v) => ctl.update((s) => s.copyWith(screenshotProtection: v)),
+            ),
+          ListTile(
+            leading: Icon(Icons.delete_forever_outlined, color: Theme.of(context).colorScheme.error),
+            title: Text(l.emergencyWipe),
+            subtitle: Text(l.emergencyWipeHint),
+            onTap: () => context.go('/settings/wipe'),
+          ),
           _Header(l.about),
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(l.about),
             onTap: () => context.go('/settings/about'),
           ),
+          ListTile(
+            leading: const Icon(Icons.new_releases_outlined),
+            title: Text(l.whatsNew),
+            onTap: () => context.go('/settings/whats-new'),
+          ),
+          if (donateUrl.isNotEmpty)
+            ListTile(
+              leading: const Icon(Icons.volunteer_activism_outlined),
+              title: Text(l.donate),
+              subtitle: Text(l.donateHint),
+              onTap: () => launchUrl(Uri.parse(donateUrl), mode: LaunchMode.externalApplication),
+            ),
         ],
       ),
     );

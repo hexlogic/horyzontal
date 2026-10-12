@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Placemark>
+  <name>Waypoint</name>
+  <gx:balloonVisibility>1</gx:balloonVisibility>
+  <Point><coordinates>24.03,49.84,0</coordinates></Point>
+</Placemark>
+<Placemark>
+  <name>Track</name>
+  <gx:Track><when>2026-01-01T00:00:00Z</when><gx:coord>24 49 0</gx:coord></gx:Track>
+</Placemark>
+</kml>

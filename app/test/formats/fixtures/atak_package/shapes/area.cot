@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<event version='2.0' uid='area-1' type='u-d-f' time='2026-10-11T09:00:00.000Z' start='2026-10-11T09:00:00.000Z' stale='2026-10-12T09:00:00.000Z' how='h-e'><point lat='47.95' lon='37.45' hae='9999999.0' ce='9999999.0' le='9999999.0' /><detail><link point='47.94,37.44'/><link point='47.94,37.46'/><link point='47.96,37.46'/><link point='47.94,37.44'/><strokeColor value='-65536'/><fillColor value='1157562368'/><contact callsign='Мінне поле'/><archive/></detail></event>

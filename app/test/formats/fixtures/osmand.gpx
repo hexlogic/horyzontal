@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<gpx version="1.1" creator="OsmAnd~ 4.8.6" xmlns="http://www.topografix.com/GPX/1/1" xmlns:osmand="https://osmand.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Вихід 11 жовтня</name>
+    <time>2026-10-11T05:00:00Z</time>
+  </metadata>
+  <wpt lat="49.8397" lon="24.0297">
+    <ele>296.3</ele>
+    <time>2026-10-11T05:10:00Z</time>
+    <name>Криниця</name>
+    <desc>Питна вода</desc>
+    <type>Вода</type>
+    <extensions>
+      <osmand:icon>water_tap</osmand:icon>
+      <osmand:background>circle</osmand:background>
+      <osmand:color>#ff1e88e5</osmand:color>
+    </extensions>
+  </wpt>
+  <wpt lat="49.8412" lon="24.0311">
+    <name>Без висоти</name>
+  </wpt>
+  <wpt lat="91.0" lon="24.0">
+    <name>Погана точка</name>
+  </wpt>
+  <rte>
+    <name>План</name>
+    <rtept lat="49.80" lon="24.00"/>
+    <rtept lat="49.81" lon="24.02"/>
+  </rte>
+  <trk>
+    <name>Запис треку</name>
+    <extensions>
+      <osmand:color>#c0e53935</osmand:color>
+      <osmand:width>bold</osmand:width>
+    </extensions>
+    <trkseg>
+      <trkpt lat="49.8397" lon="24.0297"><ele>296</ele><time>2026-10-11T05:00:00Z</time><hdop>4.1</hdop></trkpt>
+      <trkpt lat="49.8401" lon="24.0302"><ele>297</ele><time>2026-10-11T05:00:05Z</time></trkpt>
+      <trkpt lat="49.8405" lon="24.0310"><ele>298.5</ele><time>2026-10-11T05:00:10Z</time></trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="49.8500" lon="24.0400"/>
+      <trkpt lat="49.8510" lon="24.0420"/>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="49.8600" lon="24.0500"/>
+    </trkseg>
+  </trk>
+</gpx>

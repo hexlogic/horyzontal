@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<event version="2.0" uid="S-1" type="a-f-G-E-V-A-T" how="m-g" time="2026-10-11T07:00:00Z" start="2026-10-11T07:00:00Z" stale="2026-10-11T08:00:00Z"><point lat="50.1" lon="30.1" hae="152.5" ce="10" le="5"/><detail><contact callsign="Т-64 №1"/></detail></event>
+<?xml version="1.0" encoding="UTF-8"?>
+<event version="2.0" uid="S-2" type="a-n-A-C-F" how="m-g" time="2026-10-11T07:00:00Z" start="2026-10-11T07:00:00Z" stale="2026-10-11T08:00:00Z"><point lat="50.2" lon="30.2" hae="9000" ce="10" le="5"/><detail><contact callsign="Цивільний літак"/></detail></event>
+<event version="2.0" uid="S-3" type="b-t-f" how="h-g-i-g-o" time="2026-10-11T07:00:00Z" start="2026-10-11T07:00:00Z" stale="2026-10-11T08:00:00Z"><point lat="0" lon="0" hae="0" ce="9999999" le="9999999"/><detail><remarks>Чат</remarks></detail></event>
+<event version="2.0" uid="S-4" type="b-m-p-s-m" how="h-g-i-g-o" time="2026-10-11T07:00:00Z" start="2026-10-11T07:00:00Z" stale="2026-10-11T08:00:00Z"><point lat="50.3" lon="30.3" hae="9999999.0" ce="9999999" le="9999999"/><detail><contact callsign="Мітка"/><color argb="-16711936"/></detail></event>
+<event version="2.0" uid="S-5" type="a-u-G" how="h-g-i-g-o" time="2026-10-11T07:00:00Z" start="2026-10-11T07:00:00Z" stale="2026-10-11T08:00:00Z"><point lat="120" lon="30.3" hae="0" ce="9999999" le="9999999"/></event>

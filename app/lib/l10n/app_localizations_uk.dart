@@ -442,5 +442,637 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get aboutDataText =>
-      'Магнітне поле: World Magnetic Model WMM2025, NOAA NCEI і BGS. Геоїд: EGM2008, NGA. Геодезичні задачі: алгоритми C. F. F. Karney (GeographicLib, MIT).';
+      'Мапа: © учасники OpenStreetMap (ODbL), OpenFreeMap, Protomaps. Висоти: Copernicus DEM GLO-30 © DLR e.V. 2010–2014 і © Airbus Defence and Space GmbH 2014–2018, надано в рамках COPERNICUS Європейським Союзом та ESA. Магнітне поле: World Magnetic Model WMM2025, NOAA NCEI і BGS. Геоїд: EGM2008, NGA. Геодезичні задачі: алгоритми C. F. F. Karney (GeographicLib, MIT). Умовні знаки: milsymbol © Måns Beckman (MIT), каталог кодів за Esri Joint Military Symbology XML (Apache-2.0).';
+
+  @override
+  String get tabMap => 'Мапа';
+
+  @override
+  String get tabJournal => 'Журнал';
+
+  @override
+  String get addPointHere => 'Додати точку';
+
+  @override
+  String get altitudeM => 'Висота, м';
+
+  @override
+  String get appleMaps => 'Apple Maps';
+
+  @override
+  String get googleMaps => 'Google Maps';
+
+  @override
+  String get otherMapsApp => 'Інший застосунок карт';
+
+  @override
+  String get archive => 'Архів';
+
+  @override
+  String get archiveEmpty => 'В архіві немає шарів';
+
+  @override
+  String get author => 'Автор';
+
+  @override
+  String get baseMap => 'Основа мапи';
+
+  @override
+  String get close => 'Закрити';
+
+  @override
+  String get defaultLayerName => 'Мої об\'єкти';
+
+  @override
+  String get delete => 'Видалити';
+
+  @override
+  String get deleteLayer => 'Видалити шар';
+
+  @override
+  String get deleteObjectQuestion => 'Видалити об\'єкт?';
+
+  @override
+  String get description => 'Опис';
+
+  @override
+  String get distanceAzimuthFromMe => 'Від мене: відстань · азимут';
+
+  @override
+  String get donate => 'Підтримати проєкт';
+
+  @override
+  String get donateHint => 'Банка monobank';
+
+  @override
+  String get download => 'Завантажити';
+
+  @override
+  String get downloadFailed => 'не вдалося завантажити';
+
+  @override
+  String get edit => 'Редагувати';
+
+  @override
+  String get emergencyWipe => 'Екстрене видалення';
+
+  @override
+  String get emergencyWipeHint => 'Стерти всі дані на цьому пристрої';
+
+  @override
+  String get encrypt => 'Зашифрувати';
+
+  @override
+  String get encryptQuestion => 'Зашифрувати файл паролем?';
+
+  @override
+  String get encryptText =>
+      'Без пароля файл прочитає будь-хто, хто його отримає. Пароль передайте іншим каналом.';
+
+  @override
+  String get noEncryption => 'Без шифрування';
+
+  @override
+  String get exportFormats => '.hrz, KML, KMZ, GPX, CoT, пакет ATAK';
+
+  @override
+  String get exportLayer => 'Експорт шару';
+
+  @override
+  String get exportPassword => 'Пароль для файлу';
+
+  @override
+  String get formatAtakHint =>
+      'Zip для ATAK: точки як CoT, лінії й полігони як KML';
+
+  @override
+  String get formatAtakPackage => 'Пакет даних ATAK';
+
+  @override
+  String get formatCotHint => 'Точки для ATAK і WinTAK';
+
+  @override
+  String get formatGpxHint => 'Навігатори, OsmAnd, Garmin';
+
+  @override
+  String get formatHrz => 'Горизонталь (.hrz)';
+
+  @override
+  String get formatHrzHint =>
+      'Без втрат, для іншої Горизонталі; можна з паролем';
+
+  @override
+  String get formatKmlHint => 'Google Earth, ATAK, OsmAnd, QGIS';
+
+  @override
+  String get hidden => 'прихований';
+
+  @override
+  String get importAction => 'Імпортувати';
+
+  @override
+  String get importFile => 'Імпорт файлу';
+
+  @override
+  String get importPack => 'Імпорт пакета';
+
+  @override
+  String get importPassword => 'Файл зашифровано. Пароль';
+
+  @override
+  String get importQuestion => 'Імпортувати шари?';
+
+  @override
+  String get journalEmpty =>
+      'Тут з\'являться точки, лінії й полігони. Довге натискання на мапі створює точку.';
+
+  @override
+  String get kindPoint => 'Точка';
+
+  @override
+  String get kindPoints => 'Точки';
+
+  @override
+  String get kindPolygon => 'Полігон';
+
+  @override
+  String get kindPolygons => 'Полігони';
+
+  @override
+  String get kindPolyline => 'Полілінія';
+
+  @override
+  String get kindPolylines => 'Полілінії';
+
+  @override
+  String get layer => 'Шар';
+
+  @override
+  String get layerName => 'Назва шару';
+
+  @override
+  String get layers => 'Шари';
+
+  @override
+  String get manageLayers => 'Керувати';
+
+  @override
+  String get mapLayers => 'Шари мапи';
+
+  @override
+  String get mapOffline => 'Офлайн';
+
+  @override
+  String get mapOnline => 'Онлайн';
+
+  @override
+  String get name => 'Назва';
+
+  @override
+  String get newLayer => 'Новий шар';
+
+  @override
+  String get newPoint => 'Нова точка';
+
+  @override
+  String get noLayers => 'Шарів ще немає';
+
+  @override
+  String get noMapsApp => 'Немає застосунку карт для маршруту';
+
+  @override
+  String get noPacksHint =>
+      'Завантажте область, щоб мапа працювала без інтернету';
+
+  @override
+  String get noPacksOffline =>
+      'Імпортуйте файл пакета або вимкніть режим «Тільки офлайн»';
+
+  @override
+  String get noPacksTitle => 'Немає офлайн-пакетів';
+
+  @override
+  String get nothingFound => 'Нічого не знайдено';
+
+  @override
+  String get object => 'Об\'єкт';
+
+  @override
+  String get offlinePacks => 'Офлайн-пакети карт';
+
+  @override
+  String get packNoHeights => 'без висот';
+
+  @override
+  String get packNotAvailable => 'недоступно для завантаження';
+
+  @override
+  String get packUpdate => 'Оновити';
+
+  @override
+  String get packsAttribution =>
+      'Карта: © учасники OpenStreetMap (ODbL), Protomaps. Висоти: Copernicus DEM GLO-30 © DLR, Airbus, ESA. Пакети з github.com/hexlogic/horyzontal.';
+
+  @override
+  String get packsLoading => 'Перевіряю доступні пакети…';
+
+  @override
+  String get packsManifestError =>
+      'Список пакетів недоступний (немає мережі?). Можна імпортувати файл.';
+
+  @override
+  String get packsOfflineOnly => 'Режим «Тільки офлайн»: завантаження вимкнено';
+
+  @override
+  String get packsOther => 'Інші файли';
+
+  @override
+  String get password => 'Пароль';
+
+  @override
+  String get passwordHint => 'Щонайменше 8 символів';
+
+  @override
+  String get privacyOfflineOnly => 'Тільки офлайн';
+
+  @override
+  String get privacyOk => 'Зрозуміло';
+
+  @override
+  String get privacyTitle => 'Приватність';
+
+  @override
+  String get privacyText =>
+      'Горизонталь не має аналітики, реклами й облікових записів, а ваші об\'єкти зберігаються лише на пристрої, зашифрованими.\n\nОнлайн-мапа завантажує тайли з OpenFreeMap: за запитами провайдер бачить приблизний район, який ви переглядаєте. Якщо це неприйнятно, увімкніть режим «Тільки офлайн» і користуйтеся завантаженими пакетами областей. Режим можна змінити в налаштуваннях.';
+
+  @override
+  String get qrCode => 'QR-код';
+
+  @override
+  String get qrNotAPoint => 'Це не QR-код точки Горизонталі';
+
+  @override
+  String get radius => 'Радіус';
+
+  @override
+  String get radiusM => 'Радіус, м';
+
+  @override
+  String get receiveWifi => 'Отримати по Wi-Fi';
+
+  @override
+  String get renameLayer => 'Перейменувати';
+
+  @override
+  String get route => 'Маршрут';
+
+  @override
+  String get save => 'Зберегти';
+
+  @override
+  String get saveToLayer => 'Зберегти в шар';
+
+  @override
+  String get scanQr => 'Сканувати QR';
+
+  @override
+  String get scanQrHint => 'Наведіть камеру на QR-код точки';
+
+  @override
+  String get screenshotProtection => 'Заборонити знімки екрана';
+
+  @override
+  String get screenshotProtectionHint =>
+      'Також приховує вміст у переліку застосунків';
+
+  @override
+  String get searchByName => 'Пошук за назвою';
+
+  @override
+  String get searchCoordinates => 'Пошук за координатами';
+
+  @override
+  String get sendWifi => 'Передати по Wi-Fi';
+
+  @override
+  String get showOnMap => 'Показати на мапі';
+
+  @override
+  String get swipeToHide =>
+      'Проведіть шар убік, щоб сховати або показати його на мапі';
+
+  @override
+  String get symbol => 'Умовний знак';
+
+  @override
+  String get symbolNone => 'Без знака';
+
+  @override
+  String get toArchive => 'В архів';
+
+  @override
+  String get unarchive => 'З архіву';
+
+  @override
+  String get unnamed => 'Без назви';
+
+  @override
+  String get whatsNew => 'Що нового';
+
+  @override
+  String get settingsMap => 'Мапа';
+
+  @override
+  String get offlineOnly => 'Тільки офлайн';
+
+  @override
+  String get offlineOnlyHint =>
+      'Жодних мережевих запитів: ні онлайн-мапи, ні завантаження пакетів';
+
+  @override
+  String get wipeHold => 'Утримуйте 3 секунди, щоб стерти';
+
+  @override
+  String get wipePacks => 'Також видалити офлайн-пакети карт';
+
+  @override
+  String get wipeText =>
+      'Буде стерто базу з усіма шарами й об\'єктами, ключ шифрування, PIN-код, налаштування, кеш мапи, експортовані й отримані файли. Відновити це неможливо. Застосунок закриється.';
+
+  @override
+  String get wrongPassword => 'Невірний пароль';
+
+  @override
+  String get transferBadQr => 'Це не запрошення до передачі Горизонталі';
+
+  @override
+  String get transferBothReceive =>
+      'Обидва пристрої чекають на отримання. На одному з них оберіть передачу.';
+
+  @override
+  String get transferBothSend =>
+      'Обидва пристрої передають. На одному з них оберіть отримання.';
+
+  @override
+  String get transferChecksum =>
+      'Дані пошкоджено під час передачі, спробуйте ще раз';
+
+  @override
+  String get transferConnecting => 'Підключаюся…';
+
+  @override
+  String get transferDeclined => 'Імпорт скасовано';
+
+  @override
+  String get transferLayersToSend => 'Шари для передачі';
+
+  @override
+  String get transferHowTo =>
+      'QR показує один телефон, інший сканує. Якщо один з телефонів Android — QR показує Android: iPhone не вміє створювати точку доступу. Між двома iPhone працює напряму, без мережі. Дані шифруються ключем з QR-коду.';
+
+  @override
+  String get transferNeedsIphone =>
+      'Цей QR-код для передачі між двома iPhone. Покажіть QR на цьому пристрої.';
+
+  @override
+  String get transferPermission => 'Потрібен дозвіл на роботу з Wi-Fi';
+
+  @override
+  String get transferReceiving => 'Отримую шари…';
+
+  @override
+  String get transferSameNetwork => 'Обидва в одній мережі Wi-Fi';
+
+  @override
+  String get transferSameNetworkHint =>
+      'Без точки доступу: через спільний роутер';
+
+  @override
+  String get transferScanButton => 'Сканувати QR іншого телефона';
+
+  @override
+  String get transferSending => 'Передаю шари…';
+
+  @override
+  String get transferSent => 'Шари передано';
+
+  @override
+  String get transferShowQr => 'Відскануйте цей QR на іншому телефоні';
+
+  @override
+  String get transferShowQrButton => 'Показати QR';
+
+  @override
+  String get transferStarting => 'Запускаю…';
+
+  @override
+  String created(String date) {
+    return 'Створено $date';
+  }
+
+  @override
+  String updated(String date) {
+    return 'змінено $date';
+  }
+
+  @override
+  String deleteLayerQuestion(String name) {
+    return 'Видалити шар «$name»?';
+  }
+
+  @override
+  String deleteLayerText(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Разом з ним буде видалено $n об\'єкта.',
+      many: 'Разом з ним буде видалено $n об\'єктів.',
+      few: 'Разом з ним буде видалено $n об\'єкти.',
+      one: 'Разом з ним буде видалено $n об\'єкт.',
+      zero: 'У шарі немає об\'єктів.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deletePackQuestion(String name) {
+    return 'Видалити пакет «$name»?';
+  }
+
+  @override
+  String downloading(String received, String total) {
+    return '$received з $total';
+  }
+
+  @override
+  String gigabytes(String value) {
+    return '$value ГБ';
+  }
+
+  @override
+  String megabytes(String value) {
+    return '$value МБ';
+  }
+
+  @override
+  String importFailed(String name) {
+    return 'Не вдалося імпортувати $name';
+  }
+
+  @override
+  String importWarnings(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n елемента пропущено',
+      many: '$n елементів пропущено',
+      few: '$n елементи пропущено',
+      one: '$n елемент пропущено',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String imported(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Імпортовано $n об\'єкта',
+      many: 'Імпортовано $n об\'єктів',
+      few: 'Імпортовано $n об\'єкти',
+      one: 'Імпортовано $n об\'єкт',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String notAPack(String name) {
+    return '$name не є пакетом PMTiles';
+  }
+
+  @override
+  String objectsCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n об\'єкта',
+      many: '$n об\'єктів',
+      few: '$n об\'єкти',
+      one: '$n об\'єкт',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String packImported(String name) {
+    return 'Пакет $name додано';
+  }
+
+  @override
+  String packsBuild(String build) {
+    return 'Збірка карт $build';
+  }
+
+  @override
+  String packsInstalled(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n області',
+      many: '$n областей',
+      few: '$n області',
+      one: '$n область',
+      zero: 'Не встановлено',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String packsSummary(int n, String size) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n файлу, $size',
+      many: '$n файлів, $size',
+      few: '$n файли, $size',
+      one: '$n файл, $size',
+      zero: 'Немає файлів',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String transferFailed(String error) {
+    return 'Не вдалося: $error';
+  }
+
+  @override
+  String transferJoinFailed(String ssid, String psk) {
+    return 'Не вдалося підключитися до мережі $ssid. Підключіться вручну в налаштуваннях Wi-Fi, пароль: $psk';
+  }
+
+  @override
+  String transferManual(String ssid, String psk) {
+    return 'Якщо не підключається: мережа $ssid, пароль $psk';
+  }
+
+  @override
+  String vertices(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n вершини',
+      many: '$n вершин',
+      few: '$n вершини',
+      one: '$n вершина',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get favorite => 'В обране';
+
+  @override
+  String get favorites => 'Обране';
+
+  @override
+  String get recent => 'Нещодавні';
+
+  @override
+  String get symbolSearch => 'Пошук знака: піхота, танк, міномет…';
+
+  @override
+  String get sidcIdentity => 'Належність';
+
+  @override
+  String get sidcSet => 'Набір знаків';
+
+  @override
+  String get sidcEntity => 'Тип';
+
+  @override
+  String get sidcEntityNone => 'Не вибрано';
+
+  @override
+  String get sidcStatus => 'Стан';
+
+  @override
+  String get sidcHq => 'Штаб, тактична група, макет';
+
+  @override
+  String get sidcEchelon => 'Ешелон';
+
+  @override
+  String get sidcMobility => 'Рухомість';
+
+  @override
+  String get sidcModifier1 => 'Модифікатор 1';
+
+  @override
+  String get sidcModifier2 => 'Модифікатор 2';
+
+  @override
+  String sidcChooseThis(String name) {
+    return 'Вибрати «$name»';
+  }
 }

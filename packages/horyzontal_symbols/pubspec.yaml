@@ -1,0 +1,12 @@
+name: horyzontal_symbols
+description: NATO APP-6 / MIL-STD-2525 military symbols as SVG, a Dart port of milsymbol.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dev_dependencies:
+  lints: ^6.1.0
+  test: ^1.29.0

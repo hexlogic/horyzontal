@@ -16,6 +16,14 @@ class AppSettings {
     this.themeMode = ThemeMode.system,
     this.biometrics = false,
     this.lockAfter = const Duration(seconds: 30),
+    this.offlineOnly = false,
+    this.onlineMap = true,
+    this.screenshotProtection = false,
+    this.privacyNoticeSeen = false,
+    this.lastSeenVersion = '',
+    this.camera = const MapCamera(48.9, 31.2, 5.3),
+    this.symbolFavorites = const [],
+    this.symbolRecent = const [],
   });
 
   final CoordinateSystem system;
@@ -25,6 +33,23 @@ class AppSettings {
   final ThemeMode themeMode;
   final bool biometrics;
   final Duration lockAfter;
+
+  /// No network at all: no online tiles, no pack downloads.
+  final bool offlineOnly;
+
+  /// Online OpenFreeMap basemap instead of the offline packs.
+  final bool onlineMap;
+
+  /// Android FLAG_SECURE: no screenshots, blank in the app switcher.
+  final bool screenshotProtection;
+  final bool privacyNoticeSeen;
+
+  /// App version whose "what's new" the user has seen.
+  final String lastSeenVersion;
+  final MapCamera camera;
+
+  /// SIDCs starred in the symbol picker, and the last ones used.
+  final List<String> symbolFavorites, symbolRecent;
 
   static const lockOptions = [
     Duration.zero,
@@ -43,6 +68,14 @@ class AppSettings {
     ThemeMode? themeMode,
     bool? biometrics,
     Duration? lockAfter,
+    bool? offlineOnly,
+    bool? onlineMap,
+    bool? screenshotProtection,
+    bool? privacyNoticeSeen,
+    String? lastSeenVersion,
+    MapCamera? camera,
+    List<String>? symbolFavorites,
+    List<String>? symbolRecent,
   }) => AppSettings(
     system: system ?? this.system,
     geoFormat: geoFormat ?? this.geoFormat,
@@ -81,6 +114,14 @@ class AppSettings {
       themeMode: pick(ThemeMode.values, 'themeMode', d.themeMode),
       biometrics: m['biometrics'] == 'true',
       lockAfter: lock == null ? d.lockAfter : Duration(seconds: lock),
+      offlineOnly: m['offlineOnly'] == 'true',
+      onlineMap: m['onlineMap'] != 'false',
+      screenshotProtection: m['screenshotProtection'] == 'true',
+      privacyNoticeSeen: m['privacyNoticeSeen'] == 'true',
+      lastSeenVersion: m['lastSeenVersion'] ?? '',
+      camera: MapCamera.decode(m['camera']) ?? d.camera,
+      symbolFavorites: _codes(m['symbolFavorites']),
+      symbolRecent: _codes(m['symbolRecent']),
     );
   }
 
@@ -90,6 +131,24 @@ class AppSettings {
   @override
   int get hashCode => Object.hashAll(toMap().values);
 }
+
+/// Map view to restore on the next launch.
+@immutable
+class MapCamera {
+  const MapCamera(this.lat, this.lon, this.zoom);
+  final double lat, lon, zoom;
+
+  String encode() => '$lat,$lon,$zoom';
+
+  static MapCamera? decode(String? s) {
+    final p = s?.split(',').map(double.tryParse).toList();
+    if (p == null || p.length != 3 || p.contains(null)) return null;
+    return MapCamera(p[0]!, p[1]!, p[2]!);
+  }
+}
+
+List<String> _codes(String? s) =>
+    s == null || s.isEmpty ? const [] : s.split(',').where((c) => RegExp(r'^\d{20,30}$').hasMatch(c)).toList();
 
 bool _mapEquals(Map<String, String> a, Map<String, String> b) =>
     a.length == b.length && a.entries.every((e) => b[e.key] == e.value);

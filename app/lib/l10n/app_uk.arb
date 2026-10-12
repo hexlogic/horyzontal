@@ -1,11 +1,9 @@
 {
   "@@locale": "uk",
   "appTitle": "Горизонталь",
-
   "tabTasks": "Завдання",
   "tabCompass": "Компас",
   "tabSettings": "Налаштування",
-
   "copied": "Скопійовано",
   "copy": "Копіювати",
   "share": "Поділитися",
@@ -13,7 +11,6 @@
   "myLocation": "Моє місце",
   "cancel": "Скасувати",
   "clear": "Очистити",
-
   "sysWgs84": "WGS 84",
   "sysUtm": "UTM",
   "sysMgrs": "MGRS",
@@ -22,22 +19,18 @@
   "sysUsk2000": "УСК-2000, геодезичні",
   "sysUsk2000Gk": "УСК-2000, прямокутні 6°",
   "sysUsk2000Tm3": "УСК-2000, ТМ 3°",
-
   "hintGeographic": "50.4501, 30.5234 або 50°27'00\"N 30°31'24\"E",
   "hintUtm": "36U 324182 5591608",
   "hintMgrs": "36U UA 24182 91607",
   "hintGrid": "X 5593957  Y 6324233",
   "hintTm3": "X 5591157  Y 337291",
-
   "geoDegrees": "Градуси",
   "geoDegMin": "Градуси, мінути",
   "geoDms": "Градуси, мінути, секунди",
-
   "angleDeg360": "Градуси 360°",
   "angleMils6000": "Поділки 60-00",
   "angleMils6400": "Тисячні 64-00",
   "angleDms": "Градуси, мінути, секунди",
-
   "errUnrecognized": "Не вдалося розпізнати координати",
   "errOutOfRange": "Координати поза допустимими межами",
   "errMissingZone": "Вкажіть зону",
@@ -45,12 +38,16 @@
   "errAngle": "Не вдалося розпізнати кут",
   "errDistance": "Вкажіть відстань у метрах",
   "errLocation": "Немає доступу до геолокації",
-
   "zone": "Зона",
   "zoneValue": "зона {zone}",
-  "@zoneValue": {"placeholders": {"zone": {"type": "int"}}},
+  "@zoneValue": {
+    "placeholders": {
+      "zone": {
+        "type": "int"
+      }
+    }
+  },
   "neighbourZone": "Сусідня зона",
-
   "taskConverter": "Конвертер координат",
   "taskConverterSubtitle": "WGS 84, СК-42, УСК-2000, UTM, MGRS",
   "taskAngles": "Конвертер кутів",
@@ -59,14 +56,12 @@
   "taskDirectSubtitle": "Точка, відстань і кут → нова точка",
   "taskInverse": "Обернена геодезична задача",
   "taskInverseSubtitle": "Дві точки → відстань і кути",
-
   "inputSystem": "Система координат",
   "coordinates": "Координати",
   "results": "У всіх системах",
   "angle": "Кут",
   "inputFormat": "Формат введення",
   "outputFormat": "Формат виведення",
-
   "startPoint": "Початкова точка",
   "endPoint": "Кінцева точка",
   "point1": "Точка 1",
@@ -82,13 +77,33 @@
   "methodPlane": "Площина",
   "methodEllipsoid": "Еліпсоїд",
   "planeGrid": "Площина {grid}, {zone}",
-  "@planeGrid": {"placeholders": {"grid": {"type": "String"}, "zone": {"type": "String"}}},
+  "@planeGrid": {
+    "placeholders": {
+      "grid": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
   "ellipsoidNote": "Геодезична лінія на еліпсоїді WGS 84, азимути від істинної півночі",
   "metres": "{value} м",
-  "@metres": {"placeholders": {"value": {"type": "String"}}},
+  "@metres": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "kilometres": "{value} км",
-  "@kilometres": {"placeholders": {"value": {"type": "String"}}},
-
+  "@kilometres": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "compassMagnetic": "Магнітна північ",
   "compassTrue": "Істинна північ",
   "compassGrid": "Північ сітки",
@@ -96,21 +111,44 @@
   "convergence": "Зближення меридіанів",
   "altitude": "Висота",
   "altitudeMsl": "{value} м над рівнем моря",
-  "@altitudeMsl": {"placeholders": {"value": {"type": "String"}}},
+  "@altitudeMsl": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "altitudeEllipsoid": "{value} м над еліпсоїдом",
-  "@altitudeEllipsoid": {"placeholders": {"value": {"type": "String"}}},
+  "@altitudeEllipsoid": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "accuracy": "±{value} м",
-  "@accuracy": {"placeholders": {"value": {"type": "String"}}},
+  "@accuracy": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "locating": "Визначення місця…",
   "trueNorthNeedsLocation": "Істинна північ з'явиться після визначення місця, зараз показано магнітну",
   "noCompass": "На пристрої немає компаса",
   "compassLowAccuracy": "Низька точність компаса. Відкалібруйте: поводіть телефоном вісімкою, подалі від металу й техніки.",
   "compassAccuracy": "Похибка компаса ±{value}°",
-  "@compassAccuracy": {"placeholders": {"value": {"type": "String"}}},
+  "@compassAccuracy": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "wmmExpired": "Модель магнітного поля WMM2025 діє до 2030 року, схилення може бути неточним",
   "locationDenied": "Дозвольте доступ до геолокації, щоб бачити координати й істинну північ",
   "openSettings": "Відкрити налаштування",
-
   "settingsCoordinates": "Координати й кути",
   "defaultSystem": "Система координат за замовчуванням",
   "geoFormat": "Формат географічних координат",
@@ -134,11 +172,22 @@
   "lockAfter": "Блокувати після виходу",
   "lockImmediately": "Одразу",
   "lockSeconds": "Через {n} с",
-  "@lockSeconds": {"placeholders": {"n": {"type": "int"}}},
+  "@lockSeconds": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lockMinutes": "Через {n} хв",
-  "@lockMinutes": {"placeholders": {"n": {"type": "int"}}},
+  "@lockMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "about": "Про застосунок",
-
   "pinEnter": "Введіть PIN-код",
   "pinNew": "Новий PIN-код",
   "pinRepeat": "Повторіть PIN-код",
@@ -146,19 +195,366 @@
   "pinMismatch": "PIN-коди не збігаються",
   "pinWrong": "Невірний PIN-код",
   "pinWait": "Забагато спроб. Зачекайте {seconds} с",
-  "@pinWait": {"placeholders": {"seconds": {"type": "int"}}},
+  "@pinWait": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "pinSet": "PIN-код встановлено",
   "pinRemoved": "PIN-код вимкнено",
   "biometricReason": "Розблокуйте Горизонталь",
   "unlockBiometric": "Біометрія",
   "deleteDigit": "Стерти",
-
   "aboutDescription": "Безкоштовний застосунок з відкритим кодом для роботи з координатами в полі. Працює без інтернету й нікуди не надсилає ваші дані.",
   "aboutVersion": "Версія {version}",
-  "@aboutVersion": {"placeholders": {"version": {"type": "String"}}},
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "aboutLicense": "Відкритий вихідний код, ліцензія GPL-3.0.",
   "aboutTransforms": "Перехід між системами",
   "aboutTransformsText": "СК-42 → WGS 84: EPSG:15865 (точність близько 4 м). УСК-2000 → WGS 84: EPSG:7817 (близько 1 м). Єдиного офіційного набору параметрів для СК-42 в Україні немає, різні програми можуть розходитися на 1–3 м.",
   "aboutData": "Дані й алгоритми",
-  "aboutDataText": "Магнітне поле: World Magnetic Model WMM2025, NOAA NCEI і BGS. Геоїд: EGM2008, NGA. Геодезичні задачі: алгоритми C. F. F. Karney (GeographicLib, MIT)."
+  "aboutDataText": "Мапа: © учасники OpenStreetMap (ODbL), OpenFreeMap, Protomaps. Висоти: Copernicus DEM GLO-30 © DLR e.V. 2010–2014 і © Airbus Defence and Space GmbH 2014–2018, надано в рамках COPERNICUS Європейським Союзом та ESA. Магнітне поле: World Magnetic Model WMM2025, NOAA NCEI і BGS. Геоїд: EGM2008, NGA. Геодезичні задачі: алгоритми C. F. F. Karney (GeographicLib, MIT). Умовні знаки: milsymbol © Måns Beckman (MIT), каталог кодів за Esri Joint Military Symbology XML (Apache-2.0).",
+  "tabMap": "Мапа",
+  "tabJournal": "Журнал",
+  "addPointHere": "Додати точку",
+  "altitudeM": "Висота, м",
+  "appleMaps": "Apple Maps",
+  "googleMaps": "Google Maps",
+  "otherMapsApp": "Інший застосунок карт",
+  "archive": "Архів",
+  "archiveEmpty": "В архіві немає шарів",
+  "author": "Автор",
+  "baseMap": "Основа мапи",
+  "close": "Закрити",
+  "defaultLayerName": "Мої об'єкти",
+  "delete": "Видалити",
+  "deleteLayer": "Видалити шар",
+  "deleteObjectQuestion": "Видалити об'єкт?",
+  "description": "Опис",
+  "distanceAzimuthFromMe": "Від мене: відстань · азимут",
+  "donate": "Підтримати проєкт",
+  "donateHint": "Банка monobank",
+  "download": "Завантажити",
+  "downloadFailed": "не вдалося завантажити",
+  "edit": "Редагувати",
+  "emergencyWipe": "Екстрене видалення",
+  "emergencyWipeHint": "Стерти всі дані на цьому пристрої",
+  "encrypt": "Зашифрувати",
+  "encryptQuestion": "Зашифрувати файл паролем?",
+  "encryptText": "Без пароля файл прочитає будь-хто, хто його отримає. Пароль передайте іншим каналом.",
+  "noEncryption": "Без шифрування",
+  "exportFormats": ".hrz, KML, KMZ, GPX, CoT, пакет ATAK",
+  "exportLayer": "Експорт шару",
+  "exportPassword": "Пароль для файлу",
+  "formatAtakHint": "Zip для ATAK: точки як CoT, лінії й полігони як KML",
+  "formatAtakPackage": "Пакет даних ATAK",
+  "formatCotHint": "Точки для ATAK і WinTAK",
+  "formatGpxHint": "Навігатори, OsmAnd, Garmin",
+  "formatHrz": "Горизонталь (.hrz)",
+  "formatHrzHint": "Без втрат, для іншої Горизонталі; можна з паролем",
+  "formatKmlHint": "Google Earth, ATAK, OsmAnd, QGIS",
+  "hidden": "прихований",
+  "importAction": "Імпортувати",
+  "importFile": "Імпорт файлу",
+  "importPack": "Імпорт пакета",
+  "importPassword": "Файл зашифровано. Пароль",
+  "importQuestion": "Імпортувати шари?",
+  "journalEmpty": "Тут з'являться точки, лінії й полігони. Довге натискання на мапі створює точку.",
+  "kindPoint": "Точка",
+  "kindPoints": "Точки",
+  "kindPolygon": "Полігон",
+  "kindPolygons": "Полігони",
+  "kindPolyline": "Полілінія",
+  "kindPolylines": "Полілінії",
+  "layer": "Шар",
+  "layerName": "Назва шару",
+  "layers": "Шари",
+  "manageLayers": "Керувати",
+  "mapLayers": "Шари мапи",
+  "mapOffline": "Офлайн",
+  "mapOnline": "Онлайн",
+  "name": "Назва",
+  "newLayer": "Новий шар",
+  "newPoint": "Нова точка",
+  "noLayers": "Шарів ще немає",
+  "noMapsApp": "Немає застосунку карт для маршруту",
+  "noPacksHint": "Завантажте область, щоб мапа працювала без інтернету",
+  "noPacksOffline": "Імпортуйте файл пакета або вимкніть режим «Тільки офлайн»",
+  "noPacksTitle": "Немає офлайн-пакетів",
+  "nothingFound": "Нічого не знайдено",
+  "object": "Об'єкт",
+  "offlinePacks": "Офлайн-пакети карт",
+  "packNoHeights": "без висот",
+  "packNotAvailable": "недоступно для завантаження",
+  "packUpdate": "Оновити",
+  "packsAttribution": "Карта: © учасники OpenStreetMap (ODbL), Protomaps. Висоти: Copernicus DEM GLO-30 © DLR, Airbus, ESA. Пакети з github.com/hexlogic/horyzontal.",
+  "packsLoading": "Перевіряю доступні пакети…",
+  "packsManifestError": "Список пакетів недоступний (немає мережі?). Можна імпортувати файл.",
+  "packsOfflineOnly": "Режим «Тільки офлайн»: завантаження вимкнено",
+  "packsOther": "Інші файли",
+  "password": "Пароль",
+  "passwordHint": "Щонайменше 8 символів",
+  "privacyOfflineOnly": "Тільки офлайн",
+  "privacyOk": "Зрозуміло",
+  "privacyTitle": "Приватність",
+  "privacyText": "Горизонталь не має аналітики, реклами й облікових записів, а ваші об'єкти зберігаються лише на пристрої, зашифрованими.\n\nОнлайн-мапа завантажує тайли з OpenFreeMap: за запитами провайдер бачить приблизний район, який ви переглядаєте. Якщо це неприйнятно, увімкніть режим «Тільки офлайн» і користуйтеся завантаженими пакетами областей. Режим можна змінити в налаштуваннях.",
+  "qrCode": "QR-код",
+  "qrNotAPoint": "Це не QR-код точки Горизонталі",
+  "radius": "Радіус",
+  "radiusM": "Радіус, м",
+  "receiveWifi": "Отримати по Wi-Fi",
+  "renameLayer": "Перейменувати",
+  "route": "Маршрут",
+  "save": "Зберегти",
+  "saveToLayer": "Зберегти в шар",
+  "scanQr": "Сканувати QR",
+  "scanQrHint": "Наведіть камеру на QR-код точки",
+  "screenshotProtection": "Заборонити знімки екрана",
+  "screenshotProtectionHint": "Також приховує вміст у переліку застосунків",
+  "searchByName": "Пошук за назвою",
+  "searchCoordinates": "Пошук за координатами",
+  "sendWifi": "Передати по Wi-Fi",
+  "showOnMap": "Показати на мапі",
+  "swipeToHide": "Проведіть шар убік, щоб сховати або показати його на мапі",
+  "symbol": "Умовний знак",
+  "symbolNone": "Без знака",
+  "toArchive": "В архів",
+  "unarchive": "З архіву",
+  "unnamed": "Без назви",
+  "whatsNew": "Що нового",
+  "settingsMap": "Мапа",
+  "offlineOnly": "Тільки офлайн",
+  "offlineOnlyHint": "Жодних мережевих запитів: ні онлайн-мапи, ні завантаження пакетів",
+  "wipeHold": "Утримуйте 3 секунди, щоб стерти",
+  "wipePacks": "Також видалити офлайн-пакети карт",
+  "wipeText": "Буде стерто базу з усіма шарами й об'єктами, ключ шифрування, PIN-код, налаштування, кеш мапи, експортовані й отримані файли. Відновити це неможливо. Застосунок закриється.",
+  "wrongPassword": "Невірний пароль",
+  "transferBadQr": "Це не запрошення до передачі Горизонталі",
+  "transferBothReceive": "Обидва пристрої чекають на отримання. На одному з них оберіть передачу.",
+  "transferBothSend": "Обидва пристрої передають. На одному з них оберіть отримання.",
+  "transferChecksum": "Дані пошкоджено під час передачі, спробуйте ще раз",
+  "transferConnecting": "Підключаюся…",
+  "transferDeclined": "Імпорт скасовано",
+  "transferLayersToSend": "Шари для передачі",
+  "transferHowTo": "QR показує один телефон, інший сканує. Якщо один з телефонів Android — QR показує Android: iPhone не вміє створювати точку доступу. Між двома iPhone працює напряму, без мережі. Дані шифруються ключем з QR-коду.",
+  "transferNeedsIphone": "Цей QR-код для передачі між двома iPhone. Покажіть QR на цьому пристрої.",
+  "transferPermission": "Потрібен дозвіл на роботу з Wi-Fi",
+  "transferReceiving": "Отримую шари…",
+  "transferSameNetwork": "Обидва в одній мережі Wi-Fi",
+  "transferSameNetworkHint": "Без точки доступу: через спільний роутер",
+  "transferScanButton": "Сканувати QR іншого телефона",
+  "transferSending": "Передаю шари…",
+  "transferSent": "Шари передано",
+  "transferShowQr": "Відскануйте цей QR на іншому телефоні",
+  "transferShowQrButton": "Показати QR",
+  "transferStarting": "Запускаю…",
+  "created": "Створено {date}",
+  "@created": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "updated": "змінено {date}",
+  "@updated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteLayerQuestion": "Видалити шар «{name}»?",
+  "@deleteLayerQuestion": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteLayerText": "{n, plural, =0{У шарі немає об'єктів.} one{Разом з ним буде видалено {n} об'єкт.} few{Разом з ним буде видалено {n} об'єкти.} many{Разом з ним буде видалено {n} об'єктів.} other{Разом з ним буде видалено {n} об'єкта.}}",
+  "@deleteLayerText": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "deletePackQuestion": "Видалити пакет «{name}»?",
+  "@deletePackQuestion": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "downloading": "{received} з {total}",
+  "@downloading": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "gigabytes": "{value} ГБ",
+  "@gigabytes": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "megabytes": "{value} МБ",
+  "@megabytes": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "importFailed": "Не вдалося імпортувати {name}",
+  "@importFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "importWarnings": "{n, plural, one{{n} елемент пропущено} few{{n} елементи пропущено} many{{n} елементів пропущено} other{{n} елемента пропущено}}",
+  "@importWarnings": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "imported": "{n, plural, one{Імпортовано {n} об'єкт} few{Імпортовано {n} об'єкти} many{Імпортовано {n} об'єктів} other{Імпортовано {n} об'єкта}}",
+  "@imported": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "notAPack": "{name} не є пакетом PMTiles",
+  "@notAPack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "objectsCount": "{n, plural, one{{n} об'єкт} few{{n} об'єкти} many{{n} об'єктів} other{{n} об'єкта}}",
+  "@objectsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "packImported": "Пакет {name} додано",
+  "@packImported": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "packsBuild": "Збірка карт {build}",
+  "@packsBuild": {
+    "placeholders": {
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "packsInstalled": "{n, plural, =0{Не встановлено} one{{n} область} few{{n} області} many{{n} областей} other{{n} області}}",
+  "@packsInstalled": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "packsSummary": "{n, plural, =0{Немає файлів} one{{n} файл, {size}} few{{n} файли, {size}} many{{n} файлів, {size}} other{{n} файлу, {size}}}",
+  "@packsSummary": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "transferFailed": "Не вдалося: {error}",
+  "@transferFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "transferJoinFailed": "Не вдалося підключитися до мережі {ssid}. Підключіться вручну в налаштуваннях Wi-Fi, пароль: {psk}",
+  "@transferJoinFailed": {
+    "placeholders": {
+      "ssid": {
+        "type": "String"
+      },
+      "psk": {
+        "type": "String"
+      }
+    }
+  },
+  "transferManual": "Якщо не підключається: мережа {ssid}, пароль {psk}",
+  "@transferManual": {
+    "placeholders": {
+      "ssid": {
+        "type": "String"
+      },
+      "psk": {
+        "type": "String"
+      }
+    }
+  },
+  "vertices": "{n, plural, one{{n} вершина} few{{n} вершини} many{{n} вершин} other{{n} вершини}}",
+  "@vertices": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "favorite": "В обране",
+  "favorites": "Обране",
+  "recent": "Нещодавні",
+  "symbolSearch": "Пошук знака: піхота, танк, міномет…",
+  "sidcIdentity": "Належність",
+  "sidcSet": "Набір знаків",
+  "sidcEntity": "Тип",
+  "sidcEntityNone": "Не вибрано",
+  "sidcStatus": "Стан",
+  "sidcHq": "Штаб, тактична група, макет",
+  "sidcEchelon": "Ешелон",
+  "sidcMobility": "Рухомість",
+  "sidcModifier1": "Модифікатор 1",
+  "sidcModifier2": "Модифікатор 2",
+  "sidcChooseThis": "Вибрати «{name}»",
+  "@sidcChooseThis": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

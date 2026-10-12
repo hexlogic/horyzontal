@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<event version='2.0' uid='ec5b3bd1-0c27-4a5c-9b7c-2f8a0e0c5a11' type='a-h-G-U-C-I' time='2026-10-11T07:21:34.512Z' start='2026-10-11T07:21:34.512Z' stale='2026-10-12T07:21:34.512Z' how='h-g-i-g-o'>
+  <point lat='48.0234567' lon='37.8123456' hae='9999999.0' ce='9999999.0' le='9999999.0' />
+  <detail>
+    <status readiness='true'/>
+    <archive/>
+    <link uid='ANDROID-358240051111110' production_time='2026-10-11T07:21:34.511Z' type='a-f-G-U-C' parent_callsign='VOVK' relation='p-p'/>
+    <contact callsign='Ворожа піхота'/>
+    <remarks>До взводу, окопуються</remarks>
+    <archive/>
+    <color argb='-65536'/>
+    <precisionlocation altsrc='???'/>
+    <usericon iconsetpath='COT_MAPPING_2525B/a-h/a-h-G'/>
+  </detail>
+</event>

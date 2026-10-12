@@ -1,5 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- No INTERNET permission: stage 1 never touches the network. -->
+    <!-- Network: online tiles from OpenFreeMap and map packs from GitHub
+         Releases only (see README, "Сетевая политика"); layer transfer over
+         a local hotspot. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES"
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
@@ -32,6 +43,21 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- Layers and geodata shared from messengers or opened from Files. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/vnd.google-earth.kml+xml" />
+                <data android:mimeType="application/vnd.google-earth.kmz" />
+                <data android:mimeType="application/gpx+xml" />
+                <data android:mimeType="application/json" />
+                <data android:mimeType="application/zip" />
+                <data android:mimeType="application/xml" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="application/octet-stream" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

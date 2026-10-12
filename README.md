@@ -8,8 +8,8 @@
 
 ## Статус
 
-Этап 1 — координаты, конвертер, компас. Этап 0 (спайк) закрыт:
-[docs/stage0-spike.md](docs/stage0-spike.md).
+Этап 2 — карта и объекты. Этапы 0 (спайк, [docs/stage0-spike.md](docs/stage0-spike.md)) и
+1 (координаты, конвертер, компас) закрыты.
 
 Что уже работает: конвертер координат WGS 84 / СК-42 / УСК-2000 / UTM / MGRS, конвертер углов
 (360°, 60-00, 64-00, Г°М′С″), прямая и обратная геодезические задачи на плоскости и эллипсоиде,
@@ -22,12 +22,11 @@
 | `app/` | Приложение Flutter (iOS 17+, Android 8+) |
 | `packages/horyzontal_geo/` | Геодезия на чистом Dart: датумы, сетки, MGRS, углы, задачи, WMM, геоид |
 | `tools/geo-reference/` | Генерация эталонов для тестов `horyzontal_geo` (PROJ, GeographicLib, NOAA) |
-| `tools/map-pipeline/` | Нарезка офлайн-пакетов по областям: Protomaps + Copernicus DEM |
+| `packages/horyzontal_symbols/` | Символы APP-6 (порт milsymbol) и каталог кодов с украинскими названиями |
+| `tools/map-pipeline/` | Нарезка офлайн-пакетов по областям: Protomaps + Copernicus DEM; ежемесячно в `.github/workflows/maps.yml` |
 | `tools/ci/` | Проверки CI |
 | `spike/` | Одноразовое приложение этапа 0: офлайн PMTiles с рельефом, передача по Wi-Fi |
 | `docs/` | Спецификация и отчеты |
-
-`packages/horyzontal_symbols` (APP-6) появится на этапе 2.
 
 ## Сборка и тесты
 
@@ -55,12 +54,17 @@ git; после изменения схемы или строк: `dart run build
 
 ## Сетевая политика
 
-Этап 1 вообще не обращается к сети: в Android-сборке нет разрешения `INTERNET`. С этапа 2
-разрешены только эти хосты, CI (`tools/ci/check_domains.sh`) проверяет, что новых не появилось:
+Приложение обращается только к этим хостам (список в `app/lib/core/net/network.dart`, HTTP-клиент
+отказывает остальным и проверяет каждый редирект; CI `tools/ci/check_domains.sh` следит, чтобы
+в коде не появилось новых адресов):
 
-- `tiles.openfreemap.org`, `openfreemap.org` — онлайн-карта
-- `github.com`, `objects.githubusercontent.com` — офлайн-пакеты из GitHub Releases
-- источники тайлов, которые пользователь добавил сам
+- `tiles.openfreemap.org` — онлайн-карта (стиль, тайлы, шрифты)
+- `github.com`, `objects.githubusercontent.com`, `release-assets.githubusercontent.com` — офлайн-пакеты
+  из релиза [`maps`](https://github.com/hexlogic/horyzontal/releases/tag/maps)
+- источники тайлов, которые пользователь добавит сам (этап 4)
+
+Режим «Только офлайн» в настройках отключает сеть полностью, включая MapLibre. Передача слоёв
+по Wi-Fi идёт по локальной точке доступа или Multipeer Connectivity, без интернета.
 
 Никакой аналитики, рекламы и крэш-репортинга.
 

@@ -25,6 +25,9 @@ class PlatformSecureStore implements SecureStore {
 
   @override
   Future<void> delete(String key) => _storage.delete(key: key);
+
+  /// Every secret of the app: database key, PIN hash, lockout counters.
+  Future<void> deleteAll() => _storage.deleteAll();
 }
 
 class MemorySecureStore implements SecureStore {

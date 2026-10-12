@@ -1,0 +1,32 @@
+<MissionPackageManifest version="2">
+   <Configuration>
+      <Parameter name="uid" value="5f0c3b1a-8e2d-4c7b-9a6f-1e2d3c4b5a69"/>
+      <Parameter name="name" value="Позиції 3 роти.zip"/>
+      <Parameter name="onReceiveDelete" value="true"/>
+   </Configuration>
+   <Contents>
+      <Content ignore="false" zipEntry="9a3b7c1e-5d2f-4e8a-b6c4-0f1e2d3c4b5a/9a3b7c1e-5d2f-4e8a-b6c4-0f1e2d3c4b5a.cot">
+         <Parameter name="uid" value="9a3b7c1e-5d2f-4e8a-b6c4-0f1e2d3c4b5a"/>
+      </Content>
+      <Content ignore="false" zipEntry="shapes/line.cot">
+         <Parameter name="uid" value="line-1"/>
+      </Content>
+      <Content ignore="false" zipEntry="shapes/area.cot">
+         <Parameter name="uid" value="area-1"/>
+      </Content>
+      <Content ignore="false" zipEntry="shapes/rect.cot">
+         <Parameter name="uid" value="rect-1"/>
+      </Content>
+      <Content ignore="false" zipEntry="shapes/circle.cot">
+         <Parameter name="uid" value="circle-1"/>
+      </Content>
+      <Content ignore="false" zipEntry="overlays/Рубежі.kml">
+         <Parameter name="name" value="Рубежі.kml"/>
+         <Parameter name="contentType" value="KML"/>
+         <Parameter name="visible" value="true"/>
+      </Content>
+      <Content ignore="false" zipEntry="overlays/notes.txt"/>
+      <Content ignore="true" zipEntry="shapes/ignored.cot"/>
+      <Content ignore="false" zipEntry="missing/missing.cot"/>
+   </Contents>
+</MissionPackageManifest>

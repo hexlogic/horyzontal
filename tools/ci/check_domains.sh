@@ -6,11 +6,18 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 
 allowed=(
-  # Stage 2: online tiles and region packs.
+  # Online tiles.
   tiles.openfreemap.org
-  openfreemap.org
+  # Region packs from the `maps` release; GitHub redirects downloads to its
+  # asset hosts.
   github.com
   objects.githubusercontent.com
+  release-assets.githubusercontent.com
+  # XML namespace identifiers (SVG, KML, GPX), never fetched.
+  www.w3.org
+  www.opengis.net
+  www.topografix.com
+  www.google.com
 )
 
 found=$(grep -rhoE 'https?://[A-Za-z0-9.-]+' app/lib packages/*/lib \

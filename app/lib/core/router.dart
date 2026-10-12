@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:horyzontal_geo/horyzontal_geo.dart';
 
 import '../features/compass/compass_page.dart';
+import '../features/exchange/scan_page.dart';
+import '../features/exchange/transfer/transfer_page.dart';
+import '../features/journal/journal_page.dart';
+import '../features/layers/layer_page.dart';
+import '../features/layers/layers_page.dart';
+import '../features/map/map_page.dart';
+import '../features/map/packs_page.dart';
+import '../features/objects/feature_editor_page.dart';
+import '../features/objects/feature_sheet.dart';
+import '../features/objects/symbol_picker_page.dart';
 import '../features/security/pin_setup_page.dart';
+import '../features/security/wipe_page.dart';
 import '../features/settings/about_page.dart';
 import '../features/settings/settings_page.dart';
+import '../features/settings/whats_new_page.dart';
 import '../features/tasks/angles_page.dart';
 import '../features/tasks/converter_page.dart';
 import '../features/tasks/direct_page.dart';
@@ -12,50 +25,110 @@ import '../features/tasks/inverse_page.dart';
 import '../features/tasks/tasks_page.dart';
 import 'labels.dart';
 
-/// Tabs of stage 1: tasks, compass, settings. Map and journal come in stage 2.
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+
 GoRouter buildRouter() => GoRouter(
-  initialLocation: '/tasks',
-  routes: [
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, shell) => _Shell(shell: shell),
-      branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/tasks',
-              builder: (_, _) => const TasksPage(),
-              routes: [
-                GoRoute(path: 'converter', builder: (_, _) => const ConverterPage()),
-                GoRoute(path: 'angles', builder: (_, _) => const AnglesPage()),
-                GoRoute(path: 'direct', builder: (_, _) => const DirectPage()),
-                GoRoute(path: 'inverse', builder: (_, _) => const InversePage()),
-              ],
-            ),
-          ],
+      navigatorKey: rootNavigatorKey,
+      initialLocation: '/map',
+      routes: [
+        // Full-screen pickers that return a value to whoever pushed them.
+        GoRoute(
+          path: '/symbol',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (_, s) => SymbolPickerPage(initial: s.uri.queryParameters['sidc']),
         ),
-        StatefulShellBranch(
-          routes: [GoRoute(path: '/compass', builder: (_, _) => const CompassPage())],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/settings',
-              builder: (_, _) => const SettingsPage(),
-              routes: [
-                GoRoute(path: 'about', builder: (_, _) => const AboutPage()),
-                GoRoute(
-                  path: 'pin/:mode',
-                  builder: (_, state) =>
-                      PinSetupPage(mode: PinSetupMode.values.byName(state.pathParameters['mode']!)),
-                ),
-              ],
-            ),
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, shell) => _Shell(shell: shell),
+          branches: [
+            StatefulShellBranch(routes: [
+              GoRoute(
+                path: '/map',
+                builder: (_, _) => const MapPage(),
+                routes: [
+                  GoRoute(
+                    path: 'new',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (_, s) => FeatureEditorPage(
+                      initial: Geodetic(
+                        double.parse(s.uri.queryParameters['lat']!),
+                        double.parse(s.uri.queryParameters['lon']!),
+                      ),
+                    ),
+                  ),
+                  GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
+                ],
+              ),
+            ]),
+            StatefulShellBranch(routes: [
+              GoRoute(
+                path: '/journal',
+                builder: (_, _) => const JournalPage(),
+                routes: [
+                  GoRoute(
+                    path: 'object/:id',
+                    builder: (_, s) => FeaturePage(id: s.pathParameters['id']!),
+                    routes: [
+                      GoRoute(
+                        path: 'edit',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (_, s) => FeatureEditorPage(id: s.pathParameters['id']),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'layers',
+                    builder: (_, _) => const LayersPage(),
+                    routes: [
+                      GoRoute(path: ':id', builder: (_, s) => LayerPage(id: s.pathParameters['id']!)),
+                    ],
+                  ),
+                  GoRoute(path: 'scan', builder: (_, _) => const ScanPage()),
+                  GoRoute(
+                    path: 'transfer',
+                    builder: (_, s) => TransferPage(
+                      layerIds: s.uri.queryParameters['layers']?.split(',') ?? const [],
+                    ),
+                  ),
+                ],
+              ),
+            ]),
+            StatefulShellBranch(routes: [
+              GoRoute(
+                path: '/tasks',
+                builder: (_, _) => const TasksPage(),
+                routes: [
+                  GoRoute(path: 'converter', builder: (_, _) => const ConverterPage()),
+                  GoRoute(path: 'angles', builder: (_, _) => const AnglesPage()),
+                  GoRoute(path: 'direct', builder: (_, _) => const DirectPage()),
+                  GoRoute(path: 'inverse', builder: (_, _) => const InversePage()),
+                ],
+              ),
+            ]),
+            StatefulShellBranch(routes: [
+              GoRoute(path: '/compass', builder: (_, _) => const CompassPage()),
+            ]),
+            StatefulShellBranch(routes: [
+              GoRoute(
+                path: '/settings',
+                builder: (_, _) => const SettingsPage(),
+                routes: [
+                  GoRoute(path: 'about', builder: (_, _) => const AboutPage()),
+                  GoRoute(path: 'whats-new', builder: (_, _) => const WhatsNewPage()),
+                  GoRoute(path: 'packs', builder: (_, _) => const PacksPage()),
+                  GoRoute(path: 'wipe', builder: (_, _) => const WipePage()),
+                  GoRoute(
+                    path: 'pin/:mode',
+                    builder: (_, state) => PinSetupPage(
+                      mode: PinSetupMode.values.byName(state.pathParameters['mode']!),
+                    ),
+                  ),
+                ],
+              ),
+            ]),
           ],
         ),
       ],
-    ),
-  ],
-);
+    );
 
 class _Shell extends StatelessWidget {
   const _Shell({required this.shell});
@@ -68,8 +141,11 @@ class _Shell extends StatelessWidget {
       body: shell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: shell.currentIndex,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         onDestinationSelected: (i) => shell.goBranch(i, initialLocation: i == shell.currentIndex),
         destinations: [
+          NavigationDestination(icon: const Icon(Icons.map_outlined), label: l.tabMap),
+          NavigationDestination(icon: const Icon(Icons.list_alt), label: l.tabJournal),
           NavigationDestination(icon: const Icon(Icons.calculate_outlined), label: l.tabTasks),
           NavigationDestination(icon: const Icon(Icons.explore_outlined), label: l.tabCompass),
           NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l.tabSettings),

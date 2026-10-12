@@ -10,6 +10,19 @@ Copernicus DEM GLO-30. Запускается локально или (позж�
 | `build_region.sh <id>` | Пакет одного региона: `out/<id>.pmtiles` и `out/<id>-dem.pmtiles` |
 | `build_dem.py <id>` | Высоты: мозаика COG → Web Mercator → terrain-RGB (Mapbox) → WebP lossless → PMTiles |
 | `style/generate.mjs` | Офлайн-стиль MapLibre из `@protomaps/basemaps` с подписями `uk` и слоем hillshade |
+| `manifest.py <out> <build>` | `packs.json` для релиза `maps`: файлы областей с размером и SHA-256, приложение сверяет загрузки с ним |
+
+## Публикация
+
+`.github/workflows/maps.yml` раз в месяц (и вручную, можно для части областей) собирает все 25
+областей из одной сборки Protomaps и выкладывает их в релиз
+[`maps`](https://github.com/hexlogic/horyzontal/releases/tag/maps) вместе с `packs.json`. Пакеты
+грузятся раньше манифеста, так что приложение не увидит ссылку на ещё не выложенный файл. Если
+область не собралась, в релизе остаётся её прошлый пакет.
+
+Приложение берёт `https://github.com/hexlogic/horyzontal/releases/download/maps/packs.json`. Для
+проверки без GitHub можно раздать `out/` локально и собрать приложение с
+`--dart-define=PACKS_BASE_URL=http://<адрес>:<порт>/` (только для отладки).
 
 ## Зависимости
 
@@ -26,7 +39,7 @@ PYTHON=python3.14 ./build_region.sh kyiv
 Стиль (Node 20+):
 
 ```bash
-cd style && npm ci && node generate.mjs ../../../spike/assets/map/style-offline.json
+cd style && npm ci && node generate.mjs ../../../app/assets/map/style-offline.json
 ```
 
 ## Параметры по умолчанию и почему

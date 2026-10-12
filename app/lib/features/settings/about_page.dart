@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/labels.dart';
 
 /// Version string, injected at build time with `--dart-define=APP_VERSION=`.
-const appVersion = String.fromEnvironment('APP_VERSION', defaultValue: '0.1.0');
+const appVersion = String.fromEnvironment('APP_VERSION', defaultValue: '0.2.0');
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
