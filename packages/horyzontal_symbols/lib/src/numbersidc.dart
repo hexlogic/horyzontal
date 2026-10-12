@@ -5,6 +5,7 @@ import 'iconparts/air.dart';
 import 'iconparts/common_modifiers.dart';
 import 'iconparts/ground.dart';
 import 'iconparts/sea.dart';
+import 'iconparts/signals_intelligence.dart';
 import 'iconparts/space.dart';
 import 'iconparts/subsurface.dart';
 import 'ms.dart';
@@ -19,6 +20,7 @@ import 'numbersidc/sidc/landinstallation.dart';
 import 'numbersidc/sidc/landunit.dart';
 import 'numbersidc/sidc/minewarfare.dart';
 import 'numbersidc/sidc/sea.dart';
+import 'numbersidc/sidc/signalsintelligence.dart';
 import 'numbersidc/sidc/space.dart';
 import 'numbersidc/sidc/spacemissile.dart';
 import 'numbersidc/sidc/subsurface.dart';
@@ -140,6 +142,14 @@ const minewarfare = SymbolSetModule(
   icons: minewarfareIcons,
 );
 
+/// Symbol sets 50-54, signals intelligence (space, air, land, surface, subsurface).
+const signalsintelligence = SymbolSetModule(
+  name: 'signalsintelligence',
+  symbolSets: ['50', '51', '52', '53', '54'],
+  iconParts: signalsIntelligenceIconParts,
+  icons: signalsintelligenceIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
@@ -154,7 +164,7 @@ const List<SymbolSetModule> app6d = [
   subsurface,
   minewarfare,
   activites,
-  // signalsintelligence,
+  signalsintelligence,
   dismountedindividual,
   // tacticalpoints,
 ];
@@ -173,7 +183,7 @@ const List<SymbolSetModule> std2525d = [
   subsurface,
   minewarfare,
   activites,
-  // signalsintelligence,
+  signalsintelligence,
   // cyberspace,
   // tacticalpoints,
 ];
@@ -193,7 +203,7 @@ const List<SymbolSetModule> std2525e = [
   subsurface,
   minewarfare,
   activites,
-  // signalsintelligence,
+  signalsintelligence,
   dismountedindividual,
   // cyberspace,
   // tacticalpoints,
