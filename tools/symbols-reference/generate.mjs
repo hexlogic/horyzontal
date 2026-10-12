@@ -46,6 +46,7 @@ const PORTED = [
   "minewarfare",
   "signalsintelligence",
   "cyberspace",
+  "tacticalpoints",
 ];
 const ported = PORTED.map((n) => {
   if (!N[n]) throw new Error("unknown module " + n);
@@ -132,7 +133,7 @@ const FAMILIES = [
   { name: "minewarfare", sets: ["36"] },
   { name: "signalsintelligence", sets: ["50", "51", "52", "53", "54"] },
   { name: "cyberspace", sets: ["60"] },
-  // { name: "tacticalpoints", sets: ["25"] },
+  { name: "tacticalpoints", sets: ["25"] },
 ];
 // Entity used for the modifier fixtures of a set; default: first entity
 // code that draws something.
@@ -251,6 +252,32 @@ function tableKeys(set) {
           add(`${g}-scaled`, [set], sidc20({ si, set, ent, m2 }));
           add(`${g}-scaled`, [set], sidc20({ si, set, ent, m1, m2 }), k % 2 ? { outlineWidth: 2, monoColor: "black" } : {});
         }
+      }
+    }
+  }
+}
+
+// Label overrides (control measures): every entity with a label placement,
+// with all the text options its placement uses, so labelOverride runs.
+{
+  let k = 0;
+  for (const name of PORTED) {
+    const labels = N[name].labels;
+    if (!labels) continue;
+    const table = {};
+    labels(table);
+    const sets = FAMILIES.find((f) => f.name === name).sets;
+    for (const set of sets) {
+      for (const ent of Object.keys(table).sort()) {
+        const keys = Object.keys(table[ent]);
+        const options = {};
+        keys.forEach((key, i) => (options[key] = key.slice(0, 3).toUpperCase() + (i + 1)));
+        const si = AFF[k % 4];
+        add(`${name}-labels`, [set], sidc20({ si, set, ent }), options);
+        if (keys.length && k % 3 === 0) {
+          add(`${name}-labels`, [set], sidc20({ si, set, ent }), { ...options, outlineWidth: 2, infoColor: "red" });
+        }
+        k++;
       }
     }
   }

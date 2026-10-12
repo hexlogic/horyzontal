@@ -7,15 +7,16 @@
 // Usage:
 //   node tools/symbols-reference/convert.mjs iconparts <file.js> <dartFunctionName> > out.dart
 //   node tools/symbols-reference/convert.mjs sidc <file.js> <dartFunctionName> > out.dart
+//   node tools/symbols-reference/convert.mjs labels <file.js> <dartFunctionName> > out.dart
 //
 // It only reads the given file as text, it never imports or executes it.
 
 import { readFileSync } from "node:fs";
 
 const [mode, file, dartName] = process.argv.slice(2);
-if (!["iconparts", "sidc"].includes(mode) || !file || !dartName) {
+if (!["iconparts", "sidc", "labels"].includes(mode) || !file || !dartName) {
   console.error(
-    "usage: convert.mjs iconparts|sidc <file.js> <dartFunctionName>"
+    "usage: convert.mjs iconparts|sidc|labels <file.js> <dartFunctionName>"
   );
   process.exit(2);
 }
@@ -109,7 +110,7 @@ const renames = { STD2525: "std2525", _STD2525: "std2525", undefined: "null" };
 let params = [];
 function extractBody(s) {
   const re =
-    mode === "iconparts"
+    mode !== "sidc"
       ? /export\s+default\s+function\s*\w*\s*\(([^)]*)\)\s*\{/
       : /icons\s*:\s*function\s*\w*\s*\(([^)]*)\)\s*\{/;
   const m = re.exec(s);
@@ -310,6 +311,8 @@ function postProcess(dart) {
       // monoColor is a String in Dart: `!monoColor`, `monoColor ? a : b`, `monoColor && x`
       .replace(/!monoColor\b/g, "!truthy(monoColor)")
       .replace(/(?<![\w.(])monoColor(?=\s*(?:\?(?![?.])|&&|\|\|))/g, "truthy(monoColor)")
+      // if (metadata.notpresent): String fields in a condition
+      .replace(/\bif \((metadata\.\w+)\)/g, "if (truthy($1))")
       // const affiliation = metadata.affiliation || "Friend";
       .replace(
         "metadata.affiliation || 'Friend'",
@@ -349,6 +352,13 @@ ${msImport ? "import '../ms.dart';\n" : ""}import 'iconparts_functions.dart';
 void ${dartName}(
 ${sig(["JsObject", "SymbolMetadata", "SymbolColors", "bool", "String", "bool"], ["iconParts", "metadata", "colors", "std2525", "monoColor", "alternateMedal"])}
 ) {${body}}
+`);
+} else if (mode === "labels") {
+  process.stdout.write(`${header}
+import '../../js.dart';
+
+/// Label (text field) placements from \`${rel}\`, by entity code.
+void ${dartName}(JsObject ${params[0] ?? "sidc"}) {${body}}
 `);
 } else {
   process.stdout.write(`${header}

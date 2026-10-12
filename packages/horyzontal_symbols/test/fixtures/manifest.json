@@ -17,7 +17,8 @@
     "subsurface",
     "minewarfare",
     "signalsintelligence",
-    "cyberspace"
+    "cyberspace",
+    "tacticalpoints"
   ],
   "files": [
     {
@@ -294,6 +295,38 @@
         "60"
       ],
       "count": 137,
+      "errors": 0
+    },
+    {
+      "name": "tacticalpoints.jsonl.gz",
+      "sets": [
+        "25"
+      ],
+      "count": 1365,
+      "errors": 0
+    },
+    {
+      "name": "tacticalpoints-styles.jsonl.gz",
+      "sets": [
+        "25"
+      ],
+      "count": 273,
+      "errors": 0
+    },
+    {
+      "name": "tacticalpoints-modifiers.jsonl.gz",
+      "sets": [
+        "25"
+      ],
+      "count": 160,
+      "errors": 0
+    },
+    {
+      "name": "tacticalpoints-labels.jsonl.gz",
+      "sets": [
+        "25"
+      ],
+      "count": 313,
       "errors": 0
     },
     {

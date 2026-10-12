@@ -66,22 +66,22 @@ cd packages/horyzontal_symbols && dart test
 
 | Модуль | Наборы | Части иконок | Статус |
 | --- | --- | --- | --- |
-| `air` | 01 | `air.js` | нет |
-| `airmissile` | 02 | `air.js` | нет |
-| `space` | 05 | `space.js` | нет |
-| `spacemissile` | 06 | `space.js` | нет |
+| `air` | 01 | `air.js` | есть |
+| `airmissile` | 02 | `air.js` | есть |
+| `space` | 05 | `space.js` | есть |
+| `spacemissile` | 06 | `space.js` | есть |
 | `landunit` | 10 | `ground.js` | есть |
 | `landcivilian` | 11 | `ground.js` | есть |
 | `landequipment` | 15 | `ground.js` | есть |
 | `landinstallation` | 20 | `ground.js` | есть |
-| `sea` | 30 | `sea.js` | нет |
-| `subsurface` | 35 | `subsurface.js` | нет |
-| `minewarfare` | 36 | `subsurface.js` | нет |
+| `sea` | 30 | `sea.js` | есть |
+| `subsurface` | 35 | `subsurface.js` | есть |
+| `minewarfare` | 36 | `subsurface.js` | есть |
 | `activites` | 40 | `ground.js` | есть |
-| `signalsintelligence` | 50–54 | `signals-intelligence.js` | нет |
+| `signalsintelligence` | 50–54 | `signals-intelligence.js` | есть |
 | `dismountedindividual` | 27 | `ground.js` | есть |
-| `tacticalpoints` (`control-measure.js`) | 25 | `tactical-points.js`, подписи `numbersidc/labels/tactical-points.js` | нет |
-| `cyberspace` | 60 | `ground.js` (части `CY.*` уже есть) | нет |
+| `tacticalpoints` (`control-measure.js`) | 25 | `tactical-points.js`, подписи `numbersidc/labels/tactical-points.js` | есть |
+| `cyberspace` | 60 | `ground.js` (части `CY.*`) | есть |
 | `common` | модификаторы 2525E | `common-modifiers.js` | есть |
 
 Порядок для набора `air` (для остальных так же):

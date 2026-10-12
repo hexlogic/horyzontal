@@ -8,6 +8,7 @@ import 'iconparts/sea.dart';
 import 'iconparts/signals_intelligence.dart';
 import 'iconparts/space.dart';
 import 'iconparts/subsurface.dart';
+import 'iconparts/tactical_points.dart';
 import 'ms.dart';
 import 'numbersidc/sidc/activites.dart';
 import 'numbersidc/sidc/air.dart';
@@ -25,6 +26,8 @@ import 'numbersidc/sidc/signalsintelligence.dart';
 import 'numbersidc/sidc/space.dart';
 import 'numbersidc/sidc/spacemissile.dart';
 import 'numbersidc/sidc/subsurface.dart';
+import 'numbersidc/labels/tactical_points.dart';
+import 'numbersidc/sidc/tacticalpoints.dart';
 
 // One module per milsymbol file in src/numbersidc/sidc. Modules that are
 // not ported yet are listed as comments in the lists below, at their
@@ -159,6 +162,15 @@ const cyberspace = SymbolSetModule(
   icons: cyberspaceIcons,
 );
 
+/// Symbol set 25, control measures (tactical points); has label overrides.
+const tacticalpoints = SymbolSetModule(
+  name: 'tacticalpoints',
+  symbolSets: ['25'],
+  iconParts: tacticalPointsIconParts,
+  icons: tacticalpointsIcons,
+  labels: tacticalpointsLabels,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
@@ -175,7 +187,7 @@ const List<SymbolSetModule> app6d = [
   activites,
   signalsintelligence,
   dismountedindividual,
-  // tacticalpoints,
+  tacticalpoints,
 ];
 
 /// MIL-STD-2525 D modules, in milsymbol's order.
@@ -194,7 +206,7 @@ const List<SymbolSetModule> std2525d = [
   activites,
   signalsintelligence,
   cyberspace,
-  // tacticalpoints,
+  tacticalpoints,
 ];
 
 /// MIL-STD-2525 E modules, in milsymbol's order.
@@ -215,7 +227,7 @@ const List<SymbolSetModule> std2525e = [
   signalsintelligence,
   dismountedindividual,
   cyberspace,
-  // tacticalpoints,
+  tacticalpoints,
 ];
 
 /// Registers the number SIDC modules like milsymbol's `index.js` does
