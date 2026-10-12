@@ -1,10 +1,12 @@
 // Ported from milsymbol src/numbersidc.js and the module objects of
 // src/numbersidc/sidc/*.js, MIT (c) Måns Beckman.
 
+import 'iconparts/air.dart';
 import 'iconparts/common_modifiers.dart';
 import 'iconparts/ground.dart';
 import 'ms.dart';
 import 'numbersidc/sidc/activites.dart';
+import 'numbersidc/sidc/air.dart';
 import 'numbersidc/sidc/common.dart';
 import 'numbersidc/sidc/dismountedindividual.dart';
 import 'numbersidc/sidc/landcivilian.dart';
@@ -73,14 +75,27 @@ const dismountedindividual = SymbolSetModule(
   icons: dismountedindividualIcons,
 );
 
+/// Symbol set 01, air.
+const air = SymbolSetModule(
+  name: 'air',
+  symbolSets: ['01'],
+  iconParts: airIconParts,
+  icons: airIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
-  // air, airmissile, space, spacemissile,
+  air,
+  // airmissile,
+  // space,
+  // spacemissile,
   landunit,
   landcivilian,
   landequipment,
   landinstallation,
-  // sea, subsurface, minewarfare,
+  // sea,
+  // subsurface,
+  // minewarfare,
   activites,
   // signalsintelligence,
   dismountedindividual,
@@ -89,29 +104,42 @@ const List<SymbolSetModule> app6d = [
 
 /// MIL-STD-2525 D modules, in milsymbol's order.
 const List<SymbolSetModule> std2525d = [
-  // air, airmissile, space, spacemissile,
+  air,
+  // airmissile,
+  // space,
+  // spacemissile,
   landunit,
   landcivilian,
   landequipment,
   landinstallation,
-  // sea, subsurface, minewarfare,
+  // sea,
+  // subsurface,
+  // minewarfare,
   activites,
-  // signalsintelligence, cyberspace, tacticalpoints,
+  // signalsintelligence,
+  // cyberspace,
+  // tacticalpoints,
 ];
 
 /// MIL-STD-2525 E modules, in milsymbol's order.
 const List<SymbolSetModule> std2525e = [
   common,
-  // air, airmissile, space, spacemissile,
+  air,
+  // airmissile,
+  // space,
+  // spacemissile,
   landunit,
   landcivilian,
   landequipment,
   landinstallation,
-  // sea, subsurface, minewarfare,
+  // sea,
+  // subsurface,
+  // minewarfare,
   activites,
   // signalsintelligence,
   dismountedindividual,
-  // cyberspace, tacticalpoints,
+  // cyberspace,
+  // tacticalpoints,
 ];
 
 /// Registers the number SIDC modules like milsymbol's `index.js` does

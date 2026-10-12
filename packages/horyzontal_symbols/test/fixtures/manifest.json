@@ -8,7 +8,8 @@
     "landequipment",
     "landinstallation",
     "activites",
-    "dismountedindividual"
+    "dismountedindividual",
+    "air"
   ],
   "files": [
     {
@@ -44,6 +45,22 @@
         "27"
       ],
       "count": 843,
+      "errors": 0
+    },
+    {
+      "name": "air.jsonl.gz",
+      "sets": [
+        "01"
+      ],
+      "count": 265,
+      "errors": 0
+    },
+    {
+      "name": "air-modifiers.jsonl.gz",
+      "sets": [
+        "01"
+      ],
+      "count": 169,
       "errors": 0
     },
     {

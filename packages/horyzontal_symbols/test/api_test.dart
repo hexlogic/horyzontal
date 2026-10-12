@@ -25,13 +25,14 @@ void main() {
     expect(MilSymbol('10031000001211000*00').sidc, '10031000001211000-00');
   });
 
-  test('symbol set without a ported module draws the unknown icon', () {
-    // Air (01) is not ported yet: frame and question mark, not valid.
-    final s = MilSymbol('10030100001101000000');
+  test('unknown symbol set or entity draws the unknown icon', () {
+    final s = MilSymbol('10039900001211000000');
     expect(s.isValid, isFalse);
     expect(s.validity().icon, isFalse);
-    expect(s.asSvg(), contains('M 155,150 C 155,50 115,30 100,30 85,30 45,50 45,150'));
     expect(s.asSvg(), contains('m 94.8206,78.1372'));
+    final air = MilSymbol('10030100009999000000');
+    expect(air.isValid, isFalse);
+    expect(air.asSvg(), contains('M 155,150 C 155,50 115,30 100,30 85,30 45,50 45,150'));
     // Frame only codes stay valid.
     expect(MilSymbol('10030100000000000000').isValid, isTrue);
   });

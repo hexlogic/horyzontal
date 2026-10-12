@@ -37,6 +37,7 @@ const PORTED = [
   "landinstallation",
   "activites",
   "dismountedindividual",
+  "air",
 ];
 const ported = PORTED.map((n) => {
   if (!N[n]) throw new Error("unknown module " + n);
@@ -114,13 +115,16 @@ function add(group, sets, sidc, options) {
 // modules are ported (and its module names to PORTED above).
 const FAMILIES = [
   { name: "land", sets: ["10", "11", "15", "20", "27", "40"] },
-  // { name: "air", sets: ["01", "02"] },
-  // { name: "space", sets: ["05", "06"] },
+  { name: "air", sets: ["01"] },
+  // { name: "airmissile", sets: ["02"] },
+  // { name: "space", sets: ["05"] },
+  // { name: "spacemissile", sets: ["06"] },
   // { name: "sea", sets: ["30"] },
-  // { name: "subsurface", sets: ["35", "36", "39"] },
-  // { name: "sigint", sets: ["50", "51", "52", "53", "54"] },
+  // { name: "subsurface", sets: ["35"] },
+  // { name: "minewarfare", sets: ["36"] },
+  // { name: "signalsintelligence", sets: ["50", "51", "52", "53", "54"] },
   // { name: "cyberspace", sets: ["60"] },
-  // { name: "control-measures", sets: ["25"] },
+  // { name: "tacticalpoints", sets: ["25"] },
 ];
 // Entity used for the modifier fixtures of a set; default: first entity
 // code that draws something.
