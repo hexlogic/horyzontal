@@ -18,12 +18,22 @@ MilSymbol? _symbol(String sidc, double size) {
 /// render. [size] is milsymbol's size: roughly the frame height in pixels.
 String? symbolSvg(String sidc, {double size = 30}) {
   final s = _symbol(sidc, size);
-  return s == null || !s.isValid ? null : s.asSvg();
+  // Draw whenever the icon is known: isValid is also false for harmless
+  // things like an amplifier that does not fit the set.
+  return s == null || !s.isPointSymbol ? null : s.asSvg();
 }
 
-/// Whether [sidc] draws as a single point symbol (control measure lines and
-/// areas do not).
-bool isPointSymbol(String sidc) => _symbol(sidc, 30)?.isValid ?? false;
+/// Whether [sidc] draws as a single point symbol: its icon is known, and
+/// control measures that are lines or areas (not drawable as a point) are
+/// excluded.
+bool isPointSymbol(String sidc) {
+  _symbol('10031000000000000000', 30); // sets the standard once
+  try {
+    return MilSymbol.isPoint(sidc);
+  } catch (_) {
+    return false;
+  }
+}
 
 /// Shift that puts the symbol's anchor (frame centre, or the foot of a
 /// headquarters staff) on the map point: image centre minus anchor, in the
