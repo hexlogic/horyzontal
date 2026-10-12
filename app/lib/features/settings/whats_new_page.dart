@@ -5,9 +5,10 @@ import '../../l10n/app_localizations.dart';
 
 /// Versions with release notes, newest first; the notes live in the ARB
 /// file, one line per item.
-const releaseVersions = ['0.2.0', '0.1.0'];
+const releaseVersions = ['0.3.0', '0.2.0', '0.1.0'];
 
 List<String> releaseNotes(AppLocalizations l, String version) => switch (version) {
+      '0.3.0' => l.notes030,
       '0.2.0' => l.notes020,
       '0.1.0' => l.notes010,
       _ => '',

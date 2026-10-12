@@ -114,7 +114,7 @@ Flutter-приложение с ядром геодезии в отдельно�
 | Символы APP-6 | Порт milsymbol (MIT) в Dart, рендер SVG через flutter_svg; коды SIDC APP-6D; названия и поиск — каталог по Esri JMSML (Apache-2.0) с украинским переводом |
 | Компас и склонение | sensors_plus или flutter_compass; модель WMM (NOAA, public domain) своим кодом |
 | Солнце и Луна | Алгоритмы Меёса своим кодом или порт suncalc (BSD) |
-| QR | qr_flutter для генерации; сканирование через ZXing (flutter_zxing, zxing-cpp) на обеих платформах. До этапа 3 стоит mobile_scanner: на Android он использует Google ML Kit, который отправляет в Google метрики использования, что противоречит принципу «никакой телеметрии» |
+| QR | qr_flutter для генерации; сканирование через ZXing (flutter_zxing, zxing-cpp) на обеих платформах (с этапа 3; раньше стоял mobile_scanner с Google ML Kit, который отправляет в Google метрики использования) |
 | Wi-Fi обмен | Платформенные каналы: Kotlin (LocalOnlyHotspot, WifiNetworkSpecifier), Swift (NEHotspotConfiguration, MultipeerConnectivity); шифрование через пакет cryptography |
 | Вход | local_auth (биометрия), свой экран PIN |
 | Файлы и форматы | share_plus, file_picker, xml (KML, GPX, CoT), archive (KMZ) |
@@ -156,7 +156,8 @@ Flutter-приложение с ядром геодезии в отдельно�
 - **OpenFreeMap** держится на донатах и одном публичном инстансе. Запасной вариант: онлайн-режим поверх наших же PMTiles из GitHub Releases.
 - **Wi-Fi обмен:** на Android 13+ нужно разрешение NEARBY_WIFI_DEVICES, на старых версиях включенная геолокация; на iOS capability Hotspot Configuration. Поведение разных прошивок Android проверяем на 3-4 реальных устройствах.
 - **GitHub Releases:** лимит 2 ГБ на файл, большие области делим на части.
-- **Сканер QR:** mobile_scanner на Android тянет Google ML Kit, а тот отправляет в Google метрики использования (модель устройства, имя и версия приложения, задержки; изображения остаются на устройстве, [раскрытие данных ML Kit](https://developers.google.com/ml-kit/android-data-disclosure)). Это нарушает принцип «никакой телеметрии» и блокирует F-Droid. Решено: на этапе 3 меняем сканер на ZXing (flutter_zxing). До замены в Google Play Data safety нужно раскрыть сбор этих метрик.
+- **Сканер QR:** закрыто на этапе 3. mobile_scanner на Android тянул Google ML Kit, а тот отправляет в Google метрики использования ([раскрытие данных ML Kit](https://developers.google.com/ml-kit/android-data-disclosure)); сканер заменен на ZXing (flutter_zxing), CI не дает ML Kit вернуться.
+- **F-Droid и Google Play Services:** geolocator на Android тянет play-services-location. Телеметрии в нем нет, но для F-Droid нужен вариант без Play Services.
 - **Магнитный компас** на телефонах дает ошибку в несколько градусов; в интерфейсе показываем точность датчика и предупреждаем о калибровке.
 
 ## Источники

@@ -2368,6 +2368,12 @@ abstract class AppLocalizations {
   /// **'Г°М′С″'**
   String get angleDmsShort;
 
+  /// No description provided for @notes030.
+  ///
+  /// In uk, this message translates to:
+  /// **'Інструменти мапи: лінійка з відхиленнями, полілінії з кутами, полігони з площею, профіль висот, видимість між точками з висотою щогл і зоною Френеля\nПолілінії й полігони можна малювати й зберігати; у картці — довжина, площа й кути при вершинах\nПГЗ і ОГЗ: дирекційний кут, істинний і магнітний азимут, вибір сітки й зони (зокрема UTM), відстань у кілометрах і на місцевості\nСканер QR на ZXing замість Google ML Kit: жодних метрик до Google'**
+  String get notes030;
+
   /// No description provided for @notes020.
   ///
   /// In uk, this message translates to:
