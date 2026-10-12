@@ -13,6 +13,7 @@ import 'numbersidc/sidc/activites.dart';
 import 'numbersidc/sidc/air.dart';
 import 'numbersidc/sidc/airmissile.dart';
 import 'numbersidc/sidc/common.dart';
+import 'numbersidc/sidc/cyberspace.dart';
 import 'numbersidc/sidc/dismountedindividual.dart';
 import 'numbersidc/sidc/landcivilian.dart';
 import 'numbersidc/sidc/landequipment.dart';
@@ -150,6 +151,14 @@ const signalsintelligence = SymbolSetModule(
   icons: signalsintelligenceIcons,
 );
 
+/// Symbol set 60, cyberspace (2525 D/E only).
+const cyberspace = SymbolSetModule(
+  name: 'cyberspace',
+  symbolSets: ['60'],
+  iconParts: groundIconParts,
+  icons: cyberspaceIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
@@ -184,7 +193,7 @@ const List<SymbolSetModule> std2525d = [
   minewarfare,
   activites,
   signalsintelligence,
-  // cyberspace,
+  cyberspace,
   // tacticalpoints,
 ];
 
@@ -205,7 +214,7 @@ const List<SymbolSetModule> std2525e = [
   activites,
   signalsintelligence,
   dismountedindividual,
-  // cyberspace,
+  cyberspace,
   // tacticalpoints,
 ];
 

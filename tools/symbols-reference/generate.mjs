@@ -45,6 +45,7 @@ const PORTED = [
   "subsurface",
   "minewarfare",
   "signalsintelligence",
+  "cyberspace",
 ];
 const ported = PORTED.map((n) => {
   if (!N[n]) throw new Error("unknown module " + n);
@@ -130,7 +131,7 @@ const FAMILIES = [
   { name: "subsurface", sets: ["35"] },
   { name: "minewarfare", sets: ["36"] },
   { name: "signalsintelligence", sets: ["50", "51", "52", "53", "54"] },
-  // { name: "cyberspace", sets: ["60"] },
+  { name: "cyberspace", sets: ["60"] },
   // { name: "tacticalpoints", sets: ["25"] },
 ];
 // Entity used for the modifier fixtures of a set; default: first entity
