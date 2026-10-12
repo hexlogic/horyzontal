@@ -7,6 +7,7 @@ import 'iconparts/ground.dart';
 import 'ms.dart';
 import 'numbersidc/sidc/activites.dart';
 import 'numbersidc/sidc/air.dart';
+import 'numbersidc/sidc/airmissile.dart';
 import 'numbersidc/sidc/common.dart';
 import 'numbersidc/sidc/dismountedindividual.dart';
 import 'numbersidc/sidc/landcivilian.dart';
@@ -83,10 +84,18 @@ const air = SymbolSetModule(
   icons: airIcons,
 );
 
+/// Symbol set 02, air missile.
+const airmissile = SymbolSetModule(
+  name: 'airmissile',
+  symbolSets: ['02'],
+  iconParts: airIconParts,
+  icons: airmissileIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
-  // airmissile,
+  airmissile,
   // space,
   // spacemissile,
   landunit,
@@ -105,7 +114,7 @@ const List<SymbolSetModule> app6d = [
 /// MIL-STD-2525 D modules, in milsymbol's order.
 const List<SymbolSetModule> std2525d = [
   air,
-  // airmissile,
+  airmissile,
   // space,
   // spacemissile,
   landunit,
@@ -125,7 +134,7 @@ const List<SymbolSetModule> std2525d = [
 const List<SymbolSetModule> std2525e = [
   common,
   air,
-  // airmissile,
+  airmissile,
   // space,
   // spacemissile,
   landunit,

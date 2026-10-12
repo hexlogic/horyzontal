@@ -38,6 +38,7 @@ const PORTED = [
   "activites",
   "dismountedindividual",
   "air",
+  "airmissile",
 ];
 const ported = PORTED.map((n) => {
   if (!N[n]) throw new Error("unknown module " + n);
@@ -116,7 +117,7 @@ function add(group, sets, sidc, options) {
 const FAMILIES = [
   { name: "land", sets: ["10", "11", "15", "20", "27", "40"] },
   { name: "air", sets: ["01"] },
-  // { name: "airmissile", sets: ["02"] },
+  { name: "airmissile", sets: ["02"] },
   // { name: "space", sets: ["05"] },
   // { name: "spacemissile", sets: ["06"] },
   // { name: "sea", sets: ["30"] },

@@ -9,7 +9,8 @@
     "landinstallation",
     "activites",
     "dismountedindividual",
-    "air"
+    "air",
+    "airmissile"
   ],
   "files": [
     {
@@ -61,6 +62,22 @@
         "01"
       ],
       "count": 169,
+      "errors": 0
+    },
+    {
+      "name": "airmissile.jsonl.gz",
+      "sets": [
+        "02"
+      ],
+      "count": 5,
+      "errors": 0
+    },
+    {
+      "name": "airmissile-modifiers.jsonl.gz",
+      "sets": [
+        "02"
+      ],
+      "count": 131,
       "errors": 0
     },
     {
