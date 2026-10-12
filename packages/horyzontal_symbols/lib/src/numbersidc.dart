@@ -6,6 +6,7 @@ import 'iconparts/common_modifiers.dart';
 import 'iconparts/ground.dart';
 import 'iconparts/sea.dart';
 import 'iconparts/space.dart';
+import 'iconparts/subsurface.dart';
 import 'ms.dart';
 import 'numbersidc/sidc/activites.dart';
 import 'numbersidc/sidc/air.dart';
@@ -19,6 +20,7 @@ import 'numbersidc/sidc/landunit.dart';
 import 'numbersidc/sidc/sea.dart';
 import 'numbersidc/sidc/space.dart';
 import 'numbersidc/sidc/spacemissile.dart';
+import 'numbersidc/sidc/subsurface.dart';
 
 // One module per milsymbol file in src/numbersidc/sidc. Modules that are
 // not ported yet are listed as comments in the lists below, at their
@@ -121,6 +123,14 @@ const sea = SymbolSetModule(
   icons: seaIcons,
 );
 
+/// Symbol set 35, sea subsurface.
+const subsurface = SymbolSetModule(
+  name: 'subsurface',
+  symbolSets: ['35'],
+  iconParts: subsurfaceIconParts,
+  icons: subsurfaceIcons,
+);
+
 /// APP-6 D modules, in milsymbol's order.
 const List<SymbolSetModule> app6d = [
   air,
@@ -132,7 +142,7 @@ const List<SymbolSetModule> app6d = [
   landequipment,
   landinstallation,
   sea,
-  // subsurface,
+  subsurface,
   // minewarfare,
   activites,
   // signalsintelligence,
@@ -151,7 +161,7 @@ const List<SymbolSetModule> std2525d = [
   landequipment,
   landinstallation,
   sea,
-  // subsurface,
+  subsurface,
   // minewarfare,
   activites,
   // signalsintelligence,
@@ -171,7 +181,7 @@ const List<SymbolSetModule> std2525e = [
   landequipment,
   landinstallation,
   sea,
-  // subsurface,
+  subsurface,
   // minewarfare,
   activites,
   // signalsintelligence,

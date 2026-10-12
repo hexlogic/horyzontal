@@ -42,6 +42,7 @@ const PORTED = [
   "space",
   "spacemissile",
   "sea",
+  "subsurface",
 ];
 const ported = PORTED.map((n) => {
   if (!N[n]) throw new Error("unknown module " + n);
@@ -124,7 +125,7 @@ const FAMILIES = [
   { name: "space", sets: ["05"] },
   { name: "spacemissile", sets: ["06"] },
   { name: "sea", sets: ["30"] },
-  // { name: "subsurface", sets: ["35"] },
+  { name: "subsurface", sets: ["35"] },
   // { name: "minewarfare", sets: ["36"] },
   // { name: "signalsintelligence", sets: ["50", "51", "52", "53", "54"] },
   // { name: "cyberspace", sets: ["60"] },

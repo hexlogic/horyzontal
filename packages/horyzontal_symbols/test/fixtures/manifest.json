@@ -13,7 +13,8 @@
     "airmissile",
     "space",
     "spacemissile",
-    "sea"
+    "sea",
+    "subsurface"
   ],
   "files": [
     {
@@ -182,6 +183,30 @@
         "30"
       ],
       "count": 157,
+      "errors": 0
+    },
+    {
+      "name": "subsurface.jsonl.gz",
+      "sets": [
+        "35"
+      ],
+      "count": 110,
+      "errors": 0
+    },
+    {
+      "name": "subsurface-styles.jsonl.gz",
+      "sets": [
+        "35"
+      ],
+      "count": 22,
+      "errors": 0
+    },
+    {
+      "name": "subsurface-modifiers.jsonl.gz",
+      "sets": [
+        "35"
+      ],
+      "count": 155,
       "errors": 0
     },
     {
