@@ -110,6 +110,20 @@ class SettingsPage extends ConsumerWidget {
             (v) => _themeName(l, v),
             (s, v) => s.copyWith(themeMode: v),
           ),
+          _Header(l.settingsMap),
+          ListTile(
+            leading: const Icon(Icons.download_for_offline_outlined),
+            title: Text(l.offlinePacks),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go('/settings/packs'),
+          ),
+          SwitchListTile(
+            secondary: const Icon(Icons.cloud_off),
+            title: Text(l.offlineOnly),
+            subtitle: Text(l.offlineOnlyHint),
+            value: s.offlineOnly,
+            onChanged: (v) => ctl.update((s) => s.copyWith(offlineOnly: v)),
+          ),
           _Header(l.settingsSecurity),
           if (!pin)
             ListTile(

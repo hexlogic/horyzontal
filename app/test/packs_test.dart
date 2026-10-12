@@ -50,6 +50,26 @@ void main() {
     expect((layers[1]['layout']! as Map)['text-field'], '{ref}');
   });
 
+  test('online style keeps only allowed hosts', () {
+    final style = jsonDecode(ukrainianLabels(jsonEncode({
+      'glyphs': 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
+      'sprite': 'https://evil.example/sprite',
+      'sources': {
+        'openmaptiles': {'type': 'vector', 'url': 'https://tiles.openfreemap.org/planet'},
+        'ads': {'type': 'raster', 'tiles': ['https://tracker.example/{z}/{x}/{y}.png']},
+      },
+      'layers': [
+        {'id': 'water', 'source': 'openmaptiles'},
+        {'id': 'ads', 'source': 'ads'},
+        {'id': 'bg', 'type': 'background'},
+      ],
+    }))) as Map<String, Object?>;
+    expect((style['sources']! as Map).keys, ['openmaptiles']);
+    expect((style['layers']! as List).map((l) => (l as Map)['id']), ['water', 'bg']);
+    expect(style['glyphs'], isNotNull);
+    expect(style.containsKey('sprite'), isFalse);
+  });
+
   test('manifest', () {
     final r = parseManifest(jsonEncode({
       'version': 1,

@@ -759,7 +759,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get swipeToHide =>
-      'Проведіть шар убік, щоб сховати або показати його на мапі';
+      'Проведіть шар убік, щоб сховати або показати його на мапі. Довге натискання — вибрати кілька шарів для експорту чи передачі.';
 
   @override
   String get symbol => 'Умовний знак';
@@ -1074,5 +1074,41 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String sidcChooseThis(String name) {
     return 'Вибрати «$name»';
+  }
+
+  @override
+  String get cardinalN => 'Пн';
+
+  @override
+  String get cardinalE => 'Сх';
+
+  @override
+  String get cardinalS => 'Пд';
+
+  @override
+  String get cardinalW => 'Зх';
+
+  @override
+  String get angleDmsShort => 'Г°М′С″';
+
+  @override
+  String get notes020 =>
+      'Мапа: онлайн OpenFreeMap і офлайн-пакети областей з рельєфом, кілька пакетів одночасно\nОб\'єкти з умовними знаками НАТО APP-6, шари, журнал з фільтрами й пошуком\nОбмін: QR для точок, шари по Wi-Fi без інтернету, файли .hrz, KML/KMZ, GPX, CoT і пакети даних ATAK\nБезпека: розмиття в перемикачі застосунків, заборона знімків екрана (Android), екстрене видалення, режим «Тільки офлайн»';
+
+  @override
+  String get notes010 =>
+      'Конвертер координат WGS 84, СК-42, УСК-2000, UTM, MGRS і кутів\nПряма й обернена геодезичні задачі, компас з істинною північчю\nPIN-код, біометрія, зашифрована база';
+
+  @override
+  String selectedCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Вибрано $n шару',
+      many: 'Вибрано $n шарів',
+      few: 'Вибрано $n шари',
+      one: 'Вибрано $n шар',
+    );
+    return '$_temp0';
   }
 }

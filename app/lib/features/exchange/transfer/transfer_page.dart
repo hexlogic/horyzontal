@@ -110,11 +110,15 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     try {
       final key = Invite.newKey();
       Invite invite;
-      Future<Transport> accept;
+      Future<SecureChannel> accept;
       if (Platform.isIOS && !_sameNetwork) {
         final token = Invite.newToken();
         invite = Invite(mode: InviteMode.multipeer, token: token, key: key, hostSends: _sending);
-        accept = MultipeerTransport.host(token);
+        accept = MultipeerTransport.host(token).then((t) async {
+          final ch = SecureChannel(t, key, isHost: true);
+          await expectHello(ch);
+          return ch;
+        });
       } else {
         var addresses = <String>[];
         if (Platform.isAndroid && !_sameNetwork) {
@@ -136,16 +140,27 @@ class _TransferPageState extends ConsumerState<TransferPage> {
           key: key,
           hostSends: _sending,
         );
-        accept = server.first.then<Transport>(SocketTransport.new);
+        // Anyone on the hotspot may connect; only a client that proves it
+        // has the key from the QR gets a session, the rest are dropped.
+        accept = () async {
+          await for (final socket in server) {
+            final ch = SecureChannel(SocketTransport(socket), key, isHost: true);
+            try {
+              await expectHello(ch);
+              return ch;
+            } catch (_) {
+              socket.destroy();
+            }
+          }
+          throw StateError('server closed');
+        }();
       }
       if (!mounted) return;
       setState(() {
         _invite = invite;
         _status = l.transferShowQr;
       });
-      final transport = await accept;
-      final ch = _channel = SecureChannel(transport, key, isHost: true);
-      await expectHello(ch);
+      final ch = _channel = await accept;
       await _run(ch);
     } catch (e) {
       _fail(e);

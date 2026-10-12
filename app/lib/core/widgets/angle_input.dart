@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:horyzontal_geo/horyzontal_geo.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../labels.dart';
 
 /// Angle field with its own input format picker. Reports degrees, or null
@@ -92,7 +93,7 @@ class _AngleInputState extends State<AngleInput> {
               for (final f in AngleFormat.values)
                 DropdownMenuItem(
                   value: f,
-                  child: Text(_short(f), overflow: TextOverflow.ellipsis),
+                  child: Text(_short(l, f), overflow: TextOverflow.ellipsis),
                 ),
             ],
             onChanged: (f) {
@@ -104,10 +105,10 @@ class _AngleInputState extends State<AngleInput> {
     );
   }
 
-  static String _short(AngleFormat f) => switch (f) {
+  static String _short(AppLocalizations l, AngleFormat f) => switch (f) {
     AngleFormat.deg360 => '360°',
     AngleFormat.mils6000 => '60-00',
     AngleFormat.mils6400 => '64-00',
-    AngleFormat.dms => 'Г°М′С″',
+    AngleFormat.dms => l.angleDmsShort,
   };
 }

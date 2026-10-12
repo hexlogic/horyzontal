@@ -297,8 +297,10 @@ class _MapPageState extends ConsumerState<MapPage> {
               compassViewPosition: CompassViewPosition.topLeft,
               compassViewMargins: const math.Point(16, 110),
               logoEnabled: false,
-              attributionButtonPosition: AttributionButtonPosition.bottomRight,
-              attributionButtonMargins: const math.Point(8, 76),
+              // Above the scale bar, clear of the buttons: OSM (ODbL), OpenFreeMap,
+              // Protomaps and Copernicus credits come from the style's sources.
+              attributionButtonPosition: AttributionButtonPosition.bottomLeft,
+              attributionButtonMargins: const math.Point(12, 150),
               myLocationEnabled: _locationAllowed,
               myLocationTrackingMode: _tracking,
               myLocationRenderMode:

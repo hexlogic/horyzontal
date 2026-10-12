@@ -56,9 +56,13 @@ Future<String> offlineStyle(List<PackFile> packs) async {
   return buildOfflineStyle(template, packs, await PackStore.installAssets());
 }
 
-/// Rewrites every label of the OpenFreeMap style to prefer Ukrainian names.
+/// Rewrites every label of the OpenFreeMap style to prefer Ukrainian names,
+/// and drops anything in it that would make MapLibre contact a host outside
+/// [allowedHosts]: MapLibre fetches tiles, glyphs and sprites itself, past
+/// the app's own HTTP client.
 String ukrainianLabels(String styleJson) {
   final style = jsonDecode(styleJson) as Map<String, Object?>;
+  restrictHosts(style);
   const name = ['coalesce', ['get', 'name:uk'], ['get', 'name']];
   for (final l in (style['layers']! as List<Object?>).cast<Map<String, Object?>>()) {
     final layout = l['layout'] as Map<String, Object?>?;
@@ -83,5 +87,34 @@ Future<String> onlineStyle(Net net) async {
   } catch (_) {
     if (await cache.exists()) return cache.readAsString();
     rethrow;
+  }
+}
+
+bool _allowedUrl(Object? url) {
+  if (url is! String) return false;
+  final u = Uri.tryParse(url.replaceAll('{', '').replaceAll('}', ''));
+  return u != null && u.scheme == 'https' && allowedHosts.contains(u.host);
+}
+
+/// Removes sources, glyphs and sprites pointing outside [allowedHosts], and
+/// the layers that used those sources.
+void restrictHosts(Map<String, Object?> style) {
+  final sources = (style['sources'] as Map<String, Object?>?) ?? {};
+  final dropped = <String>{};
+  for (final e in sources.entries.toList()) {
+    final src = e.value as Map<String, Object?>;
+    final urls = [?src['url'], ...((src['tiles'] as List<Object?>?) ?? const [])];
+    if (urls.isEmpty || !urls.every(_allowedUrl)) {
+      sources.remove(e.key);
+      dropped.add(e.key);
+    }
+  }
+  final layers = (style['layers'] as List<Object?>?) ?? [];
+  layers.removeWhere((l) => dropped.contains((l as Map<String, Object?>)['source']));
+  if (style['glyphs'] != null && !_allowedUrl(style['glyphs'])) style.remove('glyphs');
+  final sprite = style['sprite'];
+  if (sprite is String && !_allowedUrl(sprite)) style.remove('sprite');
+  if (sprite is List && !sprite.every((s) => _allowedUrl((s as Map<String, Object?>)['url']))) {
+    style.remove('sprite');
   }
 }

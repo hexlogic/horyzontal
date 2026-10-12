@@ -110,7 +110,7 @@ class _AppServicesState extends ConsumerState<AppServices> {
     }
     if (s.lastSeenVersion != appVersion) {
       await ctl.update((s) => s.copyWith(lastSeenVersion: appVersion));
-      if (!ctx.mounted || releaseNotes.first.$1 != appVersion) return;
+      if (!ctx.mounted || releaseVersions.first != appVersion) return;
       await Navigator.of(ctx).push(MaterialPageRoute<void>(builder: (_) => const WhatsNewPage()));
     }
   }

@@ -1507,7 +1507,7 @@ abstract class AppLocalizations {
   /// No description provided for @swipeToHide.
   ///
   /// In uk, this message translates to:
-  /// **'Проведіть шар убік, щоб сховати або показати його на мапі'**
+  /// **'Проведіть шар убік, щоб сховати або показати його на мапі. Довге натискання — вибрати кілька шарів для експорту чи передачі.'**
   String get swipeToHide;
 
   /// No description provided for @symbol.
@@ -1917,6 +1917,54 @@ abstract class AppLocalizations {
   /// In uk, this message translates to:
   /// **'Вибрати «{name}»'**
   String sidcChooseThis(String name);
+
+  /// No description provided for @cardinalN.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пн'**
+  String get cardinalN;
+
+  /// No description provided for @cardinalE.
+  ///
+  /// In uk, this message translates to:
+  /// **'Сх'**
+  String get cardinalE;
+
+  /// No description provided for @cardinalS.
+  ///
+  /// In uk, this message translates to:
+  /// **'Пд'**
+  String get cardinalS;
+
+  /// No description provided for @cardinalW.
+  ///
+  /// In uk, this message translates to:
+  /// **'Зх'**
+  String get cardinalW;
+
+  /// No description provided for @angleDmsShort.
+  ///
+  /// In uk, this message translates to:
+  /// **'Г°М′С″'**
+  String get angleDmsShort;
+
+  /// No description provided for @notes020.
+  ///
+  /// In uk, this message translates to:
+  /// **'Мапа: онлайн OpenFreeMap і офлайн-пакети областей з рельєфом, кілька пакетів одночасно\nОб\'єкти з умовними знаками НАТО APP-6, шари, журнал з фільтрами й пошуком\nОбмін: QR для точок, шари по Wi-Fi без інтернету, файли .hrz, KML/KMZ, GPX, CoT і пакети даних ATAK\nБезпека: розмиття в перемикачі застосунків, заборона знімків екрана (Android), екстрене видалення, режим «Тільки офлайн»'**
+  String get notes020;
+
+  /// No description provided for @notes010.
+  ///
+  /// In uk, this message translates to:
+  /// **'Конвертер координат WGS 84, СК-42, УСК-2000, UTM, MGRS і кутів\nПряма й обернена геодезичні задачі, компас з істинною північчю\nPIN-код, біометрія, зашифрована база'**
+  String get notes010;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In uk, this message translates to:
+  /// **'{n, plural, one{Вибрано {n} шар} few{Вибрано {n} шари} many{Вибрано {n} шарів} other{Вибрано {n} шару}}'**
+  String selectedCount(int n);
 }
 
 class _AppLocalizationsDelegate

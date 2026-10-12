@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../../core/labels.dart';
+import '../../l10n/app_localizations.dart';
 
-/// Release notes, newest first. Shown once after an update.
-const releaseNotes = <(String, List<String>)>[
-  ('0.2.0', [
-    'Мапа: онлайн OpenFreeMap і офлайн-пакети областей з рельєфом, кілька пакетів одночасно',
-    'Об\'єкти з умовними знаками НАТО APP-6, шари, журнал з фільтрами й пошуком',
-    'Обмін: QR для точок, шари по Wi-Fi без інтернету, файли .hrz, KML/KMZ, GPX, CoT і пакети даних ATAK',
-    'Безпека: розмиття в перемикачі застосунків, заборона знімків екрана (Android), екстрене видалення, режим «Тільки офлайн»',
-  ]),
-  ('0.1.0', [
-    'Конвертер координат WGS 84, СК-42, УСК-2000, UTM, MGRS і кутів',
-    'Пряма й обернена геодезичні задачі, компас з істинною північчю',
-    'PIN-код, біометрія, зашифрована база',
-  ]),
-];
+/// Versions with release notes, newest first; the notes live in the ARB
+/// file, one line per item.
+const releaseVersions = ['0.2.0', '0.1.0'];
+
+List<String> releaseNotes(AppLocalizations l, String version) => switch (version) {
+      '0.2.0' => l.notes020,
+      '0.1.0' => l.notes010,
+      _ => '',
+    }
+        .split('\n')
+        .where((s) => s.isNotEmpty)
+        .toList();
 
 class WhatsNewPage extends StatelessWidget {
   const WhatsNewPage({super.key});
@@ -28,10 +27,10 @@ class WhatsNewPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          for (final (version, notes) in releaseNotes) ...[
+          for (final version in releaseVersions) ...[
             Text(l.aboutVersion(version), style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
-            for (final n in notes)
+            for (final n in releaseNotes(l, version))
               Padding(
                 padding: const EdgeInsets.only(bottom: 6),
                 child: Row(

@@ -108,7 +108,7 @@ class _CompassPageState extends ConsumerState<CompassPage> {
                       painter: CompassRosePainter(
                         format: settings.angleOutput,
                         colors: colors,
-                        cardinals: const ['Пн', 'Сх', 'Пд', 'Зх'],
+                        cardinals: [l.cardinalN, l.cardinalE, l.cardinalS, l.cardinalW],
                       ),
                     ),
                   ),
