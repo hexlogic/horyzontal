@@ -50,7 +50,7 @@ jobs:
         run: |
           sudo apt-get update -q
           sudo apt-get install -yq gdal-bin python3-gdal
-          curl -fsSL -o pmtiles.tgz https://github.com/protomaps/go-pmtiles/releases/download/v1.28.0/go-pmtiles_1.28.0_Linux_x86_64.tar.gz
+          curl -fsSL -o pmtiles.tgz https://github.com/protomaps/go-pmtiles/releases/download/v1.31.2/go-pmtiles_1.31.2_Linux_x86_64.tar.gz
           tar xzf pmtiles.tgz pmtiles && sudo mv pmtiles /usr/local/bin/
       - name: Build ${{ matrix.region }}
         working-directory: tools/map-pipeline
@@ -79,6 +79,7 @@ jobs:
           path: out
       - name: Keep packs of regions that failed this time
         run: |
+          mkdir -p out
           gh release view maps >/dev/null 2>&1 || gh release create maps --title 'Офлайн-карти' --notes 'Пакети областей для Горизонталі. Оновлюється щомісяця.' --latest=false
           for id in $(python3 -c 'import json; print(" ".join(r["id"] for r in json.load(open("tools/map-pipeline/regions/index.json"))))'); do
             for f in "$id.pmtiles" "$id-dem.pmtiles"; do
@@ -86,7 +87,10 @@ jobs:
             done
           done
       - name: Manifest
-        run: python3 tools/map-pipeline/manifest.py out ${{ needs.regions.outputs.build }}
+        run: |
+          # Nothing built and nothing to keep: leave the release as it is.
+          ls out/*.pmtiles >/dev/null 2>&1 || { echo "No packs to publish" >&2; exit 1; }
+          python3 tools/map-pipeline/manifest.py out ${{ needs.regions.outputs.build }}
       - name: Upload
         # Packs first, manifest last: the app never sees a manifest that
         # points at files not uploaded yet.
