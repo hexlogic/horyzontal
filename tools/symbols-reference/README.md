@@ -1,23 +1,23 @@
-# Эталоны для `horyzontal_symbols`
+# Еталони для `horyzontal_symbols`
 
 `packages/horyzontal_symbols` — порт [milsymbol](https://github.com/spatialillusions/milsymbol)
-3.0.4 (MIT, Måns Beckman) на Dart, только числовые SIDC (APP-6 D/E, 2525 D/E). Тест
-`test/reference_test.dart` сравнивает SVG (байт в байт), размер, якоря, `isValid`, метаданные и
-цвета с выводом самого milsymbol из `packages/horyzontal_symbols/test/fixtures/`. Фикстуры лежат в
-git, CI node не запускает. Пересобирать нужно при переносе нового набора символов или расширении
-корпуса.
+3.0.4 (MIT, Måns Beckman) на Dart, лише числові SIDC (APP-6 D/E, 2525 D/E). Тест
+`test/reference_test.dart` порівнює SVG (байт у байт), розмір, якорі, `isValid`, метадані й
+кольори з виводом самого milsymbol з `packages/horyzontal_symbols/test/fixtures/`. Фікстури лежать у
+git, CI node не запускає. Перезбирати потрібно під час перенесення нового набору знаків або розширення
+корпусу.
 
-| Фикстура | Что внутри |
+| Фікстура | Що всередині |
 | --- | --- |
-| `<модуль>*.jsonl.gz` | то же для остальных модулей (`air`, `sea`, ..., `tacticalpoints`), плюс `*-styles` (рамка, заливка, monoColor, alternateMedal по очереди) и `tacticalpoints-labels` (подписи мер управления со всеми их текстовыми полями) |
-| `land*.jsonl.gz` | наборы 10, 11, 15, 20, 27, 40: каждая сущность в четырех принадлежностях (2525) и в APP-6, все коды модификаторов 1 и 2 (двузначные и трехзначные 2525E), подтипы 95–99, уменьшение иконки техники и спешенных при модификаторах |
-| `core-*.jsonl.gz` | рамки всех измерений, контексты, принадлежности, статусы, HQ/TF/FD, эшелоны, подвижность, форма рамки 2525E, опции стиля и текстовые поля, неверные SIDC; от наборов иконок не зависят (сущность `000000`) |
-| `manifest.json` | версия milsymbol, перенесенные модули, файлы с наборами символов (`sets`) и числом записей |
-| `js_number.json` | биты double и `String(x)` из JS — проверка форматирования чисел |
+| `<модуль>*.jsonl.gz` | те саме для решти модулів (`air`, `sea`, ..., `tacticalpoints`), плюс `*-styles` (рамка, заливка, monoColor, alternateMedal по черзі) і `tacticalpoints-labels` (підписи заходів керування з усіма їхніми текстовими полями) |
+| `land*.jsonl.gz` | набори 10, 11, 15, 20, 27, 40: кожна сутність у чотирьох належностях (2525) і в APP-6, усі коди модифікаторів 1 і 2 (двозначні й тризначні 2525E), підтипи 95–99, зменшення іконки техніки й спішених за наявності модифікаторів |
+| `core-*.jsonl.gz` | рамки всіх вимірів, контексти, належності, статуси, HQ/TF/FD, ешелони, рухомість, форма рамки 2525E, опції стилю й текстові поля, хибні SIDC; від наборів іконок не залежать (сутність `000000`) |
+| `manifest.json` | версія milsymbol, перенесені модулі, файли з наборами знаків (`sets`) і кількістю записів |
+| `js_number.json` | біти double і `String(x)` з JS — перевірка форматування чисел |
 
-Запись `.jsonl.gz`: `sidc`, `options` (как в `new ms.Symbol(sidc, options)`), `svg`, `size`,
-`anchor`, `octagonAnchor`, `isValid`, `validity`, `metadata`, у `core-options` еще `colors`;
-`error`, если milsymbol бросает исключение (тогда и порт должен бросать).
+Запис `.jsonl.gz`: `sidc`, `options` (як у `new ms.Symbol(sidc, options)`), `svg`, `size`,
+`anchor`, `octagonAnchor`, `isValid`, `validity`, `metadata`, у `core-options` ще `colors`;
+`error`, якщо milsymbol кидає виняток (тоді й порт має кидати).
 
 ## Запуск
 
@@ -33,89 +33,89 @@ node tools/symbols-reference/generate.mjs /tmp/milsymbol/package packages/horyzo
 cd packages/horyzontal_symbols && dart test
 ```
 
-Нужен Node 18+. Скрипт импортирует milsymbol по пути из аргумента и ничего из него в репозиторий не
-копирует. В `manifest.json` пишется SHA-256 дерева `src/` milsymbol: если после пересборки
-расходится все сразу, сначала сравните хэш — возможно, это другая копия пакета, а не ошибка порта.
+Потрібен Node 18+. Скрипт імпортує milsymbol за шляхом з аргументу й нічого з нього в репозиторій не
+копіює. У `manifest.json` пишеться SHA-256 дерева `src/` milsymbol: якщо після перезбирання
+розходиться все одразу, спочатку порівняйте хеш — можливо, це інша копія пакета, а не помилка порту.
 
-## Как устроен эталон
+## Як влаштовано еталон
 
-- Регистрируются только перенесенные модули (`PORTED` в `generate.mjs`), в порядке milsymbol:
-  `app6d`, затем `std2525d`, затем `std2525e`, как в `index.js` без буквенных модулей. Порядок
-  важен: при совпадении ключей частей иконок побеждает модуль, добавленный позже.
-- Перед каждым символом кэш иконок milsymbol сбрасывается. `ms._scale(…, true)` меняет закэшированные
-  части иконок на месте, и с теплым кэшем вывод milsymbol зависит от порядка отрисовки (на корпусе
-  land так расходятся 9 символов из 6725). Порт строит кэш по набору символов и масштабирует копии,
-  поэтому всегда совпадает с холодным кэшем.
-- Вывод совпадает и с полным бандлом milsymbol (с буквенными модулями): проверено на всем корпусе.
-- Генератор печатает ключи частей иконок, на которые ссылаются таблицы, но которых нет ни в одном
-  перенесенном файле частей. Сейчас это только `TODO` из `control-measure.js` — заглушка самого
-  milsymbol, такие меры управления у него тоже невалидны.
+- Реєструються лише перенесені модулі (`PORTED` у `generate.mjs`), у порядку milsymbol:
+  `app6d`, потім `std2525d`, потім `std2525e`, як в `index.js` без літерних модулів. Порядок
+  важливий: за збігу ключів частин іконок перемагає модуль, доданий пізніше.
+- Перед кожним знаком кеш іконок milsymbol скидається. `ms._scale(…, true)` змінює закешовані
+  частини іконок на місці, і з теплим кешем вивід milsymbol залежить від порядку малювання (на корпусі
+  land так розходяться 9 знаків із 6725). Порт будує кеш за набором знаків і масштабує копії,
+  тому завжди збігається з холодним кешем.
+- Вивід збігається й з повним бандлом milsymbol (з літерними модулями): перевірено на всьому корпусі.
+- Генератор друкує ключі частин іконок, на які посилаються таблиці, але яких немає в жодному
+  перенесеному файлі частин. Зараз це лише `TODO` з `control-measure.js` — заглушка самого
+  milsymbol, такі заходи керування в нього теж невалідні.
 
 ## Конвертер
 
-`convert.mjs` механически переводит файл частей иконок или таблицу SIDC milsymbol в Dart: литералы
-объектов в `<String, Object?>{...}`, массивы в `<Object?>[...]`, `ms._scale`/`ms._translate` в
-`msScale`/`msTranslate`, `undefined` в `null`, финальный цикл регистрации в `registerIconParts`.
-Файл только читается как текст. Результат — заготовка, после нее `dart format --line-length 100`,
-`dart analyze` и ручные правки. Типичные: сложение строки с числом (`'M' + x` →
-`'M' + jsString(x)`), не-bool в условиях (`a || b` → `truthy(a) ? a : b`), вызовы функций milsymbol,
-которых нет в Dart. Проверенный Dart и есть исходник, конвертер сборкой не запускается.
+`convert.mjs` механічно перекладає файл частин іконок або таблицю SIDC milsymbol у Dart: літерали
+об'єктів у `<String, Object?>{...}`, масиви в `<Object?>[...]`, `ms._scale`/`ms._translate` у
+`msScale`/`msTranslate`, `undefined` у `null`, фінальний цикл реєстрації в `registerIconParts`.
+Файл лише читається як текст. Результат — заготовка, після неї `dart format --line-length 100`,
+`dart analyze` і ручні правки. Типові: додавання рядка до числа (`'M' + x` →
+`'M' + jsString(x)`), не-bool в умовах (`a || b` → `truthy(a) ? a : b`), виклики функцій milsymbol,
+яких немає в Dart. Перевірений Dart і є джерелом, конвертер під час збирання не запускається.
 
-## Как добавить набор символов
+## Як додати набір знаків
 
-Модули milsymbol (`src/numbersidc/sidc/*.js`) в порядке регистрации и их файлы частей иконок
+Модулі milsymbol (`src/numbersidc/sidc/*.js`) у порядку реєстрації та їхні файли частин іконок
 (`src/iconparts/*.js`):
 
-| Модуль | Наборы | Части иконок | Статус |
+| Модуль | Набори | Частини іконок | Стан |
 | --- | --- | --- | --- |
-| `air` | 01 | `air.js` | есть |
-| `airmissile` | 02 | `air.js` | есть |
-| `space` | 05 | `space.js` | есть |
-| `spacemissile` | 06 | `space.js` | есть |
-| `landunit` | 10 | `ground.js` | есть |
-| `landcivilian` | 11 | `ground.js` | есть |
-| `landequipment` | 15 | `ground.js` | есть |
-| `landinstallation` | 20 | `ground.js` | есть |
-| `sea` | 30 | `sea.js` | есть |
-| `subsurface` | 35 | `subsurface.js` | есть |
-| `minewarfare` | 36 | `subsurface.js` | есть |
-| `activites` | 40 | `ground.js` | есть |
-| `signalsintelligence` | 50–54 | `signals-intelligence.js` | есть |
-| `dismountedindividual` | 27 | `ground.js` | есть |
-| `tacticalpoints` (`control-measure.js`) | 25 | `tactical-points.js`, подписи `numbersidc/labels/tactical-points.js` | есть |
-| `cyberspace` | 60 | `ground.js` (части `CY.*`) | есть |
-| `common` | модификаторы 2525E | `common-modifiers.js` | есть |
+| `air` | 01 | `air.js` | є |
+| `airmissile` | 02 | `air.js` | є |
+| `space` | 05 | `space.js` | є |
+| `spacemissile` | 06 | `space.js` | є |
+| `landunit` | 10 | `ground.js` | є |
+| `landcivilian` | 11 | `ground.js` | є |
+| `landequipment` | 15 | `ground.js` | є |
+| `landinstallation` | 20 | `ground.js` | є |
+| `sea` | 30 | `sea.js` | є |
+| `subsurface` | 35 | `subsurface.js` | є |
+| `minewarfare` | 36 | `subsurface.js` | є |
+| `activites` | 40 | `ground.js` | є |
+| `signalsintelligence` | 50–54 | `signals-intelligence.js` | є |
+| `dismountedindividual` | 27 | `ground.js` | є |
+| `tacticalpoints` (`control-measure.js`) | 25 | `tactical-points.js`, підписи `numbersidc/labels/tactical-points.js` | є |
+| `cyberspace` | 60 | `ground.js` (частини `CY.*`) | є |
+| `common` | модифікатори 2525E | `common-modifiers.js` | є |
 
-Порядок для набора `air` (для остальных так же):
+Порядок для набору `air` (для решти так само):
 
-1. Части иконок, если файла еще нет в `lib/src/iconparts/`:
+1. Частини іконок, якщо файлу ще немає в `lib/src/iconparts/`:
    ```bash
    node tools/symbols-reference/convert.mjs iconparts /tmp/milsymbol/package/src/iconparts/air.js airIconParts > packages/horyzontal_symbols/lib/src/iconparts/air.dart
    ```
-2. Таблица SIDC:
+2. Таблиця SIDC:
    ```bash
    node tools/symbols-reference/convert.mjs sidc /tmp/milsymbol/package/src/numbersidc/sidc/air.js airIcons > packages/horyzontal_symbols/lib/src/numbersidc/sidc/air.dart
    ```
-3. `dart format --line-length 100` и `dart analyze` по новым файлам, ручные правки (см. выше).
-   В шапке файла остается `// Ported from milsymbol <путь>, MIT`; если правили руками, замените
+3. `dart format --line-length 100` і `dart analyze` для нових файлів, ручні правки (див. вище).
+   У шапці файлу лишається `// Ported from milsymbol <шлях>, MIT`; якщо правили вручну, замініть
    `hand edits: none` коротким списком правок.
-4. В `lib/src/numbersidc.dart` объявить модуль
+4. У `lib/src/numbersidc.dart` оголосити модуль
    (`const air = SymbolSetModule(name: 'air', symbolSets: ['01'], iconParts: airIconParts, icons: airIcons);`,
-   для `tacticalpoints` еще `labels:`) и раскомментировать его в `app6d`, `std2525d` и `std2525e` на
-   том же месте, где он стоит у milsymbol. Больше ничего в ядре менять не нужно: ядро берет части и
-   таблицы из зарегистрированных модулей, а для незарегистрированных наборов рисует рамку со знаком
-   вопроса milsymbol (`isValid == false`).
-5. В `generate.mjs` добавить имя модуля в `PORTED` и раскомментировать (или добавить) семейство в
-   `FAMILIES`; при необходимости задать сущность для модификаторов в `REPRESENTATIVE`.
-6. Пересобрать **все** фикстуры и прогнать `dart test`: все файлы должны совпасть на 100 %. Новые
-   части иконок могут законно изменить вывод уже перенесенных наборов (ссылки между модулями,
-   переопределение ключей), поэтому сравнивать надо весь корпус, а не только новый файл.
+   для `tacticalpoints` ще `labels:`) і розкоментувати його в `app6d`, `std2525d` і `std2525e` на
+   тому самому місці, де він стоїть у milsymbol. Більше нічого в ядрі змінювати не потрібно: ядро бере частини й
+   таблиці із зареєстрованих модулів, а для незареєстрованих наборів малює рамку зі знаком
+   питання milsymbol (`isValid == false`).
+5. У `generate.mjs` додати ім'я модуля в `PORTED` і розкоментувати (або додати) сімейство в
+   `FAMILIES`; за потреби задати сутність для модифікаторів у `REPRESENTATIVE`.
+6. Перезібрати **всі** фікстури й прогнати `dart test`: усі файли мають збігтися на 100 %. Нові
+   частини іконок можуть законно змінити вивід уже перенесених наборів (посилання між модулями,
+   перевизначення ключів), тому порівнювати треба весь корпус, а не лише новий файл.
 
-Особые случаи: у `minewarfare` (36) есть опция `alternateMedal`; у мер управления (25) подписи
-через `labels` (`numbersidc/labels/tactical-points.js` перенести как `LabelOverridesFunction` и
-добавить в корпус варианты с текстовыми полями, в том числе ключами вроде `uniqueDesignation1`, иначе
-`labelOverride` не выполнится) и типы инструкций `clip` и `svg` (в `assvg.dart` уже перенесены, но
-корпусом пока не проверены); `cyberspace` использует части из `ground.dart`, нужна только таблица.
-Пробная конвертация всех оставшихся файлов собирается, кроме одной строки в `tactical-points.js`
-(`if (metadata.notpresent)` → `if (truthy(metadata.notpresent))`); компиляция еще не значит
-совпадение, проверяет только полный корпус.
+Особливі випадки: у `minewarfare` (36) є опція `alternateMedal`; у заходів керування (25) підписи
+через `labels` (`numbersidc/labels/tactical-points.js` перенести як `LabelOverridesFunction` і
+додати в корпус варіанти з текстовими полями, зокрема з ключами на кшталт `uniqueDesignation1`, інакше
+`labelOverride` не виконається) і типи інструкцій `clip` і `svg` (в `assvg.dart` уже перенесено, але
+корпусом поки не перевірено); `cyberspace` використовує частини з `ground.dart`, потрібна лише таблиця.
+Пробне конвертування всіх решти файлів збирається, крім одного рядка в `tactical-points.js`
+(`if (metadata.notpresent)` → `if (truthy(metadata.notpresent))`); компіляція ще не означає
+збігу, перевіряє лише повний корпус.

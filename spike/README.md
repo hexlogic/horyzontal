@@ -1,15 +1,15 @@
-# Спайк этапа 0
+# Спайк етапу 0
 
-Одноразовое приложение, чтобы снять три технических риска до основной работы
-(см. [docs/spec.md](../docs/spec.md), раздел «Этапы»). Код отсюда в основное приложение
-переносится выборочно, само приложение не развивается.
+Одноразовий застосунок, щоб зняти три технічні ризики до основної роботи
+(див. [docs/spec.md](../docs/spec.md), розділ «Етапи»). Код звідси в основний застосунок
+переноситься вибірково, сам застосунок не розвивається.
 
-- **Мапа:** онлайн OpenFreeMap и офлайн PMTiles (Protomaps) с холмистостью из DEM-пакета;
-  тап — высота точки, два долгих нажатия — профиль высот.
-- **Передача:** Android поднимает LocalOnlyHotspot и показывает QR; второе устройство
-  сканирует, подключается к точке и получает тестовый файл по TCP с AES-256-GCM.
+- **Мапа:** онлайн OpenFreeMap і офлайн PMTiles (Protomaps) з відмиванням рельєфу з DEM-пакета;
+  дотик — висота точки, два довгі натискання — профіль висот.
+- **Передавання:** Android піднімає LocalOnlyHotspot і показує QR; другий пристрій
+  сканує його, під'єднується до точки й отримує тестовий файл по TCP з AES-256-GCM.
 
-## Сборка
+## Збирання
 
 ```bash
 cd spike && flutter pub get
@@ -23,24 +23,24 @@ flutter build apk --debug
 flutter build ios --debug
 ```
 
-iOS: нужен платный аккаунт Apple Developer — capability *Hotspot Configuration*
-(`Runner.entitlements`) бесплатной команде недоступна. Выберите свою команду в Xcode
-(`ios/Runner.xcworkspace` → Signing & Capabilities) и добавьте там же Hotspot Configuration.
+iOS: потрібен платний обліковий запис Apple Developer — capability *Hotspot Configuration*
+(`Runner.entitlements`) безкоштовній команді недоступна. Виберіть свою команду в Xcode
+(`ios/Runner.xcworkspace` → Signing & Capabilities) і додайте там само Hotspot Configuration.
 
-## Пакеты карт
+## Пакети мап
 
-Собираются в `tools/map-pipeline` (`./build_region.sh kyiv`), получаются
-`out/kyiv.pmtiles` и `out/kyiv-dem.pmtiles`.
+Збираються в `tools/map-pipeline` (`./build_region.sh kyiv`), виходять
+`out/kyiv.pmtiles` і `out/kyiv-dem.pmtiles`.
 
-- **iPhone:** Finder → устройство → Файлы → «Горизонталь спайк» → перетащить оба файла
-  (приложение ищет пакеты в `Documents` и `Documents/packs`) или кнопка импорта на экране «Мапа».
-- **Android:** скопировать на телефон и импортировать кнопкой на экране «Мапа», либо для
-  debug-сборки: `adb push` + `run-as com.synckord.horyzontal.spike cp … app_flutter/packs/`.
+- **iPhone:** Finder → пристрій → Файли → «Горизонталь спайк» → перетягнути обидва файли
+  (застосунок шукає пакети в `Documents` і `Documents/packs`) або кнопка імпорту на екрані «Мапа».
+- **Android:** скопіювати на телефон та імпортувати кнопкою на екрані «Мапа», або для
+  debug-збірки: `adb push` + `run-as com.synckord.horyzontal.spike cp … app_flutter/packs/`.
 
-## Автотест без касаний экрана
+## Автотест без дотиків до екрана
 
-Release-сборка выполняет задание и пишет результат в `Documents/autotest.log` и в консоль
-(`[autotest]`), см. `lib/autotest.dart`:
+Release-збірка виконує завдання й пише результат у `Documents/autotest.log` і в консоль
+(`[autotest]`), див. `lib/autotest.dart`:
 
 ```bash
 xcrun devicectl device copy to --device <udid> --domain-type appDataContainer --domain-identifier com.synckord.horyzontal.spike --source task.json --destination Documents/autotest.json
@@ -50,29 +50,29 @@ xcrun devicectl device copy to --device <udid> --domain-type appDataContainer --
 adb shell am start -S -n com.synckord.horyzontal.spike/.MainActivity --es autotest "'{\"do\":\"map\",\"bench\":true}'"
 ```
 
-Задания: `{"do":"map","lat":…,"lon":…,"zoom":…,"bench":true}`,
+Завдання: `{"do":"map","lat":…,"lon":…,"zoom":…,"bench":true}`,
 `{"do":"host","send":true,"mb":10,"hotspot":true}`, `{"do":"client","invite":"…","mb":10}`.
-Системные запросы iOS («Подключиться к сети?») все равно нажимает человек.
+Системні запити iOS («Під'єднатися до мережі?») однаково натискає людина.
 
-## Чек-лист на реальных устройствах
+## Чек-лист на реальних пристроях
 
-Пройден 12.10.2026 на iPhone 16 Pro Max (iOS 27) и POCO F3 (Android 16), результаты —
-в [docs/stage0-spike.md](../docs/stage0-spike.md).
+Пройдено 12.10.2026 на iPhone 16 Pro Max (iOS 27) і POCO F3 (Android 16), результати —
+у [docs/stage0-spike.md](../docs/stage0-spike.md).
 
-**Карта (iPhone и Android):**
+**Мапа (iPhone і Android):**
 
-- [x] Авиарежим, «Офлайн»: карта Киевской области рисуется, подписи украинские
-- [x] Холмистость видна; диагональных полос, как в эмуляторе, нет
-- [x] Высоты совпадают с Copernicus (среднее 0.22 м, максимум 1.18 м)
-- [x] Профиль 256 точек быстрее 300 мс в release (36–276 мс холодный, <1 мс повторно)
-- [x] Сворачивание и возврат без вылетов
-- [ ] Плавность на z14–15 — визуально нормально, но кадры в секунду не измерены
+- [x] Авіарежим, «Офлайн»: мапа Київської області малюється, підписи українські
+- [x] Відмивання рельєфу видно; діагональних смуг, як в емуляторі, немає
+- [x] Висоти збігаються з Copernicus (середнє 0.22 м, максимум 1.18 м)
+- [x] Профіль з 256 точок швидше за 300 мс у release (36–276 мс холодний, <1 мс повторно)
+- [x] Згортання й повернення без вильотів
+- [ ] Плавність на z14–15 — на око нормально, але кадри за секунду не виміряно
 
-**Передача (Android-хост и iPhone):**
+**Передавання (Android-хост і iPhone):**
 
-- [x] Android поднимает точку и показывает QR
-- [x] iPhone сканирует QR, подключается, передача 10–100 МБ, sha256 совпали
-- [x] Обратное направление: iPhone отправляет, Android принимает
-- [ ] 2–3 Android других производителей и Android 8–12 (было одно устройство)
-- [ ] Android ↔ Android через WifiNetworkSpecifier (нужен второй Android)
-- [ ] Автоповтор подключения на iOS в момент реального сбоя (сбой 2 из 12, в контрольной серии не случился)
+- [x] Android піднімає точку й показує QR
+- [x] iPhone сканує QR, під'єднується, передавання 10–100 МБ, sha256 збіглися
+- [x] Зворотний напрям: iPhone надсилає, Android приймає
+- [ ] 2–3 Android інших виробників і Android 8–12 (був один пристрій)
+- [ ] Android ↔ Android через WifiNetworkSpecifier (потрібен другий Android)
+- [ ] Автоповтор під'єднання на iOS у момент реального збою (збій 2 з 12, у контрольній серії не трапився)
